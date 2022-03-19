@@ -25,6 +25,7 @@ abstract class ValidatorContract  {
   void validate();
   void setRules(Map<String, String> rules);
   void setValues(Map<String, dynamic> values);
+  void addRule(String field, String rule);
 }
 
 abstract class Model {
@@ -32,10 +33,8 @@ abstract class Model {
   Map<String, dynamic> toJSON();
 }
 
-abstract class AbstractHttpDataProvider<T, S> {
+abstract class AbstractHttpDataProvider<T> {
   late final String path;
-
-  final String baseUrl;
 
   final scheme = 'http';
 
@@ -43,10 +42,10 @@ abstract class AbstractHttpDataProvider<T, S> {
 
   T fromJSON(Map<String, dynamic> json);
 
-  AbstractHttpDataProvider({required this.client, required this.baseUrl});
+  AbstractHttpDataProvider({required this.client});
 
   Future<List<T>> browse(Map<String, dynamic> query) async {
-    Uri uri = this.client.generateUri(baseUrl: baseUrl, query: query);
+    Uri uri = this.client.generateUri(baseUrl: this.client.baseUrl, query: query);
 
     Map<String, dynamic> result = await this.client.get(uri);
 
@@ -70,8 +69,8 @@ abstract class AbstractHttpDataProvider<T, S> {
   }
 
   Future<T> create(Map<String, dynamic> body) async {
-    Uri uri = this.generateUri();
-
+    Uri uri = this.generateUri(path: this.path);
+    print(uri);
     Map<String, dynamic> result = await this.client.post(uri, body: body);
 
     return fromJSON(result);
@@ -84,7 +83,7 @@ abstract class AbstractHttpDataProvider<T, S> {
   }
 
   Uri generateUri({String path = '', Map<String, dynamic> query = const {}}) {
-    return this.client.generateUri(baseUrl: this.baseUrl, path: path, query: query);
+    return this.client.generateUri(baseUrl: this.client.baseUrl, path: path, query: query);
   }
 
 

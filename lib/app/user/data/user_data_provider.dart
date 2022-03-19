@@ -6,7 +6,7 @@ class UserDataProvider extends AbstractHttpDataProvider {
   @override
   String path = 'user';
 
-  UserDataProvider(HttpClient client) : super(baseUrl: '10.0.2.2', client: client);
+  UserDataProvider(HttpClient client) : super(client: client);
 
   Future<UserEntity> iam() async {
     Uri uri = this.generateUri(path: this.path + '/iam');

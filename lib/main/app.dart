@@ -1,10 +1,13 @@
 import 'package:finwallet_app/app/account/pages/accounts_home.dart';
+import 'package:finwallet_app/app/account/pages/widgets/create_account_form.dart';
 import 'package:finwallet_app/app/auth/pages/login.dart';
 import 'package:finwallet_app/app/auth/pages/signup.dart';
 import 'package:finwallet_app/app/user/pages/user_setup.dart';
 import 'package:finwallet_app/common/constants/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../app/account/pages/account_first.dart';
 
 
 const RED = 98;
@@ -54,7 +57,8 @@ class _AppState extends State<App> {
           HOME_ROUTE: (context) => AccountsHome(),
           LOGIN_ROUTE: (context) => Login(),
           SIGN_UP_ROUTE: (context) => Signup(),
-          SETUP_USER_ROUTE: (context) => SetupUserPage()
+          SETUP_USER_ROUTE: (context) => SetupUserPage(),
+          CREATE_ACCOUNT_ROUTE: (context) => AccountFirst()
         },
 
       // navigatorObservers: [routeObserver],

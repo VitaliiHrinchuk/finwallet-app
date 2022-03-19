@@ -12,13 +12,16 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class HttpClient {
   final scheme = 'http';
+  final String baseUrl;
 
   final http.Client client;
   final Function(int status, String message) errorInterceptor;
 
-  Map<String, String>? _headers = Map<String, String>();
+  Map<String, String>? _headers = {
+    "content-type": "application/json",
+  };
 
-  HttpClient({required this.client, required this.errorInterceptor});
+  HttpClient({required this.client, required this.errorInterceptor, required this.baseUrl});
 
   Future<Map<String, dynamic>> get(Uri uri) async {
     try {
@@ -40,7 +43,7 @@ class HttpClient {
 
   Future<Map<String, dynamic>> post(Uri uri, {Object? body}) async {
     try {
-      Response response = await this.client.post(uri, headers: this._headers, body: body);
+      Response response = await this.client.post(uri, headers: this._headers, body: json.encode(body));
       return _processResponse(response);
     } on SocketException {
       throw NetworkException();
@@ -49,7 +52,7 @@ class HttpClient {
 
   Future<Map<String, dynamic>> patch(Uri uri, {Object? body}) async {
     try {
-      Response response = await this.client.patch(uri, headers: this._headers, body: body);
+      Response response = await this.client.patch(uri, headers: this._headers, body: json.encode(body));
       return _processResponse(response);
     } on SocketException {
       throw NetworkException();
@@ -58,7 +61,7 @@ class HttpClient {
 
   Future<Map<String, dynamic>> put(Uri uri, {Object? body}) async {
     try {
-      Response response = await this.client.put(uri, headers: this._headers, body: body);
+      Response response = await this.client.put(uri, headers: this._headers, body: json.encode(body));
       return _processResponse(response);
     } on SocketException {
       throw NetworkException();

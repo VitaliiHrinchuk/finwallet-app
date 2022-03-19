@@ -21,11 +21,20 @@ class SetupUserPage extends StatelessWidget {
                 children: [
                   Logo(),
                   Padding(
-                    padding: EdgeInsets.only(top: 40, bottom: 40),
+                    padding: EdgeInsets.only(top: 40, bottom: 10),
                     child: Center(
                       child: Text(
                         "Select Base Currency",
                         style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 40),
+                    child: Center(
+                      child: Text(
+                        "Please select the base currency to be used for analytics and statistics ",
+                        textAlign: TextAlign.center,
                       ),
                     ),
                   ),
@@ -35,7 +44,7 @@ class SetupUserPage extends StatelessWidget {
                       child: BlocListener<UserBloc, UserState>(
                         listener: (context, state) {
                           if (state is UserIsSetup) {
-                            Navigator.pushNamed(context, HOME_ROUTE);
+                            Navigator.pushNamed(context, CREATE_ACCOUNT_ROUTE);
                           }
                         },
                         child: BaseCurrencyForm(),
@@ -46,6 +55,6 @@ class SetupUserPage extends StatelessWidget {
           )
       ),
     );
-    ;
+
   }
 }

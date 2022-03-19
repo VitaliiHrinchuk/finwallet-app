@@ -26,6 +26,7 @@ void main() {
   setupLocator();
   WidgetsFlutterBinding.ensureInitialized();
   di.registerLazySingleton<HttpClient>(() => HttpClient(
+      baseUrl: '10.0.2.2',
       client: new http.Client(), errorInterceptor: errorInterceptor));
   runApp(Wrapper());
 }
@@ -48,7 +49,7 @@ class _AppState extends State<Wrapper> {
             if (state.user.userConfigured) {
               navigator.currentState?.pushNamedAndRemoveUntil(HOME_ROUTE, (route) => false);
             } else {
-              navigator.currentState?.pushNamedAndRemoveUntil(SETUP_USER_ROUTE, (route) => false);
+              navigator.currentState?.pushNamedAndRemoveUntil(CREATE_ACCOUNT_ROUTE, (route) => false);
             }
           } else if (state is AuthInitial) {
             navigator.currentState?.pushNamedAndRemoveUntil(LOGIN_ROUTE,  (route) => false);

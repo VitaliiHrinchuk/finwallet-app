@@ -5,8 +5,12 @@ abstract class HttpException implements Exception {
 
   final Map<String, dynamic>? body;
 
+  final List<dynamic>? errors;
+
   String get message {
-    if (this.description != null) {
+    if (this.errors != null) {
+      return this.errors!.first;
+    } else if (this.description != null) {
       return this.description!;
     } else {
       return this.title;
@@ -17,7 +21,8 @@ abstract class HttpException implements Exception {
   HttpException({
       required this.title,
       this.description,
-      this.body
+      this.body,
+      this.errors
   });
 }
 
@@ -40,9 +45,7 @@ class NotFoundException extends HttpException {
 class BadRequestException extends HttpException {
   BadRequestException({ String? message, List<dynamic>? errors }) : super(
       title: "Bad Request",
-      body:  {
-        "errors": errors
-      },
+      errors: errors,
       description: message
   );
 }

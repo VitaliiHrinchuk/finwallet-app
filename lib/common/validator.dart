@@ -53,13 +53,17 @@ class RuleValidator extends ValidatorContract {
         }
       },
       'length': (rule, param1, _) {
-        return rule.copyWith(length: param1);
+        return rule.copyWith(length: int.parse(param1));
       },
     };
   }
 
   setRules(Map<String, String> rules) {
     this.rules = rules;
+  }
+
+  void addRule(String field, String rule) {
+    this.rules[field] = rule;
   }
 
   setValues(Map<String, dynamic> values) {

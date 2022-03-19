@@ -10,7 +10,7 @@ class AuthDataProvider extends AbstractHttpDataProvider {
   @override
   String path = 'auth';
 
-  AuthDataProvider(HttpClient client) : super(baseUrl: '10.0.2.2', client: client);
+  AuthDataProvider(HttpClient client) : super(client: client);
 
 
   @override

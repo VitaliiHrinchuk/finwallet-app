@@ -1,3 +1,9 @@
+import 'package:finwallet_app/app/account/bloc/account/account_bloc.dart';
+import 'package:finwallet_app/app/account/cubit/form/account_form_cubit.dart';
+import 'package:finwallet_app/app/account/data/account_data_provider.dart';
+import 'package:finwallet_app/app/account/data/account_repository.dart';
+import 'package:finwallet_app/app/account/domain/account_repository_contract.dart';
+import 'package:finwallet_app/app/account/usecases/create_account.dart';
 import 'package:finwallet_app/app/auth/bloc/auth/auth_bloc.dart';
 import 'package:finwallet_app/app/auth/cubit/auth_form_cubit.dart';
 import 'package:finwallet_app/app/auth/data/auth_data_provider.dart';
@@ -36,7 +42,7 @@ void setupLocator() {
   di.registerLazySingleton<SignoutUser>(() => SignoutUser(di()));
   di.registerLazySingleton<SignupUser>(() => SignupUser(di(), di(), di()));
 
-
+  // User ---------------------
   di.registerFactory(() => UserBloc(di(), di()));
   di.registerLazySingleton<UserDataProvider>(() => UserDataProvider(di()));
   di.registerLazySingleton<UserRepositoryContract>(() => UserRepository(di()));
@@ -44,36 +50,15 @@ void setupLocator() {
   di.registerLazySingleton<FetchUser>(() => FetchUser(di()));
   di.registerLazySingleton<SetupUser>(() => SetupUser(di(), di()));
   di.registerFactory<UserSetupFormCubit>(() => UserSetupFormCubit());
-  //
-  // // School ---------------------
-  //
-  // di.registerFactory(() => SchoolBloc(
-  //     addSchoolAndInviteAdmin: di(),
-  //     deleteSchool: di()
-  // ));
-  // di.registerFactory(() => SchoolFormCubit());
-  // di.registerLazySingleton(() => AddSchoolAndInviteAdmin(di<SchoolRepositoryContract>(),di<InviteRepositoryContract>(), di<ValidatorContract>()));
-  // di.registerLazySingleton(() => DeleteSchool(di<SchoolRepositoryContract>(), di<ValidatorContract>()));
-  //
-  // di.registerLazySingleton<SchoolRepositoryContract>(() => SchoolRepository(di()));
-  // di.registerLazySingleton<SchoolDataProvider>(() => SchoolDataProvider());
-  //
-  // di.registerFactory(() => SchoolListBloc(di<SchoolRepositoryContract>().fetch()));
-  //
-  // //
-  //
-  // // - Invite ---------------------
-  // // -- data
-  // di.registerLazySingleton<InviteDataProvider>(() => InviteDataProvider());
-  // di.registerLazySingleton<InviteRepositoryContract>(() => InviteRepository(di()));
-  // // -- use case
-  // di.registerLazySingleton<ListAdministratorInvites>(() => ListAdministratorInvites(di()));
-  // di.registerLazySingleton<SendOrResendAdministratorInvite>(() => SendOrResendAdministratorInvite(di<InviteRepositoryContract>(), di()));
-  // di.registerLazySingleton<DeleteAdministratorInvite>(() => DeleteAdministratorInvite(di<InviteRepositoryContract>(), di()));
-  // // bloc
-  // di.registerFactory(() => AdminInviteListBloc(di<ListAdministratorInvites>().call(NoParams())));
-  // di.registerFactory(() => InviteBloc(di<SendOrResendAdministratorInvite>(), di<DeleteAdministratorInvite>()));
 
+  // Account ---------------------
+  di.registerFactory(() => AccountBloc(di()));
+  di.registerLazySingleton<AccountDataProvider>(() => AccountDataProvider(di()));
+  di.registerLazySingleton<AccountRepositoryContract>(() => AccountRepository(di()));
+
+  di.registerLazySingleton<CreateAccount>(() => CreateAccount(di(), di()));
+
+  di.registerFactory<AccountFormCubit>(() => AccountFormCubit());
 
 
   di.registerLazySingleton<ValidatorContract>(() => RuleValidator());

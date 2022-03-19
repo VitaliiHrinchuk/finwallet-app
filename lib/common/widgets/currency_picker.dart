@@ -7,13 +7,15 @@ class CurrencyPicker extends StatelessWidget {
   final String label;
   final Function(Currency? currency) onSelect;
   final Currency? value;
+  final String? errorText;
 
   final TextEditingController _typeAheadController = TextEditingController();
 
   CurrencyPicker({
     this.label = 'Currency',
     required this.onSelect,
-    required this.value
+    required this.value,
+    this.errorText
   });
 
   @override
@@ -30,6 +32,7 @@ class CurrencyPicker extends StatelessWidget {
           controller: this._typeAheadController,
           decoration: InputDecoration(
             labelText: this.label,
+            errorText: this.errorText,
             border: OutlineInputBorder(),
             suffixIcon: IconButton(
               onPressed: () {
