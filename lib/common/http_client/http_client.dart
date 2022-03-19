@@ -1,8 +1,10 @@
+import 'dart:collection';
 import 'dart:convert';
 import 'dart:io';
 
 import 'package:finwallet_app/common/constants/local_storage_keys.dart';
 import 'package:finwallet_app/common/http_client/exceptions.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
@@ -12,10 +14,11 @@ class HttpClient {
   final scheme = 'http';
 
   final http.Client client;
+  final Function(int status, String message) errorInterceptor;
 
   Map<String, String>? _headers = Map<String, String>();
 
-  HttpClient({required this.client});
+  HttpClient({required this.client, required this.errorInterceptor});
 
   Future<Map<String, dynamic>> get(Uri uri) async {
     try {
@@ -63,8 +66,10 @@ class HttpClient {
   }
 
   Map<String, dynamic> _processResponse(http.Response response) {
-
-    Map<String, dynamic> responseJson = json.decode(response.body.toString());
+    print("response");
+    print(response.statusCode);
+    print(response.body);
+    Map<String, dynamic> responseJson = response.body.length > 0 ? json.decode(response.body.toString()) : {};
     switch (response.statusCode) {
       case 200:
       case 201:
@@ -76,10 +81,11 @@ class HttpClient {
         print(responseJson);
         throw BadRequestException(
             message: responseJson["message"] is List ? "Bad Request" : responseJson["message"] ,
-            errors: responseJson["message"] is List ? responseJson["message"] : responseJson
+            errors: responseJson["message"] is List ? responseJson["message"] : []
         );
       case 401:
       case 403:
+        this.errorInterceptor(response.statusCode, responseJson["message"]);
         throw UnauthorizedException();
       case 404:
         throw NotFoundException();

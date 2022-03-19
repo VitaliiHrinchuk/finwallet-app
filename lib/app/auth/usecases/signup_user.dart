@@ -2,24 +2,29 @@
 
 import 'package:finwallet_app/app/auth/domain/auth_repository_contract.dart';
 import 'package:finwallet_app/app/auth/domain/credentials.dart';
+import 'package:finwallet_app/app/user/domain/user_entity.dart';
+import 'package:finwallet_app/app/user/domain/user_repository_contract.dart';
 import 'package:finwallet_app/common/contracts.dart';
 
-class SignupUser implements Interactor<Future<bool>, SignupUserParams> {
+class SignupUser implements Interactor<Future<UserEntity>, SignupUserParams> {
   final AuthRepositoryContract auth;
+  final UserRepositoryContract users;
   final ValidatorContract validator;
 
-  SignupUser(this.auth, this.validator);
+  SignupUser(this.auth, this.users, this.validator);
 
   @override
-  Future<bool> call(SignupUserParams params) async {
+  Future<UserEntity> call(SignupUserParams params) async {
     this.validate(params);
 
     try {
       await this.auth.singUpWithCredentials(Credentials(params.email, params.password));
-      return true;
+      await this.auth.singInWithCredentials(Credentials(params.email, params.password));
+      UserEntity user = await this.users.iam();
+      return user;
     }  catch (error) {
-      print(error);
-      throw error;
+      // print(error);
+      rethrow;
     }
   }
 

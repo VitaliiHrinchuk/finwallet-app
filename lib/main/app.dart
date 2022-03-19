@@ -1,4 +1,7 @@
 import 'package:finwallet_app/app/account/pages/accounts_home.dart';
+import 'package:finwallet_app/app/auth/pages/login.dart';
+import 'package:finwallet_app/app/auth/pages/signup.dart';
+import 'package:finwallet_app/app/user/pages/user_setup.dart';
 import 'package:finwallet_app/common/constants/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,7 +26,10 @@ const Map<int, Color> color =
 };
 
 class App extends StatefulWidget {
-  const App() : super();
+  final String initialRoute;
+  final GlobalKey<NavigatorState> navigationKey;
+
+  const App({required this.initialRoute, required this.navigationKey}) : super();
   @override
   _AppState createState() => _AppState();
 }
@@ -36,15 +42,19 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'FinWallet',
+      navigatorKey: widget.navigationKey,
       theme: ThemeData(
         primarySwatch: MaterialColor(HEX_COLOR, color),
         accentColor: Colors.tealAccent,
       ),
       // navigatorKey: Navigators.mainNav,
       // onGenerateRoute: _router.onGenerateRoute,
-      // initialRoute: _router.initialRoute,
+      initialRoute: widget.initialRoute,
         routes: {
           HOME_ROUTE: (context) => AccountsHome(),
+          LOGIN_ROUTE: (context) => Login(),
+          SIGN_UP_ROUTE: (context) => Signup(),
+          SETUP_USER_ROUTE: (context) => SetupUserPage()
         },
 
       // navigatorObservers: [routeObserver],
@@ -53,7 +63,6 @@ class _AppState extends State<App> {
 
   @override
   void dispose() {
-    // _router.dispose();
     super.dispose();
   }
 }

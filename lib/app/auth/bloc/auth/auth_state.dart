@@ -9,7 +9,9 @@ class AuthLoading extends AuthState {}
 
 class AuthAuthenticated extends AuthState {
 
-  AuthAuthenticated();
+  UserEntity user;
+
+  AuthAuthenticated({required this.user});
 }
 
 class AuthError extends AuthState {

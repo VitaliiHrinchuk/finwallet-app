@@ -52,6 +52,9 @@ class RuleValidator extends ValidatorContract {
           return rule.copyWith(isRequired: true);
         }
       },
+      'length': (rule, param1, _) {
+        return rule.copyWith(length: param1);
+      },
     };
   }
 

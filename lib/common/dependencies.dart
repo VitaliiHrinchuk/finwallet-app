@@ -7,6 +7,13 @@ import 'package:finwallet_app/app/auth/usecases/check_user.dart';
 import 'package:finwallet_app/app/auth/usecases/signin_user.dart';
 import 'package:finwallet_app/app/auth/usecases/signout_user.dart';
 import 'package:finwallet_app/app/auth/usecases/signup_user.dart';
+import 'package:finwallet_app/app/user/bloc/user/user_bloc.dart';
+import 'package:finwallet_app/app/user/cubit/user_setup_form_cubit.dart';
+import 'package:finwallet_app/app/user/data/user_data_provider.dart';
+import 'package:finwallet_app/app/user/data/user_repository.dart';
+import 'package:finwallet_app/app/user/domain/user_repository_contract.dart';
+import 'package:finwallet_app/app/user/usecases/fetch_user.dart';
+import 'package:finwallet_app/app/user/usecases/setup_user.dart';
 import 'http_client/http_client.dart';
 import 'package:finwallet_app/common/validator.dart';
 import 'package:get_it/get_it.dart';
@@ -24,10 +31,19 @@ void setupLocator() {
   di.registerLazySingleton<AuthRepositoryContract>(() => AuthRepository(di()));
   di.registerFactory(() => AuthFormCubit());
 
-  di.registerLazySingleton<SigninUser>(() => SigninUser(di(), di()));
-  di.registerLazySingleton<CheckUser>(() => CheckUser(di()));
+  di.registerLazySingleton<SigninUser>(() => SigninUser(di(), di(), di()));
+  di.registerLazySingleton<CheckUser>(() => CheckUser(di(), di()));
   di.registerLazySingleton<SignoutUser>(() => SignoutUser(di()));
-  di.registerLazySingleton<SignupUser>(() => SignupUser(di(), di()));
+  di.registerLazySingleton<SignupUser>(() => SignupUser(di(), di(), di()));
+
+
+  di.registerFactory(() => UserBloc(di(), di()));
+  di.registerLazySingleton<UserDataProvider>(() => UserDataProvider(di()));
+  di.registerLazySingleton<UserRepositoryContract>(() => UserRepository(di()));
+
+  di.registerLazySingleton<FetchUser>(() => FetchUser(di()));
+  di.registerLazySingleton<SetupUser>(() => SetupUser(di(), di()));
+  di.registerFactory<UserSetupFormCubit>(() => UserSetupFormCubit());
   //
   // // School ---------------------
   //
@@ -61,6 +77,6 @@ void setupLocator() {
 
 
   di.registerLazySingleton<ValidatorContract>(() => RuleValidator());
-  di.registerLazySingleton<HttpClient>(() => HttpClient(client: new http.Client()));
+
 
 }

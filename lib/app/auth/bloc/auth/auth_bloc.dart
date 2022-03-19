@@ -8,6 +8,7 @@ import 'package:finwallet_app/app/auth/usecases/check_user.dart';
 import 'package:finwallet_app/app/auth/usecases/signin_user.dart';
 import 'package:finwallet_app/app/auth/usecases/signout_user.dart';
 import 'package:finwallet_app/app/auth/usecases/signup_user.dart';
+import 'package:finwallet_app/app/user/domain/user_entity.dart';
 import 'package:finwallet_app/common/contracts.dart';
 import 'package:finwallet_app/common/error/exceptions.dart';
 import 'package:finwallet_app/common/http_client/exceptions.dart';
@@ -40,13 +41,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     try {
       emit(AuthLoading());
 
-      bool authorized = await this._checkUser(EmptyParams());
+      UserEntity? user = await this._checkUser(EmptyParams());
 
-      if (!authorized) {
+      if (user == null) {
         emit(AuthInitial());
       } else {
-        emit(AuthAuthenticated());
+        emit(AuthAuthenticated(user: user));
       }
+    } on UnauthorizedException {
+      emit(AuthInitial());
     } catch (error) {
       emit(AuthError(error: error.toString()));
     }
@@ -55,16 +58,19 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   void _onAuthAttempt(AuthAttempt event, Emitter<AuthState> emit) async {
     try {
       emit(AuthLoading());
-      await this._signinUser(SigninUserParams(
+      UserEntity user = await this._signinUser(SigninUserParams(
         email: event.email,
         password: event.password
       ));
 
-      emit(AuthAuthenticated());
+      emit(AuthAuthenticated(user: user));
     } on ValidationException catch (error) {
       emit(AuthValidationError(errors: error.messages));
     } on HttpException catch (error) {
       emit(AuthError(error: error.message));
+    } catch (error) {
+      print("auth error ${error}");
+      emit(AuthError(error: error.toString()));
     }
   }
 
@@ -81,15 +87,18 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   void _onAuthAttemptSignup(AuthAttemptSignup event, Emitter<AuthState> emit) async {
     try {
       emit(AuthLoading());
-      await this._signUpUser(SignupUserParams(
+      UserEntity user = await this._signUpUser(SignupUserParams(
           email: event.email,
           password: event.password,
           confirmPassword: event.confirmPassword
       ));
 
-      emit(AuthAuthenticated());
+      emit(AuthAuthenticated(user: user));
     } on ValidationException catch (error) {
       emit(AuthValidationError(errors: error.messages));
+    } on BadRequestException catch (error) {
+      print(error);
+      emit(AuthError(error: error.message));
     } on HttpException catch (error) {
       emit(AuthError(error: error.message));
     }
