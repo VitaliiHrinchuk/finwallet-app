@@ -16,3 +16,6 @@ class AccountCreate extends AccountEvent {
     this.hexColor
   });
 }
+
+
+class AccountFetch extends AccountEvent {}

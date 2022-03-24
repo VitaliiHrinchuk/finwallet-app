@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
+import 'http_client/pagination.dart';
 import 'http_client/http_client.dart';
 import 'package:http/http.dart';
 
@@ -44,12 +45,19 @@ abstract class AbstractHttpDataProvider<T> {
 
   AbstractHttpDataProvider({required this.client});
 
-  Future<List<T>> browse(Map<String, dynamic> query) async {
-    Uri uri = this.client.generateUri(baseUrl: this.client.baseUrl, query: query);
+  Future<Pagination<T>> browse(Map<String, dynamic> query) async {
+    Uri uri = this.client.generateUri(baseUrl: this.client.baseUrl, path: this.path, query: query);
 
     Map<String, dynamic> result = await this.client.get(uri);
-
-    return result['data'].map((key, value) => fromJSON(value));
+    Map<String, dynamic> paginationMeta = result['meta'];
+    List<T> data = (result['data'] as List).map((element) => fromJSON(element)).toList();
+    print("d");
+    print(data);
+    return new Pagination<T>(
+        hasMore: paginationMeta['hasNextPage'],
+        perPage: int.parse(paginationMeta['perPage'].toString()),
+        data: data
+    );
   }
 
   Future<T> read(String id) async {

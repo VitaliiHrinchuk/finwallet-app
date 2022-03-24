@@ -29,3 +29,9 @@ class AccountValidationError extends AccountState {
     required this.errors
   });
 }
+
+class AccountFetched extends AccountState {
+  final List<AccountEntity> accounts;
+
+  AccountFetched({ required this.accounts });
+}

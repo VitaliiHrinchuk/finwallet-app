@@ -67,6 +67,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     } on ValidationException catch (error) {
       emit(AuthValidationError(errors: error.messages));
     } on HttpException catch (error) {
+      print(error.message);
       emit(AuthError(error: error.message));
     } catch (error) {
       print("auth error ${error}");

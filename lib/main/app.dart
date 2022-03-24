@@ -40,15 +40,28 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
 
   // final _router = AppRouter();
-
+  final ThemeData theme = ThemeData();
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'FinWallet',
       navigatorKey: widget.navigationKey,
-      theme: ThemeData(
-        primarySwatch: MaterialColor(HEX_COLOR, color),
-        accentColor: Colors.tealAccent,
+      theme: theme.copyWith(
+        // primarySwatch: MaterialColor(HEX_COLOR, color),
+        // accentColor: Colors.tealAccent,
+        scaffoldBackgroundColor:  Color(0xFFf5f7f9),
+        colorScheme: theme.colorScheme.copyWith(
+            secondary: Colors.grey.shade300,
+            background: Color(0xFFf5f7f9),
+            secondaryContainer: Colors.white,
+            primary: Colors.black
+        ),
+        textTheme: theme.textTheme.copyWith(
+          titleMedium: theme.textTheme.titleMedium?.copyWith(
+            // color: Colors.grey,
+            fontWeight: FontWeight.bold
+          )
+        )
       ),
       // navigatorKey: Navigators.mainNav,
       // onGenerateRoute: _router.onGenerateRoute,

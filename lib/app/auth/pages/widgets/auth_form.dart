@@ -1,6 +1,7 @@
 import 'package:finwallet_app/app/auth/bloc/auth/auth_bloc.dart';
 import 'package:finwallet_app/app/auth/cubit/auth_form_cubit.dart';
 import 'package:finwallet_app/common/constants/routes.dart';
+import 'package:finwallet_app/common/utils/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -71,11 +72,7 @@ class AuthForm extends StatelessWidget {
       },
       listener: (context, state) {
         if (state is AuthError) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text(state.error),
-            margin: EdgeInsets.all(5),
-            behavior: SnackBarBehavior.floating,
-          ));
+          showFloatSnackBar(context, state.error);
         }
       },
     );

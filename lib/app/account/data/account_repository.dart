@@ -1,6 +1,7 @@
 import 'package:finwallet_app/app/account/domain/account_entity.dart';
 import 'package:finwallet_app/app/account/domain/account_repository_contract.dart';
 import 'package:finwallet_app/app/account/dto/create_account_dto.dart';
+import '../../../common/http_client/pagination.dart';
 
 import 'account_data_provider.dart';
 
@@ -22,5 +23,10 @@ class AccountRepository implements AccountRepositoryContract {
   @override
   Future<AccountEntity> update(AccountEntity entity) {
     return this.dataProvider.update(entity.id, entity.toJson());
+  }
+
+  @override
+  Future<Pagination<AccountEntity>> browse(Map<String, dynamic> query) {
+    return this.dataProvider.browse(query);
   }
 }

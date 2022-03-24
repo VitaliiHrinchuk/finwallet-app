@@ -69,9 +69,6 @@ class HttpClient {
   }
 
   Map<String, dynamic> _processResponse(http.Response response) {
-    print("response");
-    print(response.statusCode);
-    print(response.body);
     Map<String, dynamic> responseJson = response.body.length > 0 ? json.decode(response.body.toString()) : {};
     switch (response.statusCode) {
       case 200:
@@ -84,7 +81,7 @@ class HttpClient {
         print(responseJson);
         throw BadRequestException(
             message: responseJson["message"] is List ? "Bad Request" : responseJson["message"] ,
-            errors: responseJson["message"] is List ? responseJson["message"] : []
+            errors: responseJson["message"] is List ? responseJson["message"] : null
         );
       case 401:
       case 403:

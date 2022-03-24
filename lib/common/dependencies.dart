@@ -4,6 +4,7 @@ import 'package:finwallet_app/app/account/data/account_data_provider.dart';
 import 'package:finwallet_app/app/account/data/account_repository.dart';
 import 'package:finwallet_app/app/account/domain/account_repository_contract.dart';
 import 'package:finwallet_app/app/account/usecases/create_account.dart';
+import 'package:finwallet_app/app/account/usecases/list_account.dart';
 import 'package:finwallet_app/app/auth/bloc/auth/auth_bloc.dart';
 import 'package:finwallet_app/app/auth/cubit/auth_form_cubit.dart';
 import 'package:finwallet_app/app/auth/data/auth_data_provider.dart';
@@ -52,11 +53,12 @@ void setupLocator() {
   di.registerFactory<UserSetupFormCubit>(() => UserSetupFormCubit());
 
   // Account ---------------------
-  di.registerFactory(() => AccountBloc(di()));
+  di.registerFactory(() => AccountBloc(di(), di()));
   di.registerLazySingleton<AccountDataProvider>(() => AccountDataProvider(di()));
   di.registerLazySingleton<AccountRepositoryContract>(() => AccountRepository(di()));
 
   di.registerLazySingleton<CreateAccount>(() => CreateAccount(di(), di()));
+  di.registerLazySingleton<ListAccount>(() => ListAccount(di()));
 
   di.registerFactory<AccountFormCubit>(() => AccountFormCubit());
 
