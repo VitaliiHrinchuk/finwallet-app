@@ -7,6 +7,7 @@ import 'package:finwallet_app/common/constants/currencies.dart';
 import 'package:finwallet_app/common/dependencies.dart';
 import 'package:finwallet_app/common/widgets/currency_picker.dart';
 import 'package:finwallet_app/common/widgets/loading_button_content.dart';
+import 'package:finwallet_app/common/widgets/main_input_decoration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -40,13 +41,11 @@ class CreateAccountForm extends StatelessWidget {
                                 formContext.read<AccountFormCubit>().setName(
                                     value);
                               },
-                              decoration: InputDecoration(
+                              decoration: MainInputDecoration(
                                   errorText: (state is AccountValidationError)
                                       ? state.errors["name"]
                                       : null,
                                   labelText: "Name",
-                                  // errorText: ,
-                                  border: OutlineInputBorder()
                               ),
                             );
                           }),
@@ -68,13 +67,11 @@ class CreateAccountForm extends StatelessWidget {
                                     double.parse(value)
                                 );
                               },
-                              decoration: InputDecoration(
+                              decoration: MainInputDecoration(
                                   errorText: (state is AccountValidationError)
                                       ? state.errors["amount"]
                                       : null,
                                   labelText: "Amount",
-                                  // errorText: ,
-                                  border: OutlineInputBorder()
                               ),
                             );
                           }

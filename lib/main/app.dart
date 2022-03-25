@@ -1,4 +1,6 @@
+import 'package:finwallet_app/app/account/pages/account_edit.dart';
 import 'package:finwallet_app/app/account/pages/accounts_home.dart';
+import 'package:finwallet_app/app/account/pages/accounts_list.dart';
 import 'package:finwallet_app/app/account/pages/widgets/create_account_form.dart';
 import 'package:finwallet_app/app/auth/pages/login.dart';
 import 'package:finwallet_app/app/auth/pages/signup.dart';
@@ -49,12 +51,13 @@ class _AppState extends State<App> {
       theme: theme.copyWith(
         // primarySwatch: MaterialColor(HEX_COLOR, color),
         // accentColor: Colors.tealAccent,
-        scaffoldBackgroundColor:  Color(0xFFf5f7f9),
+        scaffoldBackgroundColor:  Color(0xFFF2F3F5),
         colorScheme: theme.colorScheme.copyWith(
             secondary: Colors.grey.shade300,
-            background: Color(0xFFf5f7f9),
+            background: Color(0xFFF2F3F5),
             secondaryContainer: Colors.white,
             primary: Colors.black
+            // primary: Color(0xFF23695E)
         ),
         textTheme: theme.textTheme.copyWith(
           titleMedium: theme.textTheme.titleMedium?.copyWith(
@@ -71,7 +74,12 @@ class _AppState extends State<App> {
           LOGIN_ROUTE: (context) => Login(),
           SIGN_UP_ROUTE: (context) => Signup(),
           SETUP_USER_ROUTE: (context) => SetupUserPage(),
-          CREATE_ACCOUNT_ROUTE: (context) => AccountFirst()
+          CREATE_ACCOUNT_ROUTE: (context) => AccountFirst(),
+          ACCOUNTS_LIST_ROUTE: (context) => AccountsList(),
+          ACCOUNTS_EDIT_ROUTE: (context) => AccountEdit(
+            arguments: ModalRoute.of(context)?.settings.arguments as AccountEditScreenArguments,
+          ),
+          ACCOUNTS_CREATE_ROUTE: (context) => AccountEdit()
         },
 
       // navigatorObservers: [routeObserver],

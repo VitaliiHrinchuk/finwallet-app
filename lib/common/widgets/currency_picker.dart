@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 
 import '../constants/currencies.dart';
+import 'main_input_decoration.dart';
 
 class CurrencyPicker extends StatelessWidget {
   final String label;
@@ -30,10 +31,9 @@ class CurrencyPicker extends StatelessWidget {
     return TypeAheadFormField<Currency>(
       textFieldConfiguration: TextFieldConfiguration(
           controller: this._typeAheadController,
-          decoration: InputDecoration(
+          decoration: MainInputDecoration(
             labelText: this.label,
             errorText: this.errorText,
-            border: OutlineInputBorder(),
             suffixIcon: IconButton(
               onPressed: () {
                 this.onSelect(null);

@@ -52,7 +52,8 @@ class AccountFirst extends StatelessWidget {
                           },
                           child: CreateAccountForm(),
                         ),
-                      )),
+                      )
+                  ),
                 ],
               )
           )
