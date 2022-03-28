@@ -4,6 +4,7 @@ import 'package:finwallet_app/app/account/pages/accounts_list.dart';
 import 'package:finwallet_app/app/account/pages/widgets/create_account_form.dart';
 import 'package:finwallet_app/app/auth/pages/login.dart';
 import 'package:finwallet_app/app/auth/pages/signup.dart';
+import 'package:finwallet_app/app/transaction/pages/add_transaction.dart';
 import 'package:finwallet_app/app/user/pages/user_setup.dart';
 import 'package:finwallet_app/common/constants/routes.dart';
 import 'package:flutter/material.dart';
@@ -59,6 +60,15 @@ class _AppState extends State<App> {
             primary: Colors.black
             // primary: Color(0xFF23695E)
         ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ButtonStyle(
+            shape:  MaterialStateProperty.all<OutlinedBorder>(
+                RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                )
+            )
+          )
+        ),
         textTheme: theme.textTheme.copyWith(
           titleMedium: theme.textTheme.titleMedium?.copyWith(
             // color: Colors.grey,
@@ -79,7 +89,8 @@ class _AppState extends State<App> {
           ACCOUNTS_EDIT_ROUTE: (context) => AccountEdit(
             arguments: ModalRoute.of(context)?.settings.arguments as AccountEditScreenArguments,
           ),
-          ACCOUNTS_CREATE_ROUTE: (context) => AccountEdit()
+          ACCOUNTS_CREATE_ROUTE: (context) => AccountEdit(),
+          TRANSACTION_ADD_ROUTE: (context) => AddTransaction()
         },
 
       // navigatorObservers: [routeObserver],

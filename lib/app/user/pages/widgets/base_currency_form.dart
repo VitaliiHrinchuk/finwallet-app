@@ -2,7 +2,7 @@ import 'package:finwallet_app/app/user/bloc/user/user_bloc.dart';
 import 'package:finwallet_app/app/user/cubit/user_setup_form_cubit.dart';
 import 'package:finwallet_app/common/constants/currencies.dart';
 import 'package:finwallet_app/common/utils/snackbar.dart';
-import 'package:finwallet_app/common/widgets/currency_picker.dart';
+import '../../../../common/widgets/input/currency_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';

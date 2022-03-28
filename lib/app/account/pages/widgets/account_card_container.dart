@@ -14,7 +14,7 @@ class AccountCardContainer extends StatelessWidget {
       // width: 200,
       // height: 100,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(13)),
+        borderRadius: BorderRadius.all(Radius.circular(10)),
         color: this.outlined ? Colors.transparent : Colors.green.shade400,
         border: Border.all(
           color: this.outlined ? Colors.blue : Colors.transparent,

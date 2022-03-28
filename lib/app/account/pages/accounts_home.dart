@@ -4,8 +4,8 @@ import 'package:finwallet_app/app/account/pages/widgets/transactions_by_category
 import 'package:finwallet_app/app/account/pages/widgets/transactions_by_range_chart.dart';
 import 'package:finwallet_app/common/constants/routes.dart';
 import 'package:finwallet_app/common/dependencies.dart';
-import 'package:finwallet_app/common/widgets/drawer_nav.dart';
-import 'package:finwallet_app/common/widgets/main_app_bar.dart';
+import '../../../common/widgets/drawer/drawer_nav.dart';
+import '../../../common/widgets/app_bar/main_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -55,46 +55,18 @@ class AccountsHome extends StatelessWidget {
                     title: "Spending this month"
                 )
 
-                // Container(
-                //
-                //   padding: EdgeInsets.only(left: 10, right: 10),
-                //   decoration: BoxDecoration(
-                //       color: Colors.white,
-                //     borderRadius: BorderRadius.circular(15)
-                //   ),
-                //   child: Column(
-                //     mainAxisAlignment: MainAxisAlignment.start,
-                //     crossAxisAlignment: CrossAxisAlignment.start,
-                //     children: [
-                //       Row(
-                //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //         crossAxisAlignment: CrossAxisAlignment.center,
-                //         children: [
-                //           Text(
-                //             "Accounts",
-                //             style: Theme.of(context).textTheme.titleMedium,
-                //           ),
-                //           IconButton(
-                //               onPressed: () {},
-                //               icon: Icon(
-                //                 Icons.settings,
-                //               )
-                //           )
-                //         ],
-                //       ),
-                //       SizedBox(height: 10,),
-                //       Container(
-                //           height: 140,
-                //           child: AccountsHorizontalList()
-                //       )
-                //     ],
-                //   ),
-                // )
 
               ],
             ),
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context).pushNamed(TRANSACTION_ADD_ROUTE);
+        },
+        child: const Icon(Icons.add),
+        backgroundColor: Theme.of(context).colorScheme.primary,
       ),
     );
   }

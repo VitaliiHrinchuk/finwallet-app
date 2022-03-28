@@ -1,5 +1,7 @@
 import 'package:finwallet_app/app/auth/cubit/auth_form_cubit.dart';
 import 'package:finwallet_app/common/dependencies.dart';
+import '../../../common/widgets/layout/content_container.dart';
+import '../../../common/widgets/app_bar/main_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,25 +11,18 @@ class Signup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: MainAppBar(
+        title: 'Create your account',
+        canGoBack: true,
+      ),
       body: SafeArea(
           child: Container(
-              padding: const EdgeInsets.only(left: 17, right: 17),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                      padding: EdgeInsets.only(top: 40, bottom: 40, left: 0),
-                      child: Text(
-                          "Create your account",
-                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
-                      ),
-                  ),
-                  Expanded(child: BlocProvider(
-                    create: (_) => di<AuthFormCubit>(),
-                    child: SignupForm(),
-                  ))
-                ],
+              padding: const EdgeInsets.all(10),
+              child: ContentContainer(
+                child: BlocProvider(
+                  create: (_) => di<AuthFormCubit>(),
+                  child: SignupForm(),
+                ),
               )
           )
       ),

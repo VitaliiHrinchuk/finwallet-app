@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 
-import '../constants/currencies.dart';
+import '../../constants/currencies.dart';
 import 'main_input_decoration.dart';
 
 class CurrencyPicker extends StatelessWidget {

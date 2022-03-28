@@ -15,6 +15,7 @@ class AccountFirst extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
           child: Container(
+            color: Colors.white,
               padding: const EdgeInsets.only(left: 17, right: 17),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,

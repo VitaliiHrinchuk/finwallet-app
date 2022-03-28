@@ -1,7 +1,7 @@
 import 'package:finwallet_app/app/account/pages/account_edit.dart';
 import 'package:finwallet_app/common/constants/routes.dart';
-import 'package:finwallet_app/common/widgets/drawer_nav.dart';
-import 'package:finwallet_app/common/widgets/main_app_bar.dart';
+import '../../../common/widgets/drawer/drawer_nav.dart';
+import '../../../common/widgets/app_bar/main_app_bar.dart';
 import 'package:flutter/material.dart';
 
 import 'widgets/account_list_item.dart';

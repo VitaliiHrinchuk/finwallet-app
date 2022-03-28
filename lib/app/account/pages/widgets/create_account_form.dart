@@ -5,12 +5,15 @@ import 'package:finwallet_app/app/account/cubit/form/account_form_cubit.dart';
 import 'package:finwallet_app/app/account/usecases/create_account.dart';
 import 'package:finwallet_app/common/constants/currencies.dart';
 import 'package:finwallet_app/common/dependencies.dart';
-import 'package:finwallet_app/common/widgets/currency_picker.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import '../../../../common/widgets/input/currency_picker.dart';
 import 'package:finwallet_app/common/widgets/loading_button_content.dart';
-import 'package:finwallet_app/common/widgets/main_input_decoration.dart';
+import '../../../../common/widgets/input/main_input_decoration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'account_color_picker.dart';
 
 const List<String> RANDOM_COLORS = [
   '304ffe',
@@ -76,6 +79,7 @@ class CreateAccountForm extends StatelessWidget {
                             );
                           }
                       ),
+
                       SizedBox(
                         height: 18,
                       ),
@@ -94,6 +98,20 @@ class CreateAccountForm extends StatelessWidget {
                                 value: formState.currency
                             );
                           }),
+                      SizedBox(
+                        height: 18,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: 5),
+                        child: Text(
+                          "Pick A Color",
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 18,
+                      ),
+                      AccountColorPicker(),
                       Expanded(child: Container()),
                       BlocBuilder<AccountFormCubit, AccountFormState>(
                         builder: (formContext, formState) {
@@ -108,8 +126,9 @@ class CreateAccountForm extends StatelessWidget {
                           );
                         },
                       ),
-                      SizedBox(height: 10)
-                    ])
+                      SizedBox(height: 10),
+                    ]
+                )
             ),
           ),
         );

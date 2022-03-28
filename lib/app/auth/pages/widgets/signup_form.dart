@@ -1,5 +1,6 @@
 import 'package:finwallet_app/app/auth/bloc/auth/auth_bloc.dart';
 import 'package:finwallet_app/app/auth/cubit/auth_form_cubit.dart';
+import '../../../../common/widgets/input/main_input_decoration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -23,10 +24,10 @@ class SignupForm extends StatelessWidget {
                             onChanged: (value) {
                               formContext.read<AuthFormCubit>().setEmail(value);
                             },
-                            decoration: InputDecoration(
+                            decoration: MainInputDecoration(
                                 errorText: (state is AuthValidationError) ? state.errors["email"]  : null,
                                 labelText: "Email",
-                                border: OutlineInputBorder()),
+                            ),
                           );
                         }
                     ),
@@ -44,11 +45,10 @@ class SignupForm extends StatelessWidget {
                           onChanged: (value) {
                             formContext.read<AuthFormCubit>().setPassword(value);
                           },
-                          decoration: InputDecoration(
+                          decoration: MainInputDecoration(
                               errorText: (state is AuthValidationError) ? state.errors["password"]  : null,
                               labelText: "Password",
                               // errorText: ,
-                              border: OutlineInputBorder()
                           ),
                         );
                       },
@@ -67,11 +67,9 @@ class SignupForm extends StatelessWidget {
                           onChanged: (value) {
                             formContext.read<AuthFormCubit>().setConfirmPassword(value);
                           },
-                          decoration: InputDecoration(
+                          decoration: MainInputDecoration(
                               errorText: (state is AuthValidationError) ? state.errors["confirmPassword"]  : null,
                               labelText: "Confirm Password",
-                              // errorText: ,
-                              border: OutlineInputBorder()
                           ),
                         );
                       },

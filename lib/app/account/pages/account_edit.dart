@@ -1,8 +1,8 @@
 import 'package:finwallet_app/app/account/pages/widgets/create_account_form.dart';
 import 'package:finwallet_app/common/dependencies.dart';
-import 'package:finwallet_app/common/widgets/content_container.dart';
-import 'package:finwallet_app/common/widgets/drawer_nav.dart';
-import 'package:finwallet_app/common/widgets/main_app_bar.dart';
+import '../../../common/widgets/layout/content_container.dart';
+import '../../../common/widgets/drawer/drawer_nav.dart';
+import '../../../common/widgets/app_bar/main_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

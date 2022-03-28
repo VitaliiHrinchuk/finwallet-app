@@ -66,7 +66,7 @@ class MainDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: Colors.white,
       child: SafeArea(
         child: Container(
           // padding: EdgeInsets.all(10),

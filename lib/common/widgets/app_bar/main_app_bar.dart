@@ -14,6 +14,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
       centerTitle: true,
       iconTheme: IconThemeData(color: Colors.black),
       title: Text(this.title),
+
       leading: this.canGoBack
           ? IconButton(
               icon: Icon(Icons.chevron_left, color: Theme.of(context).colorScheme.primary),

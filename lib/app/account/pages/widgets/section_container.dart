@@ -19,7 +19,7 @@ class SectionContainer extends StatelessWidget {
       padding: EdgeInsets.only(left: 15, right: 15, top: this.leading == null ? 20 : 0 ),
       decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(15)
+          borderRadius: BorderRadius.circular(10)
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
