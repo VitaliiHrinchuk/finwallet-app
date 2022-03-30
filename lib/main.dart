@@ -17,6 +17,8 @@ import './common/http_client/http_client.dart';
 final GlobalKey<NavigatorState> navigator = new GlobalKey();
 
 void errorInterceptor(int code, String message) {
+  print(" =========== HTTP Error");
+  print(message);
   if (code == 401) {
     navigator.currentState?.pushReplacementNamed(LOGIN_ROUTE);
   }
@@ -26,7 +28,8 @@ void main() {
   setupLocator();
   WidgetsFlutterBinding.ensureInitialized();
   di.registerLazySingleton<HttpClient>(() => HttpClient(
-      baseUrl: '10.0.2.2',
+      //baseUrl: '10.0.2.2',
+      baseUrl: '192.168.0.111',
       client: new http.Client(), errorInterceptor: errorInterceptor));
   runApp(Wrapper());
 }

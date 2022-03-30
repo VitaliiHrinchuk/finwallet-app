@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final bool canGoBack;
+  final List<Widget>? actions;
 
-  MainAppBar({required this.title, this.canGoBack = false});
+  MainAppBar({required this.title, this.canGoBack = false, this.actions});
 
   @override
   Widget build(BuildContext context) {
@@ -12,6 +13,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
       elevation: 0,
       titleTextStyle: Theme.of(context).textTheme.titleMedium,
       centerTitle: true,
+      actions: actions,
       iconTheme: IconThemeData(color: Colors.black),
       title: Text(this.title),
 

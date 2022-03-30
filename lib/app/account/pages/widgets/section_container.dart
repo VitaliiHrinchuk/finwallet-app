@@ -15,11 +15,12 @@ class SectionContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(bottom: 15),
+      margin: EdgeInsets.only(bottom: 10),
       padding: EdgeInsets.only(left: 15, right: 15, top: this.leading == null ? 20 : 0 ),
       decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(10)
+          borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: Colors.grey.shade200)
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,

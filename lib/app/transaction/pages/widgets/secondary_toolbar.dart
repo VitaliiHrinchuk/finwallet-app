@@ -4,11 +4,14 @@ class SecondaryToolbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      // decoration: BoxDecoration(
+      //     border:
+      //     Border(top: BorderSide(width: 1, color: Colors.grey.shade200))),
       padding: EdgeInsets.only(left: 5),
       child: Row(
         children: [
           TextButton(
-              onPressed: () {},
+              onPressed: () => _showDatePicker(context),
               child: Text(
                 "Today",
                 style: TextStyle(
@@ -37,5 +40,15 @@ class SecondaryToolbar extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Future<void> _showDatePicker(context) async {
+    final DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(2015, 8),
+        lastDate: DateTime(2101)
+    );
+
   }
 }

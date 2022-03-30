@@ -24,11 +24,13 @@ class SettingSection extends StatelessWidget {
             SizedBox(
               width: 15,
             ),
-            Text(
-              this.title,
-              style: TextStyle(
-                fontSize: 13,
-                fontWeight: FontWeight.bold,
+            Expanded(
+              child: Text(
+                this.title,
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
 

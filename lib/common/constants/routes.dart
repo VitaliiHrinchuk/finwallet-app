@@ -6,6 +6,7 @@ const String CREATE_ACCOUNT_ROUTE = '/account/create/first';
 const String ACCOUNTS_LIST_ROUTE = '/account/';
 const String ACCOUNTS_EDIT_ROUTE = '/account/edit';
 const String ACCOUNTS_CREATE_ROUTE = '/account/create';
+const String ACCOUNTS_SELECT_ROUTE = '/account/select';
 
 const String TRANSACTION_ADD_ROUTE = '/transactions/add';
 

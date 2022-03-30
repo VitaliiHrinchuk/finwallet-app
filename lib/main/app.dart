@@ -1,4 +1,5 @@
 import 'package:finwallet_app/app/account/pages/account_edit.dart';
+import 'package:finwallet_app/app/account/pages/account_select.dart';
 import 'package:finwallet_app/app/account/pages/accounts_home.dart';
 import 'package:finwallet_app/app/account/pages/accounts_list.dart';
 import 'package:finwallet_app/app/account/pages/widgets/create_account_form.dart';
@@ -90,7 +91,9 @@ class _AppState extends State<App> {
             arguments: ModalRoute.of(context)?.settings.arguments as AccountEditScreenArguments,
           ),
           ACCOUNTS_CREATE_ROUTE: (context) => AccountEdit(),
-          TRANSACTION_ADD_ROUTE: (context) => AddTransaction()
+          TRANSACTION_ADD_ROUTE: (context) => AddTransaction(),
+          ACCOUNTS_SELECT_ROUTE: (context) => AccountSelect()
+
         },
 
       // navigatorObservers: [routeObserver],

@@ -14,6 +14,7 @@ import 'package:finwallet_app/app/auth/usecases/check_user.dart';
 import 'package:finwallet_app/app/auth/usecases/signin_user.dart';
 import 'package:finwallet_app/app/auth/usecases/signout_user.dart';
 import 'package:finwallet_app/app/auth/usecases/signup_user.dart';
+import 'package:finwallet_app/app/transaction/cubit/math_pad/math_pad_cubit.dart';
 import 'package:finwallet_app/app/user/bloc/user/user_bloc.dart';
 import 'package:finwallet_app/app/user/cubit/user_setup_form_cubit.dart';
 import 'package:finwallet_app/app/user/data/user_data_provider.dart';
@@ -61,6 +62,9 @@ void setupLocator() {
   di.registerLazySingleton<ListAccount>(() => ListAccount(di()));
 
   di.registerFactory<AccountFormCubit>(() => AccountFormCubit());
+
+  // Transaction ----------
+  di.registerFactory<MathPadCubit>(() => MathPadCubit());
 
 
   di.registerLazySingleton<ValidatorContract>(() => RuleValidator());
