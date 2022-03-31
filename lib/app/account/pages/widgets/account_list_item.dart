@@ -3,14 +3,25 @@ import 'package:finwallet_app/common/constants/routes.dart';
 import 'package:flutter/material.dart';
 
 class AccountListItem extends StatelessWidget {
+
+  final String name;
+  final double amount;
+  final String currency;
+  final Function onTap;
+
+  AccountListItem({
+    required this.name,
+    required this.amount,
+    required this.currency,
+    required this.onTap
+  });
+
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text("Account"),
-      subtitle: Text("30 USD"),
-      onTap: () {
-        Navigator.of(context).pushNamed(ACCOUNTS_EDIT_ROUTE, arguments: AccountEditScreenArguments(id: '1'));
-      },
+      title: Text(name),
+      subtitle: Text(amount.toStringAsFixed(2) + " " + currency),
+      onTap: () => onTap(),
     );
   }
 }

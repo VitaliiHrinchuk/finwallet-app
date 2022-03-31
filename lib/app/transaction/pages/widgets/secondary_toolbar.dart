@@ -1,4 +1,6 @@
+import 'package:finwallet_app/app/transaction/cubit/form/transaction_form_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SecondaryToolbar extends StatelessWidget {
   @override
@@ -10,14 +12,18 @@ class SecondaryToolbar extends StatelessWidget {
       padding: EdgeInsets.only(left: 5),
       child: Row(
         children: [
-          TextButton(
-              onPressed: () => _showDatePicker(context),
-              child: Text(
-                "Today",
-                style: TextStyle(
-                    color: Colors.grey
-                ),
-              )
+          BlocBuilder<TransactionFormCubit, TransactionFormState>(
+            builder: (context, state) {
+              return TextButton(
+                  onPressed: () => _showDatePicker(context),
+                  child: Text(
+                    dateToString(state.transactionDate),
+                    style: TextStyle(
+                        color: Colors.grey
+                    ),
+                  )
+              );
+            },
           ),
           Container(
             margin: EdgeInsets.only(left: 10, right: 10),
@@ -42,7 +48,7 @@ class SecondaryToolbar extends StatelessWidget {
     );
   }
 
-  Future<void> _showDatePicker(context) async {
+  Future<void> _showDatePicker(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
         context: context,
         initialDate: DateTime.now(),
@@ -50,5 +56,16 @@ class SecondaryToolbar extends StatelessWidget {
         lastDate: DateTime(2101)
     );
 
+    if (picked != null) {
+      context
+          .read<TransactionFormCubit>()
+          .setDate(picked);
+    }
+
+  }
+
+  String dateToString(DateTime date) {
+    // if (date.)
+    return date.toString();
   }
 }

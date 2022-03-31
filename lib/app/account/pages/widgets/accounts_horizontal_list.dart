@@ -1,6 +1,9 @@
 import 'package:finwallet_app/app/account/bloc/account/account_bloc.dart';
+import 'package:finwallet_app/app/account/cubit/list/accounts_list_cubit.dart';
 import 'package:finwallet_app/app/account/domain/account_entity.dart';
 import 'package:finwallet_app/app/account/pages/widgets/accounts_list_action.dart';
+import 'package:finwallet_app/common/widgets/loading_spinner.dart';
+import 'package:finwallet_app/main/loading.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -9,7 +12,7 @@ import 'account_card.dart';
 class AccountsHorizontalList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AccountBloc, AccountState>(builder: (context, state) {
+    return BlocBuilder<AccountsListCubit, AccountsListState>(builder: (context, state) {
       // return Container(
       //   height: 300,
       //   child: Column(
@@ -23,10 +26,9 @@ class AccountsHorizontalList extends StatelessWidget {
       //     ],
       //   ),
       // );
-      List<AccountEntity> items = [];
-      // List<int> items = [1,2,3,4,5,6,7];
-      if (state is AccountFetched) {
-        items = [...state.accounts];
+
+      if (state.loading) {
+        return LoadingSpinner();
       }
 
       return GridView.count(
@@ -36,7 +38,11 @@ class AccountsHorizontalList extends StatelessWidget {
           scrollDirection: Axis.horizontal,
           crossAxisSpacing: 5,
           mainAxisSpacing: 5,
-          children: items.map((e) => AccountCard()).toList()
+          children: state.entities.map((e) => AccountCard(
+            name: e.name,
+            value: e.amount.toStringAsFixed(2) + " " + e.currency,
+            color: e.hexColor
+          )).toList()
       );
 
     });

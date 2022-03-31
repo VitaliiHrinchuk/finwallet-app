@@ -18,9 +18,9 @@ class ListAccount extends Interactor<Future<Pagination<AccountEntity>>, ListAcco
   Future<Pagination<AccountEntity>> call(ListAccountParams params) {
     try {
       this.validate(params);
-
       return this.accounts.browse(params.query.getParams());
     } catch (error) {
+      print(error);
       rethrow;
     }
 

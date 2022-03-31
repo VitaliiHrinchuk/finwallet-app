@@ -5,7 +5,7 @@ class AccountEntity extends Equatable {
   final String name;
   final double amount;
   final String currency;
-  final String? hexColor;
+  final String hexColor;
   final DateTime? createdAt;
   final DateTime? updatedAt;
 
@@ -14,7 +14,7 @@ class AccountEntity extends Equatable {
     required this.name,
     required this.amount,
     required this.currency,
-    this.hexColor,
+    this.hexColor = '000000',
     this.createdAt,
     this.updatedAt
   });

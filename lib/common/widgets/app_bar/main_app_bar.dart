@@ -16,7 +16,12 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: actions,
       iconTheme: IconThemeData(color: Colors.black),
       title: Text(this.title),
-
+      bottom: PreferredSize(
+          child: Container(
+            color: Color(0xFFF2F2F2),
+            height: 2,
+          ),
+          preferredSize: Size.fromHeight(kToolbarHeight)),
       leading: this.canGoBack
           ? IconButton(
               icon: Icon(Icons.chevron_left, color: Theme.of(context).colorScheme.primary),
