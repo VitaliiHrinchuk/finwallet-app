@@ -1,6 +1,7 @@
 import 'package:finwallet_app/app/transaction/cubit/form/transaction_form_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 
 class SecondaryToolbar extends StatelessWidget {
   @override
@@ -66,6 +67,16 @@ class SecondaryToolbar extends StatelessWidget {
 
   String dateToString(DateTime date) {
     // if (date.)
-    return date.toString();
+    DateFormat dateFormat = DateFormat("yyyy-MM-dd");
+    String nowFormatted = dateFormat.format(DateTime.now());
+    String yesterdayFormatted = dateFormat.format(DateTime.now().subtract(Duration(days: 1)));
+    String selectedDateFormatted = dateFormat.format(date);
+
+    if (nowFormatted == selectedDateFormatted) {
+      return "Today";
+    } else if (yesterdayFormatted == selectedDateFormatted) {
+      return "Yesterday";
+    }
+    return selectedDateFormatted;
   }
 }
