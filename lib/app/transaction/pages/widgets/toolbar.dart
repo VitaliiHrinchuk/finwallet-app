@@ -1,6 +1,8 @@
 import 'package:finwallet_app/app/account/bloc/account/account_bloc.dart';
 import 'package:finwallet_app/app/account/cubit/list/accounts_list_cubit.dart';
 import 'package:finwallet_app/app/account/pages/account_select.dart';
+import 'package:finwallet_app/app/category/cubit/list/category_list_cubit.dart';
+import 'package:finwallet_app/app/category/pages/category_select.dart';
 import 'package:finwallet_app/app/transaction/cubit/form/transaction_form_cubit.dart';
 import 'package:finwallet_app/app/transaction/pages/widgets/setting_section.dart';
 import 'package:finwallet_app/common/constants/routes.dart';
@@ -57,7 +59,7 @@ class ToolBar extends StatelessWidget {
                     borderRadius: BorderRadius.circular(5)),
               ),
               title: 'Home & Appliance',
-              onTap: () {},
+              onTap: () => _navigateAndSelectCategory(context),
             ),
           ),
           // TextButton(
@@ -79,6 +81,20 @@ class ToolBar extends StatelessWidget {
         return BlocProvider.value(
             value: BlocProvider.of<AccountsListCubit>(context),
             child: AccountSelect()
+        );
+      }),
+    );
+
+    print(result);
+  }
+
+  void _navigateAndSelectCategory(BuildContext context) async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (childContext) {
+        return BlocProvider.value(
+            value: BlocProvider.of<CategoryListCubit>(context),
+            child: CategorySelect()
         );
       }),
     );

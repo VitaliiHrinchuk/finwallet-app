@@ -15,6 +15,11 @@ import 'package:finwallet_app/app/auth/usecases/check_user.dart';
 import 'package:finwallet_app/app/auth/usecases/signin_user.dart';
 import 'package:finwallet_app/app/auth/usecases/signout_user.dart';
 import 'package:finwallet_app/app/auth/usecases/signup_user.dart';
+import 'package:finwallet_app/app/category/cubit/list/category_list_cubit.dart';
+import 'package:finwallet_app/app/category/data/category_data_provider.dart';
+import 'package:finwallet_app/app/category/data/category_repository.dart';
+import 'package:finwallet_app/app/category/domain/category_repository_contract.dart';
+import 'package:finwallet_app/app/category/usecases/list_category.dart';
 import 'package:finwallet_app/app/transaction/cubit/form/transaction_form_cubit.dart';
 import 'package:finwallet_app/app/transaction/cubit/math_pad/math_pad_cubit.dart';
 import 'package:finwallet_app/app/user/bloc/user/user_bloc.dart';
@@ -71,6 +76,14 @@ void setupLocator() {
   di.registerFactory<TransactionFormCubit>(() => TransactionFormCubit());
 
   di.registerLazySingleton<ValidatorContract>(() => RuleValidator());
+
+  // Account ---------------------
+  di.registerLazySingleton<CategoryDataProvider>(() => CategoryDataProvider(di()));
+  di.registerLazySingleton<CategoryRepositoryContract>(() => CategoryRepository(di()));
+
+  di.registerLazySingleton<ListCategory>(() => ListCategory(di()));
+
+  di.registerFactory<CategoryListCubit>(() => CategoryListCubit(di()));
 
 
 }

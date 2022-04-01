@@ -1,6 +1,7 @@
 import 'package:finwallet_app/app/account/bloc/account/account_bloc.dart';
 import 'package:finwallet_app/app/account/cubit/list/accounts_list_cubit.dart';
 import 'package:finwallet_app/app/auth/bloc/auth/auth_bloc.dart';
+import 'package:finwallet_app/app/category/cubit/list/category_list_cubit.dart';
 import 'package:finwallet_app/app/transaction/cubit/form/transaction_form_cubit.dart';
 import 'package:finwallet_app/app/transaction/cubit/math_pad/math_pad_cubit.dart';
 import 'package:finwallet_app/app/transaction/pages/widgets/currency_button.dart';
@@ -54,6 +55,8 @@ class _AddTransactionState extends State<AddTransaction> {
             BlocProvider.value(value: _mathPad),
             BlocProvider<AccountsListCubit>(
                 create: (context) => di<AccountsListCubit>()..loadAccounts()),
+            BlocProvider<CategoryListCubit>(
+                create: (context) => di<CategoryListCubit>()..load()),
           ],
           child: BlocListener<AccountsListCubit, AccountsListState>(
             listener: (context, state) {
