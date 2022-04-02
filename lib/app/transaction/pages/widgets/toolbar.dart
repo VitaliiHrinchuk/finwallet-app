@@ -1,8 +1,11 @@
 import 'package:finwallet_app/app/account/bloc/account/account_bloc.dart';
 import 'package:finwallet_app/app/account/cubit/list/accounts_list_cubit.dart';
+import 'package:finwallet_app/app/account/domain/account_entity.dart';
 import 'package:finwallet_app/app/account/pages/account_select.dart';
 import 'package:finwallet_app/app/category/cubit/list/category_list_cubit.dart';
+import 'package:finwallet_app/app/category/domain/category_entity.dart';
 import 'package:finwallet_app/app/category/pages/category_select.dart';
+import 'package:finwallet_app/app/category/pages/widgets/category_icon.dart';
 import 'package:finwallet_app/app/transaction/cubit/form/transaction_form_cubit.dart';
 import 'package:finwallet_app/app/transaction/pages/widgets/setting_section.dart';
 import 'package:finwallet_app/common/constants/routes.dart';
@@ -24,7 +27,6 @@ class ToolBar extends StatelessWidget {
           Expanded(
             child: BlocBuilder<TransactionFormCubit, TransactionFormState>(
               builder: (context, state) {
-
                 if (state.account != null) {
                   return SettingSection(
                     iconWidget: Container(
@@ -40,8 +42,6 @@ class ToolBar extends StatelessWidget {
                 } else {
                   return LoadingSpinner();
                 }
-
-
               },
             ),
           ),
@@ -50,55 +50,68 @@ class ToolBar extends StatelessWidget {
           //   color: Colors.grey,
           // ),
           Expanded(
-            child: SettingSection(
-              iconWidget: Container(
-                width: 25,
-                height: 25,
-                decoration: BoxDecoration(
-                    color: Colors.green,
-                    borderRadius: BorderRadius.circular(5)),
-              ),
-              title: 'Home & Appliance',
-              onTap: () => _navigateAndSelectCategory(context),
+            child: BlocBuilder<TransactionFormCubit, TransactionFormState>(
+              builder: (context, state) {
+                if (state.category != null) {
+                  return SettingSection(
+                    iconWidget: Container(
+                      width: 25,
+                      height: 25,
+                      child: CategoryIcon(slug: state.category!.slug),
+                    ),
+                    title: state.category!.name,
+                    onTap: () => _navigateAndSelectCategory(context),
+                  );
+                } else {
+                  return LoadingSpinner();
+                }
+              },
             ),
           ),
-          // TextButton(
-          //   onPressed: () {},
-          //   child: Icon(
-          //     Icons.more_horiz_rounded,
-          //     color: Colors.grey,
-          //   ),
-          // ),
+
         ],
       ),
     );
   }
 
   void _navigateAndSelectAccount(BuildContext context) async {
-    final result = await Navigator.push(
+    final String? result = await Navigator.push(
       context,
       MaterialPageRoute(builder: (childContext) {
         return BlocProvider.value(
             value: BlocProvider.of<AccountsListCubit>(context),
-            child: AccountSelect()
-        );
+            child: AccountSelect());
       }),
     );
 
-    print(result);
+    if (result != null) {
+      AccountEntity selectedAccount =
+      BlocProvider.of<AccountsListCubit>(context)
+          .state
+          .entities
+          .firstWhere((element) => element.id == result);
+      BlocProvider.of<TransactionFormCubit>(context).setAccount(selectedAccount);
+    }
   }
 
   void _navigateAndSelectCategory(BuildContext context) async {
-    final result = await Navigator.push(
+    final String? result = await Navigator.push(
       context,
       MaterialPageRoute(builder: (childContext) {
         return BlocProvider.value(
             value: BlocProvider.of<CategoryListCubit>(context),
-            child: CategorySelect()
-        );
+            child: CategorySelect());
       }),
     );
 
-    print(result);
+    if (result != null) {
+      CategoryEntity selectedCategory =
+          BlocProvider.of<CategoryListCubit>(context)
+              .state
+              .entities
+              .firstWhere((element) => element.id == result);
+      BlocProvider.of<TransactionFormCubit>(context).setCategory(selectedCategory);
+    }
+
   }
 }

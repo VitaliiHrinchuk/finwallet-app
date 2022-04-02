@@ -3,6 +3,7 @@ import 'package:finwallet_app/app/account/domain/account_entity.dart';
 import 'package:finwallet_app/app/account/usecases/list_account.dart';
 import 'package:finwallet_app/app/category/domain/category_entity.dart';
 import 'package:finwallet_app/app/category/usecases/list_category.dart';
+import 'package:finwallet_app/app/transaction/domain/transaction_entity.dart';
 import 'package:finwallet_app/common/http_client/pagination.dart';
 import 'package:finwallet_app/common/http_client/query_params.dart';
 import 'package:finwallet_app/common/utils/enum_to_string.dart';
@@ -17,10 +18,14 @@ class CategoryListCubit extends Cubit<CategoryListState> {
 
   CategoryListCubit(this._fetch) : super(CategoryListInitial());
 
-  void load() async {
+  void load(TransactionType type) async {
     try {
       emit(state.copyWith(loading: true));
-      Pagination<CategoryEntity> result = await this._fetch(ListCategoryParams(query: QueryParams()..setParam('categoryType', 'DEB')));
+      Pagination<CategoryEntity> result = await this._fetch(
+          ListCategoryParams(
+              query: QueryParams()..setParam('categoryType', enumToShortString(type.toString()))
+          )
+      );
 
       emit(state.copyWith(loading: false, entities: result.data, loaded: true));
     } on HttpException catch (error) {

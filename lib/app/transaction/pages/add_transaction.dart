@@ -4,6 +4,7 @@ import 'package:finwallet_app/app/auth/bloc/auth/auth_bloc.dart';
 import 'package:finwallet_app/app/category/cubit/list/category_list_cubit.dart';
 import 'package:finwallet_app/app/transaction/cubit/form/transaction_form_cubit.dart';
 import 'package:finwallet_app/app/transaction/cubit/math_pad/math_pad_cubit.dart';
+import 'package:finwallet_app/app/transaction/domain/transaction_entity.dart';
 import 'package:finwallet_app/app/transaction/pages/widgets/currency_button.dart';
 import 'package:finwallet_app/app/transaction/pages/widgets/num_pad.dart';
 import 'package:finwallet_app/app/transaction/pages/widgets/num_pad_value.dart';
@@ -56,16 +57,40 @@ class _AddTransactionState extends State<AddTransaction> {
             BlocProvider<AccountsListCubit>(
                 create: (context) => di<AccountsListCubit>()..loadAccounts()),
             BlocProvider<CategoryListCubit>(
-                create: (context) => di<CategoryListCubit>()..load()),
+                create: (context) => di<CategoryListCubit>()..load(TransactionType.CRE)),
           ],
-          child: BlocListener<AccountsListCubit, AccountsListState>(
-            listener: (context, state) {
-              if (state.loaded) {
-                context.read<TransactionFormCubit>().setAccount(state.entities.first);
-              }
-            },
+          child: MultiBlocListener(
+            listeners: [
+              BlocListener<AccountsListCubit, AccountsListState>(
+                listener: (context, state) {
+                  if (state.loaded) {
+                    context
+                        .read<TransactionFormCubit>()
+                        .setAccount(state.entities.first);
+                  }
+                },
+              ),
+              BlocListener<CategoryListCubit, CategoryListState>(
+                listener: (context, state) {
+                  if (state.loaded) {
+                    context
+                        .read<TransactionFormCubit>()
+                        .setCategory(state.entities.first);
+                  }
+                },
+              ),
+              BlocListener<TransactionFormCubit, TransactionFormState>(
+                listenWhen: (previousState, currentState) {
+                  return previousState.type != currentState.type;
+                },
+                listener: (context, state) {
+                  BlocProvider.of<CategoryListCubit>(context).load(state.type);
+                },
+              ),
+            ],
             child: Column(
               children: [
+                SizedBox(height: 10,),
                 TransactionTypeToggler(),
                 Expanded(child: Container()),
                 Padding(
