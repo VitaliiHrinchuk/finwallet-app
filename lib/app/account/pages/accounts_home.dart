@@ -61,7 +61,11 @@ class AccountsHome extends StatelessWidget {
                     },
                   ),
                   child:
-                      Container(height: 120, child: AccountsHorizontalList()),
+                      Container(
+                          height: 130,
+                          padding: EdgeInsets.only(bottom: 10),
+                          child: AccountsHorizontalList()
+                      ),
                 ),
                 SectionContainer(
                     child: TransactionsByRangeChart(),

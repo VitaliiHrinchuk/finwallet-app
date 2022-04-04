@@ -19,19 +19,22 @@ class AccountCard extends StatelessWidget {
       onTap: () => {},
       child: AccountCardContainer(
         color: this.color != null ? Color(int.parse('0xFF${color}')) : null ,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                name,
-                style: TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.bold),
-              ),
-              Text(
-                value,
-                style: TextStyle(fontSize: 14, color: Colors.white),
-              ),
-            ],
+          child: FittedBox(
+            alignment: Alignment.centerLeft,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  name,
+                  style: TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  value,
+                  style: TextStyle(fontSize: 14, color: Colors.white),
+                ),
+              ],
+            ),
           )
       ),
     );

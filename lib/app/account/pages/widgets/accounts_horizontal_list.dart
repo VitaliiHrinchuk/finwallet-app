@@ -34,13 +34,13 @@ class AccountsHorizontalList extends StatelessWidget {
       return GridView.count(
           shrinkWrap: true,
           crossAxisCount: 2,
-          childAspectRatio: 2 / 5.5,
+          childAspectRatio: 2 / 5,
           scrollDirection: Axis.horizontal,
           crossAxisSpacing: 5,
           mainAxisSpacing: 5,
           children: state.entities.map((e) => AccountCard(
             name: e.name,
-            value: e.amount.toStringAsFixed(2) + " " + e.currency,
+            value: e.amount.toStringAsFixed(2) + " " + e.currency.code,
             color: e.hexColor
           )).toList()
       );

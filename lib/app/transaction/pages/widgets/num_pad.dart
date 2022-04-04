@@ -73,24 +73,26 @@ class NumButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Container(
-        color: this.secondary ? Colors.grey.shade100 : null ,
-        // decoration: BoxDecoration(
-        //   border: this.secondary ? Border(
-        //     left: BorderSide(width: 1, color: Colors.grey),
-        //   ) : null
-        // ),
         child: SizedBox.expand(
           child: TextButton(
             onPressed: () => this.onTap(),
             child: Container(
-                child: Text(
-                  this.title,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      // fontWeight: FontWeight.bold,
-                      fontSize: 30
-                  ),
-            )),
+                width: 100,
+                height: 100,
+                decoration: BoxDecoration(
+                    color: this.secondary ? Color(0xFFB6E0F9) : null,
+                    borderRadius: this.secondary ? BorderRadius.circular(50) : null
+                ),
+                child: Center(
+                  child: Text(
+                    this.title,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        // fontWeight: FontWeight.bold,
+                        fontSize: 30
+                    ),
+            ),
+                )),
           ),
         ),
       ),

@@ -35,7 +35,8 @@ class AccountsList extends StatelessWidget {
                   return AccountListItem(
                     name: entity.name,
                     amount: entity.amount,
-                    currency: entity.currency,
+                    currency: entity.currency.code,
+                    hexColor: entity.hexColor,
                     onTap: () {
                       Navigator.of(context).pushNamed(ACCOUNTS_EDIT_ROUTE, arguments: AccountEditScreenArguments(id: '1'));
                     },

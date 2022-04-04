@@ -66,7 +66,8 @@ class AccountSelect extends StatelessWidget {
               return AccountListItem(
                 name: entity.name,
                 amount: entity.amount,
-                currency: entity.currency,
+                currency: entity.currency.code,
+                hexColor: entity.hexColor,
                 onTap: () {
                   Navigator.pop(context, entity.id);
                 },

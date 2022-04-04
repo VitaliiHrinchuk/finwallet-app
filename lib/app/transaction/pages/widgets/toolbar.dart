@@ -34,7 +34,8 @@ class ToolBar extends StatelessWidget {
                       height: 25,
                       decoration: BoxDecoration(
                           color: hexToColorWidget(state.account!.hexColor),
-                          borderRadius: BorderRadius.circular(5)),
+                          borderRadius: BorderRadius.circular(5)
+                      ),
                     ),
                     title: state.account!.name,
                     onTap: () => _navigateAndSelectAccount(context),

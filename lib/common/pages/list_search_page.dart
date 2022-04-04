@@ -51,7 +51,9 @@ class _ListSearchPageState<T> extends State<ListSearchPage<T>> {
       ),
       extendBodyBehindAppBar: true,
       body: SafeArea(
-          child: ListView.builder(
+          child: ListView.separated(
+            separatorBuilder: (context, index) => Divider(),
+            padding: EdgeInsets.zero,
             itemCount: filtered.length,
             itemBuilder: (context, i) {
               T entity = filtered[i];

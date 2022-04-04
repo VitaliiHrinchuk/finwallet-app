@@ -1,10 +1,11 @@
 import 'package:equatable/equatable.dart';
+import 'package:finwallet_app/common/constants/currencies.dart';
 
 class AccountEntity extends Equatable {
   final String id;
   final String name;
   final double amount;
-  final String currency;
+  final Currency currency;
   final String hexColor;
   final DateTime? createdAt;
   final DateTime? updatedAt;
@@ -24,7 +25,7 @@ class AccountEntity extends Equatable {
       'id': this.id,
       'name': this.name,
       'amount': this.amount,
-      'currency': this.currency,
+      'currency': this.currency.code,
       'hexColor': this.hexColor,
       'createdAt': this.createdAt?.toIso8601String(),
       'updatedAt': this.updatedAt?.toIso8601String()
@@ -36,7 +37,7 @@ class AccountEntity extends Equatable {
       id: json['id'],
       name: json['name'] ?? "",
       amount: double.parse(json['amount'].toString()),
-      currency: json['currency'] ?? "",
+      currency: CURRENCIES.firstWhere((element) => element.code == json['currency']),
       hexColor: json['hexColor'] ?? "",
       createdAt:  json['createdAt'] != null ? DateTime.parse(json['createdAt']) : null,
       updatedAt: json['updatedAt'] != null ? DateTime.parse(json['updatedAt']) : null,

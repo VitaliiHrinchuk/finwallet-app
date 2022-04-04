@@ -1,5 +1,8 @@
+import 'package:finwallet_app/app/account/cubit/list/accounts_list_cubit.dart';
 import 'package:finwallet_app/app/account/pages/widgets/create_account_form.dart';
+import 'package:finwallet_app/common/constants/routes.dart';
 import 'package:finwallet_app/common/dependencies.dart';
+import 'package:finwallet_app/common/utils/snackbar.dart';
 import '../../../common/widgets/layout/content_container.dart';
 import '../../../common/widgets/drawer/drawer_nav.dart';
 import '../../../common/widgets/app_bar/main_app_bar.dart';
@@ -34,11 +37,12 @@ class AccountEdit extends StatelessWidget {
               create: (_) => di<AccountBloc>(),
               child: BlocListener<AccountBloc, AccountState>(
                 listener: (context, state) {
-                  // if (state is AccountError) {
-                  //   showFloatSnackBar(context, state.error ?? "Unknown error");
-                  // } else if (state is AccountLoaded) {
-                  //   Navigator.pushNamed(context, HOME_ROUTE);
-                  // }
+                  if (state is AccountError) {
+                    showFloatSnackBar(context, state.error ?? "Unknown error");
+                  } else if (state is AccountLoaded) {
+                    Navigator.pushNamed(context, HOME_ROUTE);
+                    BlocProvider.of<AccountsListCubit>(context).loadAccounts();
+                  }
                 },
                 child: CreateAccountForm(),
               ),

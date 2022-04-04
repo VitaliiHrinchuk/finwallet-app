@@ -21,7 +21,12 @@ import 'package:finwallet_app/app/category/data/category_repository.dart';
 import 'package:finwallet_app/app/category/domain/category_repository_contract.dart';
 import 'package:finwallet_app/app/category/usecases/list_category.dart';
 import 'package:finwallet_app/app/transaction/cubit/form/transaction_form_cubit.dart';
+import 'package:finwallet_app/app/transaction/cubit/list/transactions_list_cubit.dart';
 import 'package:finwallet_app/app/transaction/cubit/math_pad/math_pad_cubit.dart';
+import 'package:finwallet_app/app/transaction/data/transaction_data_provider.dart';
+import 'package:finwallet_app/app/transaction/data/transaction_repostitory.dart';
+import 'package:finwallet_app/app/transaction/domain/transaction_repository_contract.dart';
+import 'package:finwallet_app/app/transaction/usecases/query_transactions.dart';
 import 'package:finwallet_app/app/user/bloc/user/user_bloc.dart';
 import 'package:finwallet_app/app/user/cubit/user_setup_form_cubit.dart';
 import 'package:finwallet_app/app/user/data/user_data_provider.dart';
@@ -72,12 +77,17 @@ void setupLocator() {
   di.registerFactory<AccountsListCubit>(() => AccountsListCubit(di()));
 
   // Transaction ----------
+  di.registerLazySingleton<TransactionDataProvider>(() => TransactionDataProvider(di()));
+  di.registerLazySingleton<TransactionRepositoryContract>(() => TransactionRepository(di()));
+  di.registerLazySingleton<QueryTransactions>(() => QueryTransactions(di()));
+
+  di.registerFactory<TransactionsListCubit>(() => TransactionsListCubit(di()));
   di.registerFactory<MathPadCubit>(() => MathPadCubit());
   di.registerFactory<TransactionFormCubit>(() => TransactionFormCubit());
 
   di.registerLazySingleton<ValidatorContract>(() => RuleValidator());
 
-  // Account ---------------------
+  // Category ---------------------
   di.registerLazySingleton<CategoryDataProvider>(() => CategoryDataProvider(di()));
   di.registerLazySingleton<CategoryRepositoryContract>(() => CategoryRepository(di()));
 

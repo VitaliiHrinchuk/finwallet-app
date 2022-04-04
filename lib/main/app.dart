@@ -6,6 +6,7 @@ import 'package:finwallet_app/app/account/pages/widgets/create_account_form.dart
 import 'package:finwallet_app/app/auth/pages/login.dart';
 import 'package:finwallet_app/app/auth/pages/signup.dart';
 import 'package:finwallet_app/app/transaction/pages/add_transaction.dart';
+import 'package:finwallet_app/app/transaction/pages/list_transactions.dart';
 import 'package:finwallet_app/app/user/pages/user_setup.dart';
 import 'package:finwallet_app/common/constants/routes.dart';
 import 'package:flutter/material.dart';
@@ -75,6 +76,10 @@ class _AppState extends State<App> {
             // color: Colors.grey,
             fontWeight: FontWeight.bold
           )
+        ),
+        appBarTheme: theme.appBarTheme.copyWith(
+          backgroundColor: Colors.white,
+          foregroundColor: Colors.black
         )
       ),
       // navigatorKey: Navigators.mainNav,
@@ -92,7 +97,9 @@ class _AppState extends State<App> {
           ),
           ACCOUNTS_CREATE_ROUTE: (context) => AccountEdit(),
           TRANSACTION_ADD_ROUTE: (context) => AddTransaction(),
-          ACCOUNTS_SELECT_ROUTE: (context) => AccountSelect()
+          ACCOUNTS_SELECT_ROUTE: (context) => AccountSelect(),
+          INCOMES_ROUTE: (context) => ListTransactions(isIncome: true),
+          INCOMES_ROUTE: (context) => ListTransactions(isIncome: false),
 
         },
 

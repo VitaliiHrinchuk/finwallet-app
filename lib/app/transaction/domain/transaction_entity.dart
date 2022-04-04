@@ -1,4 +1,6 @@
 import 'package:equatable/equatable.dart';
+import 'package:finwallet_app/app/account/domain/account_entity.dart';
+import 'package:finwallet_app/app/category/domain/category_entity.dart';
 import 'package:finwallet_app/common/constants/currencies.dart';
 import 'package:finwallet_app/common/utils/enum_to_string.dart';
 
@@ -15,6 +17,8 @@ class TransactionEntity extends Equatable {
   final TransactionType transactionType;
   final String? note;
   final DateTime transactionDate;
+  final CategoryEntity category;
+  final AccountEntity account;
   final DateTime? createdAt;
   final DateTime? updatedAt;
 
@@ -27,7 +31,9 @@ class TransactionEntity extends Equatable {
     this.note,
     required this.transactionDate,
     this.createdAt,
-    this.updatedAt
+    this.updatedAt,
+    required this.category,
+    required this.account
   });
 
   Map<String, dynamic> toJson() {
@@ -55,6 +61,8 @@ class TransactionEntity extends Equatable {
       transactionDate:  DateTime.parse(json['transactionDate']),
       createdAt:  json['createdAt'] != null ? DateTime.parse(json['createdAt']) : null,
       updatedAt: json['updatedAt'] != null ? DateTime.parse(json['updatedAt']) : null,
+      category: CategoryEntity.fromJSON(json['category']),
+      account: AccountEntity.fromJSON(json['account']),
     );
   }
 
