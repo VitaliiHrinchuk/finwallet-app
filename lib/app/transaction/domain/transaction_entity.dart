@@ -14,6 +14,7 @@ class TransactionEntity extends Equatable {
   final Currency currency;
   final double amount;
   final double accountCurrencyAmount;
+  final double baseCurrencyAmount;
   final TransactionType transactionType;
   final String? note;
   final DateTime transactionDate;
@@ -27,6 +28,7 @@ class TransactionEntity extends Equatable {
     required this.currency,
     required this.amount,
     required this.accountCurrencyAmount,
+    required this.baseCurrencyAmount,
     required this.transactionType,
     this.note,
     required this.transactionDate,
@@ -42,6 +44,7 @@ class TransactionEntity extends Equatable {
       'currency': this.currency.code,
       'amount': this.amount,
       'accountCurrencyAmount': this.accountCurrencyAmount,
+      'baseCurrencyAmount': this.baseCurrencyAmount,
       'transactionType': enumToShortString(this.transactionType.toString()),
       'note': this.note,
       'transactionDate': this.transactionDate.toIso8601String(),
@@ -56,6 +59,7 @@ class TransactionEntity extends Equatable {
       currency: CURRENCIES.firstWhere((element) => element.code == json['currency']),
       amount: double.parse(json['amount'].toString()),
       accountCurrencyAmount: double.parse(json['accountCurrencyAmount'].toString()),
+      baseCurrencyAmount: double.parse(json['baseCurrencyAmount'].toString()),
       note: json['note'],
       transactionType: TransactionType.values.byName(json['transactionType']),
       transactionDate:  DateTime.parse(json['transactionDate']),
@@ -72,6 +76,7 @@ class TransactionEntity extends Equatable {
     'currency',
     'amount',
     'accountCurrencyAmount',
+    'baseCurrencyAmount',
     'transactionType',
     'note',
     'transactionDate',

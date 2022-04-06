@@ -1,4 +1,5 @@
 import 'package:finwallet_app/app/account/cubit/list/accounts_list_cubit.dart';
+import 'package:finwallet_app/app/account/domain/account_entity.dart';
 import 'package:finwallet_app/app/account/pages/widgets/create_account_form.dart';
 import 'package:finwallet_app/common/constants/routes.dart';
 import 'package:finwallet_app/common/dependencies.dart';
@@ -12,12 +13,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../bloc/account/account_bloc.dart';
 
 class AccountEdit extends StatelessWidget {
-  final AccountEditScreenArguments? arguments;
+  // final AccountEditScreenArguments? arguments;
+  final AccountEntity? entity;
 
-  bool get isEdit => this.arguments?.id != null;
+  bool get isEdit => this.entity != null;
 
   AccountEdit({
-    this.arguments
+    this.entity
   });
 
   @override
@@ -44,7 +46,13 @@ class AccountEdit extends StatelessWidget {
                     BlocProvider.of<AccountsListCubit>(context).loadAccounts();
                   }
                 },
-                child: CreateAccountForm(),
+                child: CreateAccountForm(
+                  amount: entity?.amount,
+                  currency: entity?.currency,
+                  name: entity?.name,
+                  hexColor: entity?.hexColor,
+                  isEdit: isEdit,
+                ),
               ),
             ),
           ),

@@ -42,7 +42,7 @@ class _AddTransactionState extends State<AddTransaction> {
               String? baseCurrency =
                   (context.read<AuthBloc>().state as AuthAuthenticated)
                       .user
-                      .baseCurrency;
+                      .baseCurrency!.code;
 
               print(baseCurrency);
               if (baseCurrency != null) {

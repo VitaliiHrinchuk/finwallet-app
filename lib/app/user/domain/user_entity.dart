@@ -1,10 +1,11 @@
 import 'package:equatable/equatable.dart';
+import 'package:finwallet_app/common/constants/currencies.dart';
 
 class UserEntity extends Equatable {
   final String id;
   final String email;
   final String? name;
-  final String? baseCurrency;
+  final Currency? baseCurrency;
   final bool userConfigured;
   final DateTime? createdAt;
   final DateTime? updatedAt;
@@ -24,7 +25,7 @@ class UserEntity extends Equatable {
       'id': this.id,
       'email': this.email,
       'name': this.name,
-      'baseCurrency': this.baseCurrency,
+      'baseCurrency': this.baseCurrency?.code,
       'userConfigured': this.userConfigured,
       'createdAt': this.createdAt?.toIso8601String(),
       'updatedAt': this.updatedAt?.toIso8601String()
@@ -36,7 +37,7 @@ class UserEntity extends Equatable {
         id: json['id'],
         email: json['email'],
         name: json['name'],
-        baseCurrency: json['baseCurrency'],
+        baseCurrency: CURRENCIES.firstWhere((element) => element.code == json['baseCurrency']),
         userConfigured: json['userConfigured'],
         createdAt:  json['createdAt'] != null ? DateTime.parse(json['createdAt']) : null,
         updatedAt: json['updatedAt'] != null ? DateTime.parse(json['updatedAt']) : null,

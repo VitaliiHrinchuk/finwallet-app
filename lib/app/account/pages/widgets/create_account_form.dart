@@ -22,12 +22,45 @@ const List<String> RANDOM_COLORS = [
 ];
 
 class CreateAccountForm extends StatelessWidget {
+  final String? name;
+  final double? amount;
+  final Currency? currency;
+  final String? hexColor;
+  final bool isEdit;
+
+  CreateAccountForm({
+      this.name,
+      this.amount,
+      this.currency,
+      this.hexColor,
+      required this.isEdit
+  });
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AccountBloc, AccountState>(
       builder: (context, state) {
         return BlocProvider(
-          create: (_) => di<AccountFormCubit>(),
+          create: (_) {
+            AccountFormCubit form = di<AccountFormCubit>();
+            
+            if (this.name != null) {
+              form.setName(this.name);
+            }
+            if (this.amount != null) {
+              print(this.amount);
+              form.setAmount(this.amount);
+            }
+            if (this.currency != null) {
+              form.setCurrency(this.currency);
+            }
+            if (this.hexColor != hexColor) {
+              form.setHexColor(this.name);
+            }
+
+            
+            return form;
+          },
           child: Container(
             child: Form(
                 child: Column(
@@ -59,9 +92,10 @@ class CreateAccountForm extends StatelessWidget {
                           builder: (formContext, formState) {
                             return TextFormField(
                               keyboardType: TextInputType.number,
-                              initialValue: formState.name,
+                              initialValue: formState.amount?.toStringAsFixed(2),
                               enableSuggestions: false,
                               autocorrect: false,
+                              readOnly: this.isEdit,
                               inputFormatters: <TextInputFormatter>[
                                 FilteringTextInputFormatter.digitsOnly
                               ],
@@ -88,6 +122,7 @@ class CreateAccountForm extends StatelessWidget {
 
                             return CurrencyPicker(
                                 label: "Base Currency",
+                                readOnly: this.isEdit,
                                 onSelect: (Currency? currency) =>
                                     formContext
                                         .read<AccountFormCubit>()

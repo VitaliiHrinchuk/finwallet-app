@@ -1,3 +1,4 @@
+import 'package:finwallet_app/common/pages/currency_select.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 
@@ -9,68 +10,48 @@ class CurrencyPicker extends StatelessWidget {
   final Function(Currency? currency) onSelect;
   final Currency? value;
   final String? errorText;
-
-  final TextEditingController _typeAheadController = TextEditingController();
+  final bool readOnly;
 
   CurrencyPicker({
     this.label = 'Currency',
     required this.onSelect,
     required this.value,
-    this.errorText
+    this.errorText,
+    this.readOnly = false
   });
 
   @override
   Widget build(BuildContext context) {
-    print("null ${this.value}");
-    if (this.value != null) {
-      this._typeAheadController.text = "${value!.name} - ${value!.code}";
-    } else {
+    TextEditingController controller = TextEditingController();
+    controller.text = value != null ? value!.code + ' - ' + value!.name : "";
+    return TextFormField(
+      controller: controller,
+      readOnly: true,
+      enableSuggestions: false,
+      autocorrect: false,
+      onTap: () {
+        if (!this.readOnly) {
+          _navigateAndSelectCurrency(context);
+        }
 
-      this._typeAheadController.text = "";
-    }
-    return TypeAheadFormField<Currency>(
-      textFieldConfiguration: TextFieldConfiguration(
-          controller: this._typeAheadController,
-          decoration: MainInputDecoration(
-            labelText: this.label,
-            errorText: this.errorText,
-            suffixIcon: IconButton(
-              onPressed: () {
-                this.onSelect(null);
-              },
-              icon: Icon(Icons.clear),
-            ),
-          ),
-
+      },
+      decoration: MainInputDecoration(
+        labelText: this.label,
       ),
-      suggestionsCallback: (String pattern) {
-        List<Currency> items =
-        CURRENCIES.where((Currency currency) {
-          bool nameContains = currency.name
-              .toUpperCase()
-              .contains(pattern.toUpperCase());
-
-          bool codeContains = currency.code
-              .toUpperCase()
-              .contains(pattern.toUpperCase());
-
-          return nameContains || codeContains;
-        }).toList();
-
-        return items;
-      },
-      itemBuilder: (context, Currency suggestion) {
-        return ListTile(
-          title: Text(
-              "${suggestion.name} - ${suggestion.code}"),
-        );
-      },
-      transitionBuilder: (context, suggestionsBox, controller) {
-        return suggestionsBox;
-      },
-      onSuggestionSelected: (Currency suggestion) {
-        this.onSelect(suggestion);
-      },
     );
+  }
+
+  void _navigateAndSelectCurrency(BuildContext context) async {
+
+    final String result = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (childContext) {
+        return CurrencySelect();
+      }),
+    );
+
+    Currency currency = CURRENCIES.firstWhere((element) => element.code == result);
+
+    this.onSelect(currency);
   }
 }

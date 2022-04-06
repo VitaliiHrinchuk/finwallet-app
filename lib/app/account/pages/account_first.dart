@@ -51,7 +51,9 @@ class AccountFirst extends StatelessWidget {
                               Navigator.pushNamed(context, HOME_ROUTE);
                             }
                           },
-                          child: CreateAccountForm(),
+                          child: CreateAccountForm(
+                            isEdit: false,
+                          ),
                         ),
                       )
                   ),

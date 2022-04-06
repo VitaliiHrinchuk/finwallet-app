@@ -45,13 +45,16 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
 
   // final _router = AppRouter();
-  final ThemeData theme = ThemeData();
+  final ThemeData theme = ThemeData(
+    fontFamily: 'OpenSans'
+  );
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'FinWallet',
       navigatorKey: widget.navigationKey,
       theme: theme.copyWith(
+
         // primarySwatch: MaterialColor(HEX_COLOR, color),
         // accentColor: Colors.tealAccent,
         scaffoldBackgroundColor:  Color(0xFFF2F3F5),
@@ -72,6 +75,7 @@ class _AppState extends State<App> {
           )
         ),
         textTheme: theme.textTheme.copyWith(
+
           titleMedium: theme.textTheme.titleMedium?.copyWith(
             // color: Colors.grey,
             fontWeight: FontWeight.bold
@@ -79,7 +83,7 @@ class _AppState extends State<App> {
         ),
         appBarTheme: theme.appBarTheme.copyWith(
           backgroundColor: Colors.white,
-          foregroundColor: Colors.black
+          foregroundColor: Colors.black,
         )
       ),
       // navigatorKey: Navigators.mainNav,
@@ -92,14 +96,14 @@ class _AppState extends State<App> {
           SETUP_USER_ROUTE: (context) => SetupUserPage(),
           CREATE_ACCOUNT_ROUTE: (context) => AccountFirst(),
           ACCOUNTS_LIST_ROUTE: (context) => AccountsList(),
-          ACCOUNTS_EDIT_ROUTE: (context) => AccountEdit(
-            arguments: ModalRoute.of(context)?.settings.arguments as AccountEditScreenArguments,
-          ),
-          ACCOUNTS_CREATE_ROUTE: (context) => AccountEdit(),
+          // ACCOUNTS_EDIT_ROUTE: (context) => AccountEdit(
+          //   arguments: ModalRoute.of(context)?.settings.arguments as AccountEditScreenArguments,
+          // ),
+          // ACCOUNTS_CREATE_ROUTE: (context) => AccountEdit(),
           TRANSACTION_ADD_ROUTE: (context) => AddTransaction(),
           ACCOUNTS_SELECT_ROUTE: (context) => AccountSelect(),
           INCOMES_ROUTE: (context) => ListTransactions(isIncome: true),
-          INCOMES_ROUTE: (context) => ListTransactions(isIncome: false),
+          OUTCOMES_ROUTE: (context) => ListTransactions(isIncome: false),
 
         },
 

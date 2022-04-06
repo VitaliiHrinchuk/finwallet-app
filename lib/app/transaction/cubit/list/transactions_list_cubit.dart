@@ -16,10 +16,21 @@ class TransactionsListCubit extends Cubit<TransactionsListState> {
 
   void load(TransactionType type) async {
     try {
+
+      DateTime startDate = this._getStartDateOfMonth(DateTime.now().subtract(Duration(days: 31)));
+      DateTime endDate = this._getEndDateOfMonth(DateTime.now().subtract(Duration(days: 31)));
+      print(startDate.toIso8601String());
+      print(endDate.toIso8601String());
       emit(state.copyWith(loading: true));
       Pagination<TransactionEntity> result = await this._query(
           QueryTransactionsParams(
-              query: QueryParams()
+              query: QueryParams(
+                params: {
+                  'type': type.toString().split('.').last,
+                  'startDate': startDate.toIso8601String(),
+                  'endDate': endDate.toIso8601String()
+                }
+              )
           )
       );
 
@@ -30,5 +41,13 @@ class TransactionsListCubit extends Cubit<TransactionsListState> {
       print(error);
       emit(state.copyWith(loading: false, error: error.toString()));
     }
+  }
+
+  DateTime _getStartDateOfMonth(DateTime date) {
+    return DateTime.utc(date.year, date.month, 1);
+  }
+
+  DateTime _getEndDateOfMonth(DateTime date) {
+    return DateTime.utc(date.year,date.month+1,).subtract(Duration(days: 1));
   }
 }

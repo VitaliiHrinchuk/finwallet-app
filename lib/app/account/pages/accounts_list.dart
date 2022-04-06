@@ -38,7 +38,13 @@ class AccountsList extends StatelessWidget {
                     currency: entity.currency.code,
                     hexColor: entity.hexColor,
                     onTap: () {
-                      Navigator.of(context).pushNamed(ACCOUNTS_EDIT_ROUTE, arguments: AccountEditScreenArguments(id: '1'));
+                      // Navigator.of(context).pushNamed(ACCOUNTS_EDIT_ROUTE, arguments: AccountEditScreenArguments(id: '1'));
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (childContext) {
+                          return AccountEdit(entity: entity);
+                        }),
+                      );
                     },
                   );
                   // return ListTile(
@@ -56,7 +62,13 @@ class AccountsList extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.of(context).pushNamed(ACCOUNTS_CREATE_ROUTE);
+          // Navigator.of(context).pushNamed(ACCOUNTS_CREATE_ROUTE);
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (childContext) {
+              return AccountEdit();
+            }),
+          );
         },
         child: const Icon(Icons.add),
         backgroundColor: Theme
