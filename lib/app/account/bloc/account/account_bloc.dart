@@ -52,7 +52,7 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
     try {
 
       Pagination<AccountEntity> pagination = await this.listAccount(
-          ListAccountParams(query: new QueryParams())
+          ListAccountParams(query: new QueryParams({}))
       );
       print("fetched");
       print(pagination.data);

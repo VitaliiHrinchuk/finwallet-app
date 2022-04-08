@@ -28,8 +28,6 @@ class AccountsHome extends StatelessWidget {
         child: MultiBlocProvider(
           providers: [
             BlocProvider(create: (context) => di<AccountBloc>()),
-            BlocProvider(
-                create: (context) => _accountsListCubit..loadAccounts())
           ],
           child: SingleChildScrollView(
             padding: EdgeInsets.only(left: 10, right: 10),

@@ -1,9 +1,7 @@
 class QueryParams {
   final Map<String, dynamic> params;
 
-  QueryParams({
-    this.params = const {}
-  });
+  QueryParams(this.params);
 
   void setParam(String key, dynamic value) {
     this.params[key] = value;

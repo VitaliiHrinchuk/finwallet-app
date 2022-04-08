@@ -18,19 +18,26 @@ class CategoryListCubit extends Cubit<CategoryListState> {
 
   CategoryListCubit(this._fetch) : super(CategoryListInitial());
 
-  void load(TransactionType type) async {
+  void load(TransactionType? type) async {
     try {
       emit(state.copyWith(loading: true));
+      QueryParams queryParams = QueryParams({});
+
+      if (type != null) {
+        queryParams.setParam('categoryType', enumToShortString(type.toString()));
+      }
+
       Pagination<CategoryEntity> result = await this._fetch(
-          ListCategoryParams(
-              query: QueryParams()..setParam('categoryType', enumToShortString(type.toString()))
-          )
+          ListCategoryParams(query: queryParams)
       );
 
       emit(state.copyWith(loading: false, entities: result.data, loaded: true));
     } on HttpException catch (error) {
+
+      print(error);
       emit(state.copyWith(loading: false, error: error));
     } catch (error) {
+
       print(error);
       emit(state.copyWith(loading: false, error: error.toString()));
     }

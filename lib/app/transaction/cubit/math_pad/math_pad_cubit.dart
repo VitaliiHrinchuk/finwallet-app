@@ -7,10 +7,14 @@ part 'math_pad_state.dart';
 class MathPadCubit extends Cubit<MathPadState> {
   MathPadCubit() : super(MathPadInitial());
 
-  addValue(String char) {
+  void addValue(String char) {
     String result = this._formatResult(char);
 
     emit(state.copyWith(result: result));
+  }
+
+  void prepare() {
+    emit(state.copyWith(result: this.calculate(this.state.result)));
   }
 
   String _formatResult(String char) {
@@ -23,6 +27,10 @@ class MathPadCubit extends Cubit<MathPadState> {
 
     if (isOperator && this.state.lastIsOperator) {
       return result;
+    }
+
+    if (result == '0' && !isOperator) {
+      return char;
     }
 
     if (char == '<') {
@@ -60,3 +68,4 @@ class MathPadCubit extends Cubit<MathPadState> {
     return '${res.toStringAsFixed(2)}';
   }
 }
+

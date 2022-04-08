@@ -6,13 +6,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CategorySelect extends StatelessWidget {
+
+  final CategoryType type;
+
+  CategorySelect({
+    required this.type
+  });
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CategoryListCubit, CategoryListState>(
       builder: (context, state) {
         return ListSearchPage<CategoryEntity>(
             title: 'Select Category',
-            entities: state.entities,
+            entities: state.entities.where((element) => element.type == type).toList(),
             filterPredicate: (CategoryEntity element, String query) {
               return element.name.toLowerCase().contains(query);
             },
@@ -20,7 +27,7 @@ class CategorySelect extends StatelessWidget {
               return ListTile(
                 leading: CategoryIcon(slug: entity.slug),
                 title: Text(entity.name),
-                onTap:  () {
+                onTap: () {
                   Navigator.pop(context, entity.id);
                 },
               );

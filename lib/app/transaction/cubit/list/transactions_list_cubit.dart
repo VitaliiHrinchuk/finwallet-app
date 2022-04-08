@@ -24,13 +24,11 @@ class TransactionsListCubit extends Cubit<TransactionsListState> {
       emit(state.copyWith(loading: true));
       Pagination<TransactionEntity> result = await this._query(
           QueryTransactionsParams(
-              query: QueryParams(
-                params: {
-                  'type': type.toString().split('.').last,
-                  'startDate': startDate.toIso8601String(),
-                  'endDate': endDate.toIso8601String()
-                }
-              )
+              query: QueryParams({
+                'type': type.toString().split('.').last,
+                'startDate': startDate.toIso8601String(),
+                'endDate': endDate.toIso8601String()
+              })
           )
       );
 

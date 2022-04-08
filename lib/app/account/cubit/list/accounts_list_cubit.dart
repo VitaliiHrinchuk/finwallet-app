@@ -17,7 +17,7 @@ class AccountsListCubit extends Cubit<AccountsListState> {
   void loadAccounts() async {
     try {
       emit(state.copyWith(loading: true));
-      Pagination<AccountEntity> result = await this._listAccount(ListAccountParams(query: QueryParams()));
+      Pagination<AccountEntity> result = await this._listAccount(ListAccountParams(query: QueryParams({})));
       emit(state.copyWith(loading: false, entities: result.data, loaded: true));
     } on HttpException catch (error) {
       emit(state.copyWith(loading: false, error: error));

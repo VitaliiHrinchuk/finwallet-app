@@ -7,6 +7,7 @@ import 'package:finwallet_app/app/category/domain/category_entity.dart';
 import 'package:finwallet_app/app/category/pages/category_select.dart';
 import 'package:finwallet_app/app/category/pages/widgets/category_icon.dart';
 import 'package:finwallet_app/app/transaction/cubit/form/transaction_form_cubit.dart';
+import 'package:finwallet_app/app/transaction/domain/transaction_entity.dart';
 import 'package:finwallet_app/app/transaction/pages/widgets/setting_section.dart';
 import 'package:finwallet_app/common/constants/routes.dart';
 import 'package:finwallet_app/common/utils/hex_to_color_widget.dart';
@@ -96,12 +97,16 @@ class ToolBar extends StatelessWidget {
   }
 
   void _navigateAndSelectCategory(BuildContext context) async {
+    TransactionType transactionType = BlocProvider.of<TransactionFormCubit>(context).state.type;
     final String? result = await Navigator.push(
       context,
       MaterialPageRoute(builder: (childContext) {
         return BlocProvider.value(
             value: BlocProvider.of<CategoryListCubit>(context),
-            child: CategorySelect());
+            child: CategorySelect(
+              type: transactionType == TransactionType.CRE ? CategoryType.CRE : CategoryType.DEB,
+            )
+        );
       }),
     );
 

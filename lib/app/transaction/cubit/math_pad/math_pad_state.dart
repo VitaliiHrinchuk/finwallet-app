@@ -12,7 +12,7 @@ class MathPadState {
   bool get onlyTwoCharsAfterDot => RegExp(r'.*\.[0-9]{2}$').hasMatch(this.result);
 
   MathPadState({
-    this.result = '',
+    this.result = '0',
   });
 
   MathPadState copyWith({result}) =>

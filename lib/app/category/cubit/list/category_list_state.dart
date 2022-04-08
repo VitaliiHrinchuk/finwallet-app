@@ -7,6 +7,12 @@ class CategoryListState {
   final String? error;
   final bool loaded;
 
+  List<CategoryEntity> get creditEntities =>
+      this.entities.where((element) => element.type == CategoryType.CRE).toList();
+
+  List<CategoryEntity> get debitEntities =>
+      this.entities.where((element) => element.type == CategoryType.DEB).toList();
+
   CategoryListState({
     required this.entities,
     required this.loading,

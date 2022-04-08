@@ -17,8 +17,8 @@ class TransactionRepository implements TransactionRepositoryContract {
   TransactionRepository(this.dataProvider);
 
   @override
-  Future<TransactionEntity> create(CreateTransactionDto dto) {
-    return this.dataProvider.create(dto.toJson());
+  Future<TransactionEntity> create(Map<String, dynamic> transaction) {
+    return this.dataProvider.create(transaction);
   }
 
   // @override

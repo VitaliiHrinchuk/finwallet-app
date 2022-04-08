@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:finwallet_app/app/account/domain/account_entity.dart';
 import 'package:finwallet_app/app/category/domain/category_entity.dart';
 import 'package:finwallet_app/app/transaction/domain/transaction_entity.dart';
+import 'package:finwallet_app/app/transaction/dto/create_transaction_dto.dart';
 import 'package:finwallet_app/common/constants/currencies.dart';
 import 'package:meta/meta.dart';
 
@@ -34,5 +35,28 @@ class TransactionFormCubit extends Cubit<TransactionFormState> {
 
   void setDate(DateTime date) {
     emit(state.copyWith(transactionDate: date));
+  }
+
+  void setAmount(double amount) {
+    emit(state.copyWith(amount: amount));
+  }
+  
+  CreateTransactionDto? toDTO() {
+    if(state.account == null) {
+      emit(state.copyWith(error: "Please select account"));
+      return null;
+    } else if (state.category == null ) {
+      emit(state.copyWith(error: "Please select category"));
+      return null;
+    } else {
+      return CreateTransactionDto(
+          account: state.account!,
+          type: state.type,
+          category: state.category!,
+          amount: state.amount,
+          currency: state.currency
+      );
+    }
+
   }
 }

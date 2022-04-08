@@ -7,6 +7,6 @@ import '../../../common/http_client/pagination.dart';
 
 abstract class TransactionRepositoryContract {
   Future<void> remove(TransactionEntity entity);
-  Future<TransactionEntity> create(CreateTransactionDto dto);
+  Future<TransactionEntity> create(Map<String, dynamic> transaction);
   Future<Pagination<TransactionEntity>> browse(Map<String, dynamic> query);
 }
