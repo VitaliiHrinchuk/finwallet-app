@@ -5,7 +5,7 @@ class TransactionFormState {
   final AccountEntity? account;
   final CategoryEntity? category;
 
-  //final TagsEntity[]
+  final List<TagEntity> tags;
   final DateTime transactionDate;
   final Currency currency;
   final TransactionType type;
@@ -18,10 +18,11 @@ class TransactionFormState {
       required this.currency,
       this.category,
       required this.type,
-      this.error
+      this.error,
+      required this.tags
   });
 
-  TransactionFormState copyWith({amount, account, transactionDate, currency, category, type, error}) =>
+  TransactionFormState copyWith({amount, account, transactionDate, currency, category, type, error, tags}) =>
       TransactionFormState(
           amount: amount ?? this.amount,
           account: account ?? this.account,
@@ -29,7 +30,8 @@ class TransactionFormState {
           currency: currency ?? this.currency,
           category: category ?? this.category,
           type: type ?? this.type,
-          error: error ?? this.error
+          error: error ?? this.error,
+          tags: tags ?? this.tags
       );
 }
 
@@ -39,6 +41,7 @@ class TransactionFormInitial extends TransactionFormState {
             amount: 0,
             transactionDate: DateTime.now(),
             currency: Currency(code: "USD", name: "United States Dollar"),
-            type: TransactionType.CRE
+            type: TransactionType.CRE,
+            tags: []
   );
 }

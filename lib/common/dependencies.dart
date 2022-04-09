@@ -20,6 +20,11 @@ import 'package:finwallet_app/app/category/data/category_data_provider.dart';
 import 'package:finwallet_app/app/category/data/category_repository.dart';
 import 'package:finwallet_app/app/category/domain/category_repository_contract.dart';
 import 'package:finwallet_app/app/category/usecases/list_category.dart';
+import 'package:finwallet_app/app/tag/cubit/list/tag_list_cubit.dart';
+import 'package:finwallet_app/app/tag/data/tag_data_provider.dart';
+import 'package:finwallet_app/app/tag/data/tag_repostitory.dart';
+import 'package:finwallet_app/app/tag/domain/tag_repository_contract.dart';
+import 'package:finwallet_app/app/tag/usecases/query_tags.dart';
 import 'package:finwallet_app/app/transaction/cubit/form/transaction_form_cubit.dart';
 import 'package:finwallet_app/app/transaction/cubit/list/transactions_list_cubit.dart';
 import 'package:finwallet_app/app/transaction/cubit/math_pad/math_pad_cubit.dart';
@@ -98,6 +103,14 @@ void setupLocator() {
   di.registerLazySingleton<ListCategory>(() => ListCategory(di()));
 
   di.registerFactory<CategoryListCubit>(() => CategoryListCubit(di()));
+
+  // Tag --------------------------
+  di.registerLazySingleton<TagDataProvider>(() => TagDataProvider(di()));
+  di.registerLazySingleton<TagRepositoryContract>(() => TagRepository(di()));
+
+  di.registerLazySingleton<QueryTags>(() => QueryTags(di()));
+
+  di.registerFactory<TagListCubit>(() => TagListCubit(di()));
 
 
 }

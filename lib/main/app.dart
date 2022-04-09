@@ -7,6 +7,7 @@ import 'package:finwallet_app/app/account/pages/widgets/create_account_form.dart
 import 'package:finwallet_app/app/auth/pages/login.dart';
 import 'package:finwallet_app/app/auth/pages/signup.dart';
 import 'package:finwallet_app/app/category/cubit/list/category_list_cubit.dart';
+import 'package:finwallet_app/app/tag/cubit/list/tag_list_cubit.dart';
 import 'package:finwallet_app/app/transaction/pages/add_transaction.dart';
 import 'package:finwallet_app/app/transaction/pages/list_transactions.dart';
 import 'package:finwallet_app/app/user/pages/user_setup.dart';
@@ -49,10 +50,12 @@ class _AppState extends State<App> {
   // final _router = AppRouter();
   final ThemeData theme = ThemeData(fontFamily: 'OpenSans');
   final CategoryListCubit _categoryListCubit = di<CategoryListCubit>();
+  final TagListCubit _tagListCubit = di<TagListCubit>();
 
   @override
   Widget build(BuildContext context) {
     _categoryListCubit.load(null);
+    _tagListCubit.load();
     return MultiBlocProvider(
       providers: [
         BlocProvider<AccountsListCubit>(
@@ -60,6 +63,9 @@ class _AppState extends State<App> {
         ),
         BlocProvider<CategoryListCubit>(
           create: (context) => _categoryListCubit
+        ),
+        BlocProvider<TagListCubit>(
+          create: (context) => _tagListCubit,
         ),
       ],
       child: MaterialApp(

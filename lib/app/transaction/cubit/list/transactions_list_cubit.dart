@@ -27,7 +27,8 @@ class TransactionsListCubit extends Cubit<TransactionsListState> {
               query: QueryParams({
                 'type': type.toString().split('.').last,
                 'startDate': startDate.toIso8601String(),
-                'endDate': endDate.toIso8601String()
+                'endDate': endDate.toIso8601String(),
+                'limit': '999'
               })
           )
       );

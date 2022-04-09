@@ -13,3 +13,5 @@ const List<Color> ACCOUNTS_COLORS = [
   Colors.green,
 
 ];
+
+const Color PRIMARY_COLOR = Color(0xFFB6E0F9);

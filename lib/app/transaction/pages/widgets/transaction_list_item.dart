@@ -13,11 +13,25 @@ class TransactionListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String tags = entity.tags.map((e) => e.name).join(', ');
     return ListTile(
       dense: true,
       minVerticalPadding: 0,
       leading: CategoryIcon(slug: entity.category.slug),
-      title: Text(entity.category.name),
+      title: Row(
+        children: [
+          Text(entity.category.name),
+          SizedBox(width: 5,),
+          Text(
+            tags,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+                fontSize: 12,
+                color: Colors.grey
+            ),
+          ),
+        ],
+      ),
       subtitle: Text(entity.account.name),
       trailing: Column(
         crossAxisAlignment: CrossAxisAlignment.end,

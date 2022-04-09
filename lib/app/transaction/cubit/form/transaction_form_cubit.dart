@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:finwallet_app/app/account/domain/account_entity.dart';
 import 'package:finwallet_app/app/category/domain/category_entity.dart';
+import 'package:finwallet_app/app/tag/domain/tag_entity.dart';
 import 'package:finwallet_app/app/transaction/domain/transaction_entity.dart';
 import 'package:finwallet_app/app/transaction/dto/create_transaction_dto.dart';
 import 'package:finwallet_app/common/constants/currencies.dart';
@@ -40,6 +41,10 @@ class TransactionFormCubit extends Cubit<TransactionFormState> {
   void setAmount(double amount) {
     emit(state.copyWith(amount: amount));
   }
+
+  void setTags(List<TagEntity> tags) {
+    emit(state.copyWith(tags: tags));
+  }
   
   CreateTransactionDto? toDTO() {
     if(state.account == null) {
@@ -54,7 +59,8 @@ class TransactionFormCubit extends Cubit<TransactionFormState> {
           type: state.type,
           category: state.category!,
           amount: state.amount,
-          currency: state.currency
+          currency: state.currency,
+          tags: state.tags
       );
     }
 

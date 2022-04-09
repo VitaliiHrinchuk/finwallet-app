@@ -68,6 +68,7 @@ class _MainAppBarState extends State<MainAppBar> {
   }
 
   List<Widget> _buildActions() {
+    List<Widget> actions = widget.actions ?? [];
     if (widget.enableSearch) {
 
       if (this.isSearch) {
@@ -78,6 +79,7 @@ class _MainAppBarState extends State<MainAppBar> {
               this._searchQueryController.clear();
             },
           ),
+          ...actions
         ];
       } else {
 
@@ -86,10 +88,11 @@ class _MainAppBarState extends State<MainAppBar> {
             icon: const Icon(Icons.search),
             onPressed: _startSearch,
           ),
+          ...actions
         ];
       }
     } else {
-      return widget.actions ?? [];
+      return actions ;
     }
 
   }

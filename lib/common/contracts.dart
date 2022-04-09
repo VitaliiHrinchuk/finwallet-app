@@ -51,8 +51,6 @@ abstract class AbstractHttpDataProvider<T> {
     Map<String, dynamic> result = await this.client.get(uri);
     Map<String, dynamic> paginationMeta = result['meta'];
     List<T> data = (result['data'] as List).map((element) => fromJSON(element)).toList();
-    print("d");
-    print(data);
     return new Pagination<T>(
         hasMore: paginationMeta['hasNextPage'],
         perPage: int.parse(paginationMeta['perPage'].toString()),

@@ -1,3 +1,4 @@
+import 'package:finwallet_app/common/constants/colors.dart';
 import 'package:flutter/material.dart';
 
 class NumPad extends StatelessWidget {
@@ -80,7 +81,7 @@ class NumButton extends StatelessWidget {
                 width: 100,
                 height: 100,
                 decoration: BoxDecoration(
-                    color: this.secondary ? Color(0xFFB6E0F9) : null,
+                    color: this.secondary ? PRIMARY_COLOR : null,
                     borderRadius: this.secondary ? BorderRadius.circular(50) : null
                 ),
                 child: Center(

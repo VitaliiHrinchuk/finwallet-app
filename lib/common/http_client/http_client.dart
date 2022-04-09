@@ -69,7 +69,6 @@ class HttpClient {
   }
 
   Map<String, dynamic> _processResponse(http.Response response) {
-    print(response.body);
     Map<String, dynamic> responseJson = response.body.length > 0 ? json.decode(response.body.toString()) : {};
     switch (response.statusCode) {
       case 200:
