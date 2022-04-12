@@ -14,5 +14,12 @@ class AccountDataProvider extends AbstractHttpDataProvider<AccountEntity> {
     return AccountEntity.fromJSON(json);
   }
 
+  Future<Map<String, dynamic>> fetchAnalytics(Map<String, dynamic> params) async {
+    Uri uri = this.generateUri(path: this.path + '/analytics', query: params);
+
+    Map<String, dynamic> result = await this.client.get(uri);
+
+    return result;
+  }
 
 }

@@ -19,6 +19,7 @@ final GlobalKey<NavigatorState> navigator = new GlobalKey();
 void errorInterceptor(int code, String message) {
   print(" =========== HTTP Error");
   print(message);
+
   if (code == 401) {
     navigator.currentState?.pushReplacementNamed(LOGIN_ROUTE);
   }
