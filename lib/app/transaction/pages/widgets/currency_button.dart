@@ -23,15 +23,21 @@ class CurrencyButton extends StatelessWidget {
             _navigateAndSelectCurrency(context);
           },
           style: TextButton.styleFrom(
+            elevation: 0,
+
             shape: CircleBorder(
               side: BorderSide(
-                color: Theme.of(context).colorScheme.primary
+                color: Colors.black,
+                width: 2
               )
             ),
             padding: EdgeInsets.all(20),
           ),
           child: Text(
             this.value.code,
+            style: TextStyle(
+              color: Colors.black
+            ),
           ),
         ),
       ),

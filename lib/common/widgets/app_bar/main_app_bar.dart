@@ -44,11 +44,11 @@ class _MainAppBarState extends State<MainAppBar> {
           preferredSize: Size.fromHeight(kToolbarHeight)),
       leading: this.widget.canGoBack
           ? IconButton(
-              icon: Icon(Icons.chevron_left, color: Theme.of(context).colorScheme.primary),
+              icon: Icon(Icons.chevron_left, color: Colors.black),
               onPressed: () => Navigator.of(context).pop(),
             )
           : null,
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.transparent,
       actions: _buildActions(),
     );
   }

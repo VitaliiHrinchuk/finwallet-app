@@ -14,7 +14,7 @@ class TransactionsListCubit extends Cubit<TransactionsListState> {
 
   TransactionsListCubit(this._query) : super(TransactionsListInitial());
 
-  void load(TransactionType type) async {
+  void load() async {
     try {
 
       DateTime startDate = this._getStartDateOfMonth(DateTime.now().subtract(Duration(days: 31)));
@@ -25,7 +25,7 @@ class TransactionsListCubit extends Cubit<TransactionsListState> {
       Pagination<TransactionEntity> result = await this._query(
           QueryTransactionsParams(
               query: QueryParams({
-                'type': type.toString().split('.').last,
+                // 'type': type.toString().split('.').last,
                 'startDate': startDate.toIso8601String(),
                 'endDate': endDate.toIso8601String(),
                 'limit': '999'

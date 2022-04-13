@@ -34,7 +34,10 @@ class AccountsHorizontalList extends StatelessWidget {
       return GridView.count(
           shrinkWrap: true,
           crossAxisCount: 2,
-          childAspectRatio: 2 / 5,
+
+          // childAspectRatio: 1 / 3,
+          childAspectRatio: MediaQuery.of(context).size.width /
+              (MediaQuery.of(context).size.height ) / 1.7,
           scrollDirection: Axis.horizontal,
           crossAxisSpacing: 5,
           mainAxisSpacing: 5,

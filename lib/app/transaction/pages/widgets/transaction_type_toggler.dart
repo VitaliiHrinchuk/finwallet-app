@@ -18,7 +18,7 @@ class TransactionTypeToggler extends StatelessWidget {
       height: 35,
       clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
-          border: Border.all(color: Theme.of(context).colorScheme.primary),
+          border: Border.all(color: Colors.black),
           borderRadius: BorderRadius.circular(10)),
       child: Container(
         child: Row(
@@ -34,14 +34,14 @@ class TransactionTypeToggler extends StatelessWidget {
           builder: (context, state) {
             return Expanded(
                 child: Container(
-                    color: type == state.type ? Theme.of(context).colorScheme.primary : null,
+                    color: type == state.type ? Colors.black : null,
                     child: TextButton(
                       onPressed: () {
                         BlocProvider.of<TransactionFormCubit>(context).setType(type);
                       },
                       child: Text(
                           name,
-                          style: type == state.type ? TextStyle(color: Colors.white) : null,
+                          style: type == state.type ? TextStyle(color: Colors.white) : TextStyle(color: Colors.black),
                     )
                 )
             ));

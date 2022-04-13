@@ -16,9 +16,9 @@ class CategoryIcon extends StatelessWidget {
     return FittedBox(
       child: Container(
         padding: EdgeInsets.all(5),
-        child: Icon(settings.icon, color: Colors.black),
+        child: Icon(settings.icon, color: Colors.white),
         decoration: BoxDecoration(
-            color: Color(0xFFB6E0F9),
+            color: settings.color,
             borderRadius: BorderRadius.circular(5)
         ),
       ),

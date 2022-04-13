@@ -1,4 +1,5 @@
 import 'package:finwallet_app/app/account/pages/widgets/account_card_container.dart';
+import 'package:finwallet_app/common/constants/colors.dart';
 import 'package:flutter/material.dart';
 
 class AccountCard extends StatelessWidget {
@@ -14,24 +15,39 @@ class AccountCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
+    Color color = this.color != null ? Color(int.parse('0xFF${this.color}')) : PRIMARY_COLOR;
     return GestureDetector(
       onTap: () => {},
       child: AccountCardContainer(
-        color: this.color != null ? Color(int.parse('0xFF${color}')) : null ,
+        color: color,
           child: FittedBox(
             alignment: Alignment.centerLeft,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: Row(
               children: [
-                Text(
-                  name,
-                  style: TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.bold),
+                Container(
+                  width: 10,
+                  height: 10,
+
+                  decoration: BoxDecoration(
+                    color: color,
+                    borderRadius: BorderRadius.circular(10)
+                  ),
                 ),
-                Text(
-                  value,
-                  style: TextStyle(fontSize: 14, color: Colors.white),
+                SizedBox(width: 10,),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      name,
+                      style: TextStyle(fontSize: 14, color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(height: 5),
+                    Text(
+                      value,
+                      style: TextStyle(fontSize: 12, color: Colors.white),
+                    ),
+                  ],
                 ),
               ],
             ),

@@ -11,8 +11,10 @@ import 'package:finwallet_app/app/tag/cubit/list/tag_list_cubit.dart';
 import 'package:finwallet_app/app/transaction/pages/add_transaction.dart';
 import 'package:finwallet_app/app/transaction/pages/list_transactions.dart';
 import 'package:finwallet_app/app/user/pages/user_setup.dart';
+import 'package:finwallet_app/common/constants/colors.dart';
 import 'package:finwallet_app/common/constants/routes.dart';
 import 'package:finwallet_app/common/dependencies.dart';
+import 'package:finwallet_app/main/main_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -75,10 +77,10 @@ class _AppState extends State<App> {
 
           // primarySwatch: MaterialColor(HEX_COLOR, color),
           // accentColor: Colors.tealAccent,
-            scaffoldBackgroundColor: Color(0xFFF2F3F5),
+            scaffoldBackgroundColor: Colors.white,
             colorScheme: theme.colorScheme.copyWith(
                 secondary: Colors.grey.shade300,
-                background: Color(0xFFF2F3F5),
+                // background: Color(0xFFF2F3F5),
                 secondaryContainer: Colors.white,
                 primary: Colors.black
               // primary: Color(0xFF23695E)
@@ -101,20 +103,20 @@ class _AppState extends State<App> {
         // onGenerateRoute: _router.onGenerateRoute,
         initialRoute: widget.initialRoute,
         routes: {
-          HOME_ROUTE: (context) => AccountsHome(),
+          HOME_ROUTE: (context) => MainWrapper(),
           LOGIN_ROUTE: (context) => Login(),
           SIGN_UP_ROUTE: (context) => Signup(),
           SETUP_USER_ROUTE: (context) => SetupUserPage(),
           CREATE_ACCOUNT_ROUTE: (context) => AccountFirst(),
-          ACCOUNTS_LIST_ROUTE: (context) => AccountsList(),
-          // ACCOUNTS_EDIT_ROUTE: (context) => AccountEdit(
-          //   arguments: ModalRoute.of(context)?.settings.arguments as AccountEditScreenArguments,
-          // ),
-          // ACCOUNTS_CREATE_ROUTE: (context) => AccountEdit(),
-          TRANSACTION_ADD_ROUTE: (context) => AddTransaction(),
-          ACCOUNTS_SELECT_ROUTE: (context) => AccountSelect(),
-          INCOMES_ROUTE: (context) => ListTransactions(isIncome: true),
-          OUTCOMES_ROUTE: (context) => ListTransactions(isIncome: false),
+          // ACCOUNTS_LIST_ROUTE: (context) => AccountsList(),
+          // // ACCOUNTS_EDIT_ROUTE: (context) => AccountEdit(
+          // //   arguments: ModalRoute.of(context)?.settings.arguments as AccountEditScreenArguments,
+          // // ),
+          // // ACCOUNTS_CREATE_ROUTE: (context) => AccountEdit(),
+          // TRANSACTION_ADD_ROUTE: (context) => AddTransaction(),
+          // ACCOUNTS_SELECT_ROUTE: (context) => AccountSelect(),
+          // INCOMES_ROUTE: (context) => ListTransactions(isIncome: true),
+          // OUTCOMES_ROUTE: (context) => ListTransactions(isIncome: false),
         },
 
         // navigatorObservers: [routeObserver],

@@ -67,6 +67,8 @@ class NumButton extends StatelessWidget {
   final String title;
   final bool secondary;
   final Function onTap;
+  final Color defaultColor = Colors.black;
+  final Color secondaryColor = PRIMARY_COLOR;
 
   NumButton(this.title, {this.secondary = false, required this.onTap});
 
@@ -81,8 +83,8 @@ class NumButton extends StatelessWidget {
                 width: 100,
                 height: 100,
                 decoration: BoxDecoration(
-                    color: this.secondary ? PRIMARY_COLOR : null,
-                    borderRadius: this.secondary ? BorderRadius.circular(50) : null
+                    // color: this.secondary ? PRIMARY_COLOR : null,
+                    // borderRadius: this.secondary ? BorderRadius.circular(50) : null
                 ),
                 child: Center(
                   child: Text(
@@ -90,7 +92,8 @@ class NumButton extends StatelessWidget {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         // fontWeight: FontWeight.bold,
-                        fontSize: 30
+                        fontSize: 30,
+                            color: this.secondary ? secondaryColor : defaultColor
                     ),
             ),
                 )),

@@ -28,6 +28,7 @@ class SettingSection extends StatelessWidget {
               child: Text(
                 this.title,
                 style: TextStyle(
+                  color: Colors.black,
                   fontSize: 12,
                   fontWeight: FontWeight.bold,
                 ),

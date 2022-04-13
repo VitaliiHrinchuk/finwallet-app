@@ -18,9 +18,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
 class ListTransactions extends StatelessWidget {
-  final bool isIncome;
-
-  ListTransactions({required this.isIncome});
+  ListTransactions();
 
   @override
   Widget build(BuildContext context) {
@@ -42,18 +40,19 @@ class ListTransactions extends StatelessWidget {
                 bottom: TabBar(
                   labelColor: Theme.of(context).colorScheme.primary,
                   indicatorColor: Theme.of(context).colorScheme.primary,
+                  indicatorWeight: 3,
                   tabs: [
                     Tab(text: 'By Date'),
                     Tab(text: 'By Category'),
                   ],
                 ),
-                title: isIncome ? Text('Incomes') : Text('Outcomes'),
+                title: Text('Records'),
                 backgroundColor: Colors.white,
               ),
             ];
           },
           body: BlocProvider<TransactionsListCubit>(
-            create: (context) => di<TransactionsListCubit>()..load(isIncome ? TransactionType.DEB : TransactionType.CRE),
+            create: (context) => di<TransactionsListCubit>()..load(),
             child: SafeArea(
               child: BlocBuilder<TransactionsListCubit, TransactionsListState>(
                 builder: (context, state) {
@@ -161,7 +160,7 @@ class ListTransactions extends StatelessWidget {
       String transactionFormattedDate = dateFormat.format(entity.transactionDate);
 
       if (formattedDate == transactionFormattedDate) {
-        sum += entity.baseCurrencyAmount;
+        sum += entity.transactionType == TransactionType.DEB ? entity.baseCurrencyAmount : -entity.baseCurrencyAmount;
       }
 
     });
@@ -174,7 +173,7 @@ class ListTransactions extends StatelessWidget {
 
     entities.forEach((TransactionEntity entity) {
       if (entity.category.slug == slug) {
-        sum += entity.baseCurrencyAmount;
+        sum += entity.transactionType == TransactionType.DEB ? entity.baseCurrencyAmount : -entity.baseCurrencyAmount;
       }
     });
 
