@@ -7,6 +7,7 @@ import 'package:finwallet_app/app/account/pages/widgets/accounts_horizontal_list
 import 'package:finwallet_app/app/account/pages/widgets/app_bar/account_app_bar.dart';
 import 'package:finwallet_app/app/account/pages/widgets/transactions_by_category_chart.dart';
 import 'package:finwallet_app/app/account/pages/widgets/transactions_by_range_chart.dart';
+import 'package:finwallet_app/app/transaction/pages/add_transaction.dart';
 import 'package:finwallet_app/common/constants/colors.dart';
 import 'package:finwallet_app/common/constants/routes.dart';
 import 'package:finwallet_app/common/dependencies.dart';
@@ -16,6 +17,7 @@ import '../../../common/widgets/app_bar/main_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'widgets/account_home_button.dart';
 import 'widgets/section_container.dart';
 
 class AccountsHome extends StatelessWidget {
@@ -48,7 +50,42 @@ class AccountsHome extends StatelessWidget {
             SliverList(
                 delegate: SliverChildListDelegate(
                   [
+                    Container(
+                      child: Row(
+                        children: [
+                          AccountHomeButton(
+                            title: 'Accounts',
+                            icon: Icons.account_balance_wallet,
+                            onTap: (){
+                              Navigator.of(context).push(
+                                MaterialPageRoute(builder: (childContext) {
+                                  return AccountsList();
+                                }),
+                              );
+                            },
+                          ),
+                          AccountHomeButton(
+                            title: 'New Record',
+                            icon: Icons.add,
+                            onTap: (){
+                              Navigator.of(context).push(
+                                MaterialPageRoute(builder: (childContext) {
+                                  return AddTransaction();
+                                }),
+                              );
+                            },
+                          ),
+                          AccountHomeButton(
+                            title: 'Import',
+                            icon: Icons.import_export,
+                            onTap: (){},
+                          )
+                        ],
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      ),
+                      padding: EdgeInsets.all(20),
 
+                    ),
                     SectionContainer(
                         child: BlocProvider(
                           create: (context) => di<AnalyticsCubit<CategoryNodeModel>>()..fetch(),

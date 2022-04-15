@@ -50,26 +50,26 @@ class AccountAppBap extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 80),
-                BlocBuilder<AccountsListCubit, AccountsListState>(
-                  builder: (context, state) {
-                    return IconButton(
-                      iconSize: 20,
-                        onPressed: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(builder: (childContext) {
-                              return BlocProvider<AccountsListCubit>.value(
-                                  value: BlocProvider.of<AccountsListCubit>(
-                                      context),
-                                  child: AccountsList());
-                            }),
-                          );
-                        },
-                        icon: Icon(
-                          Icons.settings,
-                          color: textColor,
-                        ));
-                  },
-                ),
+                // BlocBuilder<AccountsListCubit, AccountsListState>(
+                //   builder: (context, state) {
+                //     return IconButton(
+                //       iconSize: 20,
+                //         onPressed: () {
+                //           Navigator.of(context).push(
+                //             MaterialPageRoute(builder: (childContext) {
+                //               return BlocProvider<AccountsListCubit>.value(
+                //                   value: BlocProvider.of<AccountsListCubit>(
+                //                       context),
+                //                   child: AccountsList());
+                //             }),
+                //           );
+                //         },
+                //         icon: Icon(
+                //           Icons.settings,
+                //           color: textColor,
+                //         ));
+                //   },
+                // ),
               ],
             ),
           ),

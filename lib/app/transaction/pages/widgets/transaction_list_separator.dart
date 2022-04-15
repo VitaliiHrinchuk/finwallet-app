@@ -14,7 +14,11 @@ class TransactionListSeparator extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       // color: Color(0xFFB6E0F9),
-      padding: EdgeInsets.all(10),
+      // decoration: BoxDecoration(
+      //   border: Border(bottom: BorderSide(color: Colors.black))
+      // ),
+      padding: EdgeInsets.only(top: 10, bottom: 10),
+      margin: EdgeInsets.all(10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -22,16 +26,16 @@ class TransactionListSeparator extends StatelessWidget {
             leadingTitle,
             style: TextStyle(
                 fontWeight: FontWeight.bold,
-              // color: Colors.grey.shade400,
-                fontSize: 12
+                color: Colors.black,
+                fontSize: 14
             ),
           ),
           Text(
             trailingTitle,
               style: TextStyle(
                   // fontWeight: FontWeight.bold,
-                  // color: Colors.grey.shade400,
-                fontSize: 12
+                color: Colors.black,
+                fontSize: 14
               ),
           ),
         ],

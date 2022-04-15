@@ -20,7 +20,7 @@ class _MainWrapperState extends State<MainWrapper> {
       'Index 2: School',
       style: optionStyle,
     ),
-    AddTransaction(),
+    // AddTransaction(),
     ListTransactions(),
     Text(
       'Index 2: School',
@@ -52,10 +52,10 @@ class _MainWrapperState extends State<MainWrapper> {
             activeIcon: Icon(Icons.insert_chart_sharp),
             label: 'Statistics',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.add_circle_outline_rounded),
-            label: 'New Record',
-          ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(Icons.add_circle_outline_rounded),
+          //   label: 'New Record',
+          // ),
           BottomNavigationBarItem(
             icon: Icon(Icons.list_outlined),
             activeIcon: Icon(Icons.list),

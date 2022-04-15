@@ -4,6 +4,7 @@ import 'package:finwallet_app/app/auth/bloc/auth/auth_bloc.dart';
 import 'package:finwallet_app/app/category/domain/category_entity.dart';
 import 'package:finwallet_app/app/transaction/cubit/list/transactions_list_cubit.dart';
 import 'package:finwallet_app/app/transaction/domain/transaction_entity.dart';
+import 'package:finwallet_app/app/transaction/pages/add_transaction.dart';
 import 'package:finwallet_app/app/transaction/pages/widgets/empty_transaction_list_placeholder.dart';
 import 'package:finwallet_app/app/transaction/pages/widgets/transaction_list_item.dart';
 import 'package:finwallet_app/app/transaction/pages/widgets/transaction_list_separator.dart';
@@ -69,7 +70,11 @@ class ListTransactions extends StatelessWidget {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            Navigator.of(context).pushNamed(TRANSACTION_ADD_ROUTE);
+            Navigator.of(context).push(
+              MaterialPageRoute(builder: (childContext) {
+                return AddTransaction();
+              }),
+            );
           },
           child: const Icon(Icons.add),
           backgroundColor: Theme.of(context).colorScheme.primary,
@@ -83,7 +88,7 @@ class ListTransactions extends StatelessWidget {
       return EmptyTransactionsListPlaceholder();
     } else {
       return ListView.separated(
-        separatorBuilder: (context, index) => Divider(),
+        separatorBuilder: (context, index) => Container(),
         itemCount: children.length,
         itemBuilder: (context, int index) {
           return children[index];
