@@ -6,8 +6,11 @@ import 'package:finwallet_app/app/account/data/account_data_provider.dart';
 import 'package:finwallet_app/app/account/data/account_repository.dart';
 import 'package:finwallet_app/app/account/domain/account_repository_contract.dart';
 import 'package:finwallet_app/app/account/domain/analytics_models/category_node_model.dart';
+import 'package:finwallet_app/app/account/domain/analytics_models/date_node_model.dart';
+import 'package:finwallet_app/app/account/domain/analytics_type.dart';
 import 'package:finwallet_app/app/account/usecases/create_account.dart';
 import 'package:finwallet_app/app/account/usecases/fetch_summary_by_category.dart';
+import 'package:finwallet_app/app/account/usecases/fetch_summary_by_date.dart';
 import 'package:finwallet_app/app/account/usecases/list_account.dart';
 import 'package:finwallet_app/app/account/usecases/remove_account.dart';
 import 'package:finwallet_app/app/account/usecases/update_account.dart';
@@ -87,10 +90,12 @@ void setupLocator() {
   di.registerLazySingleton<RemoveAccount>(() => RemoveAccount(di(), di()));
   di.registerLazySingleton<ListAccount>(() => ListAccount(di()));
   di.registerLazySingleton<FetchSummaryByCategory>(() => FetchSummaryByCategory(di()));
+  di.registerLazySingleton<FetchSummaryByDate>(() => FetchSummaryByDate(di()));
 
   di.registerFactory<AccountFormCubit>(() => AccountFormCubit());
   di.registerFactory<AccountsListCubit>(() => AccountsListCubit(di()));
-  di.registerFactory<AnalyticsCubit<CategoryNodeModel>>(() => AnalyticsCubit<CategoryNodeModel>(di()));
+  di.registerFactory<AnalyticsCubit<CategoryNodeModel>>(() => AnalyticsCubit<CategoryNodeModel>(AnalyticsType.category, di(), di()));
+  di.registerFactory<AnalyticsCubit<DateNodeModel>>(() => AnalyticsCubit<DateNodeModel>(AnalyticsType.date, di(), di()));
 
   // Transaction ----------
   di.registerLazySingleton<TransactionDataProvider>(() => TransactionDataProvider(di()));

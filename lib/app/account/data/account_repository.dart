@@ -66,8 +66,19 @@ class AccountRepository implements AccountRepositoryContract {
   }
 
   @override
-  Future<List<DateNodeModel>> fetchSummaryByDate(Map<String, dynamic> query) {
-    // TODO: implement fetchSummaryByDate
-    throw UnimplementedError();
+  Future<List<DateNodeModel>> fetchSummaryByDate(Map<String, dynamic> query) async {
+      Map<String, dynamic> params = {
+        ...query,
+        'type': 'date'
+      };
+      Map<String, dynamic> result = await this.dataProvider.fetchAnalytics(params);
+
+      List<dynamic> data = result['data'];
+      List<DateNodeModel> models = data.map((e) => DateNodeModel(
+          date: DateTime.parse(e['date']),
+          sum: double.parse(e['sum'].toString()))
+      ).toList();
+
+      return models;
   }
 }

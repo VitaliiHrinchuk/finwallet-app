@@ -2,6 +2,7 @@ import 'package:finwallet_app/app/account/bloc/account/account_bloc.dart';
 import 'package:finwallet_app/app/account/cubit/analytics/analytics_cubit.dart';
 import 'package:finwallet_app/app/account/cubit/list/accounts_list_cubit.dart';
 import 'package:finwallet_app/app/account/domain/analytics_models/category_node_model.dart';
+import 'package:finwallet_app/app/account/domain/analytics_models/date_node_model.dart';
 import 'package:finwallet_app/app/account/pages/accounts_list.dart';
 import 'package:finwallet_app/app/account/pages/widgets/accounts_horizontal_list.dart';
 import 'package:finwallet_app/app/account/pages/widgets/app_bar/account_app_bar.dart';
@@ -91,6 +92,7 @@ class AccountsHome extends StatelessWidget {
                     padding: EdgeInsets.all(20),
 
                   ),
+                  Divider(),
                   SectionContainer(
                       child: BlocProvider(
                         create: (context) => di<AnalyticsCubit<CategoryNodeModel>>()..fetch(),
@@ -108,8 +110,22 @@ class AccountsHome extends StatelessWidget {
                       title: "Spending this month"
                   ),
                   SectionContainer(
-                      child: TransactionsByRangeChart(),
-                      title: "Spending this month"),
+                      child: BlocProvider(
+                        create: (context) => di<AnalyticsCubit<DateNodeModel>>()..fetch(),
+                        child: BlocBuilder<AnalyticsCubit<DateNodeModel>, AnalyticsState<DateNodeModel>>(
+                          builder: (context, state) {
+                            if (state.loading) {
+                              return LoadingSpinner();
+                            } else {
+                              print(state.models);
+                              return TransactionsByRangeChart(state.models);
+                            }
+
+                          },
+                        ),
+                      ),
+                      title: "Spending this month"
+                  ),
 
                   // SectionContainer(
                   //     child: TransactionsByRangeChart(),

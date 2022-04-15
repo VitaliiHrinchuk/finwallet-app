@@ -52,7 +52,8 @@ class AccountEdit extends StatelessWidget {
                   if (state is AccountError) {
                     showFloatSnackBar(context, state.error ?? "Unknown error");
                   } else if (state is AccountLoaded || state is AccountRemoved) {
-                    Navigator.pushNamed(context, HOME_ROUTE);
+                    Navigator.of(context)
+                        .pushNamedAndRemoveUntil(HOME_ROUTE, (Route<dynamic> route) => false);
                     BlocProvider.of<AccountsListCubit>(context).loadAccounts();
                   }
                 },
