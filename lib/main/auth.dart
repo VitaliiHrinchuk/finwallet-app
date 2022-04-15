@@ -1,68 +1,101 @@
-import 'package:finwallet_app/app/auth/cubit/auth_form_cubit.dart';
+import 'package:finwallet_app/app/account/cubit/list/accounts_list_cubit.dart';
+import 'package:finwallet_app/app/account/pages/account_edit.dart';
+import 'package:finwallet_app/app/account/pages/account_select.dart';
+import 'package:finwallet_app/app/account/pages/accounts_home.dart';
+import 'package:finwallet_app/app/account/pages/accounts_list.dart';
+import 'package:finwallet_app/app/account/pages/widgets/create_account_form.dart';
+import 'package:finwallet_app/app/auth/pages/login.dart';
 import 'package:finwallet_app/app/auth/pages/signup.dart';
-import 'package:finwallet_app/app/auth/pages/widgets/auth_form.dart';
-import 'package:finwallet_app/app/auth/pages/widgets/logo.dart';
+import 'package:finwallet_app/app/category/cubit/list/category_list_cubit.dart';
+import 'package:finwallet_app/app/tag/cubit/list/tag_list_cubit.dart';
+import 'package:finwallet_app/app/transaction/pages/add_transaction.dart';
+import 'package:finwallet_app/app/transaction/pages/list_transactions.dart';
+import 'package:finwallet_app/app/user/pages/user_setup.dart';
+import 'package:finwallet_app/common/constants/colors.dart';
+import 'package:finwallet_app/common/constants/routes.dart';
 import 'package:finwallet_app/common/dependencies.dart';
+import 'package:finwallet_app/main/main_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class Auth extends StatelessWidget {
-  // This widget is the root of your application.
+import '../app/account/pages/account_first.dart';
+
+const RED = 98;
+const GREEN = 0;
+const BLUE = 238;
+const HEX_COLOR = 0xff6200EE;
+const Map<int, Color> color = {
+  50: Color.fromRGBO(RED, GREEN, BLUE, .1),
+  100: Color.fromRGBO(RED, GREEN, BLUE, .2),
+  200: Color.fromRGBO(RED, GREEN, BLUE, .3),
+  300: Color.fromRGBO(RED, GREEN, BLUE, .4),
+  400: Color.fromRGBO(RED, GREEN, BLUE, .5),
+  500: Color.fromRGBO(RED, GREEN, BLUE, .6),
+  600: Color.fromRGBO(RED, GREEN, BLUE, .7),
+  700: Color.fromRGBO(RED, GREEN, BLUE, .8),
+  800: Color.fromRGBO(RED, GREEN, BLUE, .9),
+  900: Color.fromRGBO(RED, GREEN, BLUE, 1),
+};
+
+class Auth extends StatefulWidget {
+  const Auth() : super();
+
+  @override
+  _AuthState createState() => _AuthState();
+}
+
+class _AuthState extends State<Auth> {
+  // final _router = AppRouter();
+  final ThemeData theme = ThemeData(fontFamily: 'OpenSans');
+
+
   @override
   Widget build(BuildContext context) {
 
-    return MaterialApp(
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.deepPurple,
-      ),
-      initialRoute: '/auth',
-      routes: {
-        '/signup': (context) => Signup(),
-        '/auth': (context) => Scaffold(
-            resizeToAvoidBottomInset: false,
-            body: SafeArea(
-              child: Align(
-                  alignment: Alignment.topCenter,
-                  child: Container(
-                    padding: const EdgeInsets.only(left: 17, right: 17),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Logo(),
-                        BlocProvider(
-                          create: (_) => di<AuthFormCubit>(),
-                          child: AuthForm(),
-                        ),
-                        SizedBox(height: 30),
-                        Text("New to the app?",
-                            style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.black.withOpacity(.6))),
-                        SizedBox(height: 8),
-                        SizedBox(
-                          width: double.infinity,
-                          child: ElevatedButton(
-                            onPressed: () =>
-                                {Navigator.pushNamed(context, '/signup')},
-                            child: Text("SIGN UP"),
-                          ),
-                        )
-                      ],
-                    ),
-                  )),
-            ))
-      },
-    );
+    return
+      MaterialApp(
+        title: 'FinWallet',
+        theme: theme.copyWith(
+
+          // primarySwatch: MaterialColor(HEX_COLOR, color),
+          // accentColor: Colors.tealAccent,
+            scaffoldBackgroundColor: Colors.white,
+            colorScheme: theme.colorScheme.copyWith(
+                secondary: Colors.grey.shade300,
+                // background: Color(0xFFF2F3F5),
+                secondaryContainer: Colors.white,
+                primary: Colors.black
+              // primary: Color(0xFF23695E)
+            ),
+            elevatedButtonTheme: ElevatedButtonThemeData(
+                style: ButtonStyle(
+                    shape: MaterialStateProperty.all<OutlinedBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        )))),
+            textTheme: theme.textTheme.copyWith(
+                titleMedium: theme.textTheme.titleMedium?.copyWith(
+                  // color: Colors.grey,
+                    fontWeight: FontWeight.bold)),
+            appBarTheme: theme.appBarTheme.copyWith(
+              backgroundColor: Colors.white,
+              foregroundColor: Colors.black,
+            )),
+        // navigatorKey: Navigators.mainNav,
+        // onGenerateRoute: _router.onGenerateRoute,
+        initialRoute: LOGIN_ROUTE,
+        routes: {
+          LOGIN_ROUTE: (context) => Login(),
+          SIGN_UP_ROUTE: (context) => Signup(),
+
+        },
+
+        // navigatorObservers: [routeObserver],
+      );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 }

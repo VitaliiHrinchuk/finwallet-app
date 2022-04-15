@@ -4,6 +4,8 @@ import 'package:finwallet_app/app/account/domain/analytics_models/category_node_
 import 'package:finwallet_app/app/account/domain/analytics_models/currency_node_model.dart';
 import 'package:finwallet_app/app/account/domain/analytics_models/date_node_model.dart';
 import 'package:finwallet_app/app/account/dto/create_account_dto.dart';
+import 'package:finwallet_app/app/account/dto/update_account_dto.dart';
+import 'package:finwallet_app/app/account/usecases/update_account.dart';
 import '../../../common/http_client/pagination.dart';
 
 import 'account_data_provider.dart';
@@ -24,8 +26,14 @@ class AccountRepository implements AccountRepositoryContract {
   }
 
   @override
-  Future<AccountEntity> update(AccountEntity entity) {
-    return this.dataProvider.update(entity.id, entity.toJson());
+  Future<void> remove(String id) {
+    return this.dataProvider.remove(id);
+  }
+
+  @override
+  Future<AccountEntity> update(UpdateAccountDto dto) {
+    print(dto.toJson());
+    return this.dataProvider.update(dto.id, dto.toJson());
   }
 
   @override
@@ -42,7 +50,11 @@ class AccountRepository implements AccountRepositoryContract {
     Map<String, dynamic> result = await this.dataProvider.fetchAnalytics(params);
     print(result);
     List<dynamic> data = result['data'];
-    List<CategoryNodeModel> models = data.map((e) => CategoryNodeModel(name: e['name'], sum: e['sum'])).toList();
+    List<CategoryNodeModel> models = data.map((e) => CategoryNodeModel(
+        name: e['name'],
+        sum: double.parse(e['sum'].toString()),
+        slug: e['slug'])
+    ).toList();
 
     return models;
   }

@@ -13,8 +13,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../bloc/account/account_bloc.dart';
 
 class AccountEdit extends StatelessWidget {
-  // final AccountEditScreenArguments? arguments;
   final AccountEntity? entity;
+  final AccountBloc _accountBLoc =  di<AccountBloc>();
 
   bool get isEdit => this.entity != null;
 
@@ -24,24 +24,34 @@ class AccountEdit extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: MainDrawer(),
-      appBar: MainAppBar(
-          title: this.isEdit ? 'Edit Account' : 'Create An Account',
-          canGoBack: true
-      ),
-      extendBodyBehindAppBar: true,
-      body: SafeArea(
-        child: Container(
-          padding: EdgeInsets.all(10),
-          child: ContentContainer(
-            child: BlocProvider(
-              create: (_) => di<AccountBloc>(),
+    Widget removeBtn = this.isEdit
+        ? IconButton(
+              onPressed: () => this._showDeleteModal(context, this.entity!.id),
+              icon: Icon(Icons.delete)
+          )
+        : Container();
+
+    return BlocProvider(
+      create: (_) => _accountBLoc,
+      child: Scaffold(
+        drawer: MainDrawer(),
+        appBar: MainAppBar(
+            title: this.isEdit ? 'Edit Account' : 'Create An Account',
+            actions: [
+              removeBtn
+            ],
+            canGoBack: true
+        ),
+        extendBodyBehindAppBar: true,
+        body: SafeArea(
+          child: Container(
+            padding: EdgeInsets.all(10),
+            child: ContentContainer(
               child: BlocListener<AccountBloc, AccountState>(
                 listener: (context, state) {
                   if (state is AccountError) {
                     showFloatSnackBar(context, state.error ?? "Unknown error");
-                  } else if (state is AccountLoaded) {
+                  } else if (state is AccountLoaded || state is AccountRemoved) {
                     Navigator.pushNamed(context, HOME_ROUTE);
                     BlocProvider.of<AccountsListCubit>(context).loadAccounts();
                   }
@@ -52,21 +62,49 @@ class AccountEdit extends StatelessWidget {
                   name: entity?.name,
                   hexColor: entity?.hexColor,
                   isEdit: isEdit,
+                  id: entity?.id
                 ),
               ),
             ),
           ),
         ),
       ),
-    );;
+    );
   }
+
+  Future<void> _showDeleteModal(context, String id) {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Remove Account'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: const <Widget>[
+                Text('Are you sure you want to remove this account?'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Submit'),
+              onPressed: () {
+                _accountBLoc.add(AccountRemove(id: id));
+              },
+            ),
+            TextButton(
+              child: const Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
 }
 
 
-class AccountEditScreenArguments {
-  final String? id;
-
-  AccountEditScreenArguments({
-    this.id
-  });
-}

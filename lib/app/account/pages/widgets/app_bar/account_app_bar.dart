@@ -20,7 +20,7 @@ class AccountAppBap extends StatelessWidget {
         .top;
 
     return Container(
-      padding: new EdgeInsets.only(top: statusBarHeight),
+      padding: new EdgeInsets.only(top: statusBarHeight, left: 15, right: 15),
       // height: statusBarHeight + appBarHeight,
       decoration: BoxDecoration(
 //        color: PRIMARY_COLOR,
@@ -36,7 +36,7 @@ class AccountAppBap extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            padding: EdgeInsets.only(right: 20, left: 20),
+            padding: EdgeInsets.only(right: 20),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -76,6 +76,7 @@ class AccountAppBap extends StatelessWidget {
           // AccountsHorizontalList(),
           Container(
             height: 130,
+            // margin: EdgeInsets.only(left: 10),
             child: AccountsHorizontalList(),
           ),
 

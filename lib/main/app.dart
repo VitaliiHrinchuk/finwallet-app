@@ -51,23 +51,21 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   // final _router = AppRouter();
   final ThemeData theme = ThemeData(fontFamily: 'OpenSans');
-  final CategoryListCubit _categoryListCubit = di<CategoryListCubit>();
-  final TagListCubit _tagListCubit = di<TagListCubit>();
+  // final CategoryListCubit _categoryListCubit = di<CategoryListCubit>();
+  // final TagListCubit _tagListCubit = di<TagListCubit>();
 
   @override
   Widget build(BuildContext context) {
-    _categoryListCubit.load(null);
-    _tagListCubit.load();
     return MultiBlocProvider(
       providers: [
         BlocProvider<AccountsListCubit>(
           create: (context) => di<AccountsListCubit>()..loadAccounts(),
         ),
         BlocProvider<CategoryListCubit>(
-          create: (context) => _categoryListCubit
+          create: (context) => di<CategoryListCubit>()
         ),
         BlocProvider<TagListCubit>(
-          create: (context) => _tagListCubit,
+          create: (context) => di<TagListCubit>(),
         ),
       ],
       child: MaterialApp(
@@ -104,10 +102,10 @@ class _AppState extends State<App> {
         initialRoute: widget.initialRoute,
         routes: {
           HOME_ROUTE: (context) => MainWrapper(),
-          LOGIN_ROUTE: (context) => Login(),
-          SIGN_UP_ROUTE: (context) => Signup(),
-          SETUP_USER_ROUTE: (context) => SetupUserPage(),
-          CREATE_ACCOUNT_ROUTE: (context) => AccountFirst(),
+          // LOGIN_ROUTE: (context) => Login(),
+          // SIGN_UP_ROUTE: (context) => Signup(),
+          // SETUP_USER_ROUTE: (context) => SetupUserPage(),
+          // CREATE_ACCOUNT_ROUTE: (context) => AccountFirst(),
           // ACCOUNTS_LIST_ROUTE: (context) => AccountsList(),
           // // ACCOUNTS_EDIT_ROUTE: (context) => AccountEdit(
           // //   arguments: ModalRoute.of(context)?.settings.arguments as AccountEditScreenArguments,

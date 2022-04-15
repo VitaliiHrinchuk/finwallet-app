@@ -38,7 +38,7 @@ class AccountEntity extends Equatable {
       name: json['name'] ?? "",
       amount: double.parse(json['amount'].toString()),
       currency: CURRENCIES.firstWhere((element) => element.code == json['currency']),
-      hexColor: json['hexColor'] ?? "",
+      hexColor: json['hexColor'] ?? "000000",
       createdAt:  json['createdAt'] != null ? DateTime.parse(json['createdAt']) : null,
       updatedAt: json['updatedAt'] != null ? DateTime.parse(json['updatedAt']) : null,
     );

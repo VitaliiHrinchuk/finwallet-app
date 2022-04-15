@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:finwallet_app/common/constants/currencies.dart';
+import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
 part 'account_form_state.dart';
@@ -19,8 +20,8 @@ class AccountFormCubit extends Cubit<AccountFormState> {
     emit(state.copyWith(currency: currency));
   }
 
-  void setHexColor(String? hexColor){
-    emit(state.copyWith(hexColor: hexColor));
+  void setHexColor(Color? color){
+    emit(state.copyWith(color: color));
   }
 
 }

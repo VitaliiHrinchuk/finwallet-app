@@ -17,15 +17,13 @@ class AnalyticsCubit<T> extends Cubit<AnalyticsState<T>> {
     try {
       print(T.runtimeType);
       // if (typeOf(T) == CategoryNodeModel) {
-        print("TTT");
-        print(T);
-        print(T is CategoryNodeModel);
+
         emit(state.copyWith(loading: true));
       print("fetching");
         List<CategoryNodeModel> models = await this._fetchSummaryByCategory(
             QueryParams({
-              "startDate": DateTime.utc(2022, 3, 1).toIso8601String(),
-              "endDate": DateTime.utc(2022, 4, 1).toIso8601String(),
+              "startDate": DateTime.utc(2022, 4, 1).toIso8601String(),
+              "endDate": DateTime.utc(2022, 5, 1).toIso8601String(),
               "transactionType": "CRE"
             })
         );

@@ -43,11 +43,11 @@ class ListTransactions extends StatelessWidget {
                   indicatorColor: Theme.of(context).colorScheme.primary,
                   indicatorWeight: 3,
                   tabs: [
-                    Tab(text: 'By Date'),
-                    Tab(text: 'By Category'),
+                    const Tab(text: 'By Date'),
+                    const Tab(text: 'By Category'),
                   ],
                 ),
-                title: Text('Records'),
+                title: const Text('Records'),
                 backgroundColor: Colors.white,
               ),
             ];
@@ -55,16 +55,21 @@ class ListTransactions extends StatelessWidget {
           body: BlocProvider<TransactionsListCubit>(
             create: (context) => di<TransactionsListCubit>()..load(),
             child: SafeArea(
-              child: BlocBuilder<TransactionsListCubit, TransactionsListState>(
-                builder: (context, state) {
-                  return TabBarView(
-                    children: [
-                      this._buildList(context, this._buildListByDate(context, state.entities)),
-                      this._buildList(context, this._buildListByCategory(context, state.entities)),
-                    ],
-                  );
-                },
-              ),
+              child: TabBarView(
+                children: [
+                  BlocBuilder<TransactionsListCubit, TransactionsListState>(
+                    builder: (context, state) {
+                      return this._buildList(context, this._buildListByDate(context, state.entities));
+                    },
+                  ),
+                  BlocBuilder<TransactionsListCubit, TransactionsListState>(
+                    builder: (context, state) {
+                      return this._buildList(context, this._buildListByCategory(context, state.entities));
+                    },
+                  )
+                  ,
+                ],
+              )
             ),
           ),
         ),
@@ -87,8 +92,8 @@ class ListTransactions extends StatelessWidget {
     if (children.length == 0) {
       return EmptyTransactionsListPlaceholder();
     } else {
-      return ListView.separated(
-        separatorBuilder: (context, index) => Container(),
+      return ListView.builder(
+        // separatorBuilder: (context, index) => Container(),
         itemCount: children.length,
         itemBuilder: (context, int index) {
           return children[index];

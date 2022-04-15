@@ -5,6 +5,14 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
 class AccountColorPicker extends StatelessWidget {
 
+  final Function(Color? color) onChange;
+  final Color? initialValue;
+
+  AccountColorPicker({
+    required this.onChange,
+    this.initialValue
+  });
+
   Widget pickerItemBuilder(Color color, bool isCurrentColor, void Function() changeColor) {
     return Container(
       // margin: const EdgeInsets.all(8),
@@ -59,9 +67,9 @@ class AccountColorPicker extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: BlockPicker(
-        pickerColor: Colors.white,
+        pickerColor: this.initialValue != null ? this.initialValue! : ACCOUNTS_COLORS[0],
         onColorChanged: (Color color) {
-          // Navigator.pop(context);
+          this.onChange(color);
         },
         availableColors: ACCOUNTS_COLORS,
         layoutBuilder: pickerLayoutBuilder,

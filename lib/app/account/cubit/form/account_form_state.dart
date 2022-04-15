@@ -4,21 +4,21 @@ class AccountFormState {
   final String? name;
   final double? amount;
   final Currency? currency;
-  final String? hexColor;
+  final Color? color;
 
   AccountFormState({
     this.name,
     this.amount,
     this.currency,
-    this.hexColor,
+    this.color,
   });
 
-  AccountFormState copyWith({name, amount, currency, hexColor}) =>
+  AccountFormState copyWith({name, amount, currency, color}) =>
       AccountFormState(
           name: name ?? this.name,
           amount: amount ?? this.amount,
           currency: currency ?? this.currency,
-          hexColor: hexColor ?? this.hexColor
+          color: color ?? this.color
       );
 }
 

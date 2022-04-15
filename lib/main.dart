@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:finwallet_app/app/auth/pages/login.dart';
 import 'package:finwallet_app/app/user/bloc/user/user_bloc.dart';
 import 'package:finwallet_app/main/loading.dart';
 import 'package:flutter/foundation.dart';
@@ -55,15 +56,13 @@ class _AppState extends State<Wrapper> {
             } else {
               navigator.currentState?.pushNamedAndRemoveUntil(SETUP_USER_ROUTE, (route) => false);
             }
-          } else if (state is AuthInitial) {
-            navigator.currentState?.pushNamedAndRemoveUntil(LOGIN_ROUTE,  (route) => false);
           }
         },
         builder: (context, state) {
           if (state is AuthAuthenticated) {
             return this._buildApp(context, HOME_ROUTE);
           } else {
-            return this._buildApp(context, LOGIN_ROUTE);
+            return Auth();
           }
         },
       ),

@@ -5,6 +5,7 @@ import 'package:finwallet_app/app/account/cubit/form/account_form_cubit.dart';
 import 'package:finwallet_app/app/account/usecases/create_account.dart';
 import 'package:finwallet_app/common/constants/currencies.dart';
 import 'package:finwallet_app/common/dependencies.dart';
+import 'package:finwallet_app/common/utils/hex_to_color_widget.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import '../../../../common/widgets/input/currency_picker.dart';
 import 'package:finwallet_app/common/widgets/loading_button_content.dart';
@@ -15,25 +16,21 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'account_color_picker.dart';
 
-const List<String> RANDOM_COLORS = [
-  '304ffe',
-  'aa00ff',
-  '00c853'
-];
-
 class CreateAccountForm extends StatelessWidget {
   final String? name;
   final double? amount;
   final Currency? currency;
   final String? hexColor;
   final bool isEdit;
+  final String? id;
 
   CreateAccountForm({
-      this.name,
-      this.amount,
-      this.currency,
-      this.hexColor,
-      required this.isEdit
+    this.name,
+    this.amount,
+    this.currency,
+    this.hexColor,
+    required this.isEdit,
+    this.id
   });
 
   @override
@@ -43,7 +40,7 @@ class CreateAccountForm extends StatelessWidget {
         return BlocProvider(
           create: (_) {
             AccountFormCubit form = di<AccountFormCubit>();
-            
+
             if (this.name != null) {
               form.setName(this.name);
             }
@@ -54,11 +51,12 @@ class CreateAccountForm extends StatelessWidget {
             if (this.currency != null) {
               form.setCurrency(this.currency);
             }
-            if (this.hexColor != hexColor) {
-              form.setHexColor(this.name);
+            if (this.hexColor != null) {
+
+              form.setHexColor(hexToColorWidget(this.hexColor!));
             }
 
-            
+
             return form;
           },
           child: Container(
@@ -78,10 +76,10 @@ class CreateAccountForm extends StatelessWidget {
                                     value);
                               },
                               decoration: MainInputDecoration(
-                                  errorText: (state is AccountValidationError)
-                                      ? state.errors["name"]
-                                      : null,
-                                  labelText: "Name",
+                                errorText: (state is AccountValidationError)
+                                    ? state.errors["name"]
+                                    : null,
+                                labelText: "Name",
                               ),
                             );
                           }),
@@ -92,7 +90,8 @@ class CreateAccountForm extends StatelessWidget {
                           builder: (formContext, formState) {
                             return TextFormField(
                               keyboardType: TextInputType.number,
-                              initialValue: formState.amount?.toStringAsFixed(2),
+                              initialValue: formState.amount?.toStringAsFixed(
+                                  2),
                               enableSuggestions: false,
                               autocorrect: false,
                               readOnly: this.isEdit,
@@ -105,10 +104,10 @@ class CreateAccountForm extends StatelessWidget {
                                 );
                               },
                               decoration: MainInputDecoration(
-                                  errorText: (state is AccountValidationError)
-                                      ? state.errors["amount"]
-                                      : null,
-                                  labelText: "Amount",
+                                errorText: (state is AccountValidationError)
+                                    ? state.errors["amount"]
+                                    : null,
+                                labelText: "Amount",
                               ),
                             );
                           }
@@ -119,7 +118,6 @@ class CreateAccountForm extends StatelessWidget {
                       ),
                       BlocBuilder<AccountFormCubit, AccountFormState>(
                           builder: (formContext, formState) {
-
                             return CurrencyPicker(
                                 label: "Base Currency",
                                 readOnly: this.isEdit,
@@ -128,8 +126,8 @@ class CreateAccountForm extends StatelessWidget {
                                         .read<AccountFormCubit>()
                                         .setCurrency(currency),
                                 errorText: (state is AccountValidationError)
-                                            ? state.errors["currency"]
-                                            : null,
+                                    ? state.errors["currency"]
+                                    : null,
                                 value: formState.currency
                             );
                           }),
@@ -140,13 +138,30 @@ class CreateAccountForm extends StatelessWidget {
                         padding: EdgeInsets.only(left: 5),
                         child: Text(
                           "Pick A Color",
-                          style: Theme.of(context).textTheme.titleMedium,
+                          style: Theme
+                              .of(context)
+                              .textTheme
+                              .titleMedium,
                         ),
                       ),
                       SizedBox(
                         height: 18,
                       ),
-                      AccountColorPicker(),
+                      BlocBuilder<AccountFormCubit, AccountFormState>(
+                        builder: (formContext, state) {
+                          Color? initialValue = state.color != null
+                              ? state.color
+                              : null;
+                          return AccountColorPicker(
+                            initialValue: initialValue,
+                            onChange: (Color? color) {
+                              formContext
+                                  .read<AccountFormCubit>()
+                                  .setHexColor(color);
+                            } ,
+                          );
+                        },
+                      ),
                       Expanded(child: Container()),
                       BlocBuilder<AccountFormCubit, AccountFormState>(
                         builder: (formContext, formState) {
@@ -180,13 +195,20 @@ class CreateAccountForm extends StatelessWidget {
   }
 
   void dispatchCreateAccount(context, AccountFormState state) {
-    final _random = new Random();
+    if (this.isEdit) {
+      BlocProvider.of<AccountBloc>(context).add(AccountUpdate(
+        name: state.name,
+        id: this.id!,
+        hexColor: state.color != null ? widgetColorToHex(state.color!) : null,
+      ));
+    } else {
+      BlocProvider.of<AccountBloc>(context).add(AccountCreate(
+        name: state.name,
+        amount: state.amount,
+        currency: state.currency?.code,
+        hexColor: state.color != null ? widgetColorToHex(state.color!) : null,
+      ));
+    }
 
-    BlocProvider.of<AccountBloc>(context).add(AccountCreate(
-      name: state.name,
-      amount: state.amount,
-      currency: state.currency?.code,
-      hexColor: RANDOM_COLORS[_random.nextInt(RANDOM_COLORS.length)],
-    ));
   }
 }

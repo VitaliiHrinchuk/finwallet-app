@@ -1,9 +1,14 @@
+import 'package:finwallet_app/app/account/cubit/list/accounts_list_cubit.dart';
 import 'package:finwallet_app/app/account/pages/accounts_home.dart';
 import 'package:finwallet_app/app/account/pages/accounts_list.dart';
+import 'package:finwallet_app/app/category/cubit/list/category_list_cubit.dart';
+import 'package:finwallet_app/app/tag/cubit/list/tag_list_cubit.dart';
 import 'package:finwallet_app/app/transaction/pages/add_transaction.dart';
 import 'package:finwallet_app/app/transaction/pages/list_transactions.dart';
 import 'package:finwallet_app/common/constants/colors.dart';
+import 'package:finwallet_app/common/dependencies.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MainWrapper extends StatefulWidget {
   @override
@@ -17,13 +22,13 @@ class _MainWrapperState extends State<MainWrapper> {
   List<Widget> _widgetOptions = <Widget>[
     AccountsHome(),
     Text(
-      'Index 2: School',
+      'Statistics',
       style: optionStyle,
     ),
     // AddTransaction(),
     ListTransactions(),
     Text(
-      'Index 2: School',
+      'Settings',
       style: optionStyle,
     ),
   ];
@@ -36,6 +41,8 @@ class _MainWrapperState extends State<MainWrapper> {
 
   @override
   Widget build(BuildContext context) {
+    BlocProvider.of<CategoryListCubit>(context).load(null);
+    BlocProvider.of<TagListCubit>(context).load();
     return Scaffold(
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),

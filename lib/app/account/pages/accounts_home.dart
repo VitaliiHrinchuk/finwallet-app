@@ -8,6 +8,7 @@ import 'package:finwallet_app/app/account/pages/widgets/app_bar/account_app_bar.
 import 'package:finwallet_app/app/account/pages/widgets/transactions_by_category_chart.dart';
 import 'package:finwallet_app/app/account/pages/widgets/transactions_by_range_chart.dart';
 import 'package:finwallet_app/app/transaction/pages/add_transaction.dart';
+import 'package:finwallet_app/app/transaction/pages/list_transactions.dart';
 import 'package:finwallet_app/common/constants/colors.dart';
 import 'package:finwallet_app/common/constants/routes.dart';
 import 'package:finwallet_app/common/dependencies.dart';
@@ -31,89 +32,92 @@ class AccountsHome extends StatelessWidget {
       // appBar: MainAppBar(
       //   title: "Home",
       // ),
-      body: MultiBlocProvider(
-        providers: [
-          BlocProvider(create: (context) => di<AccountBloc>()),
-        ],
-        child: CustomScrollView(
-          // padding: EdgeInsets.only(left: 10, right: 10),
-          slivers: [
-            SliverAppBar(
-              // title: Container(child: Text("test"),),
-              elevation: 0,
-              // pinned: true,
-              expandedHeight: 250.0,
-              flexibleSpace: FlexibleSpaceBar(
-                background: AccountAppBap(),
-              ),
+      body: CustomScrollView(
+        // padding: EdgeInsets.only(left: 10, right: 10),
+        slivers: [
+          SliverAppBar(
+            // title: Container(child: Text("test"),),
+            elevation: 0,
+            // pinned: true,
+            expandedHeight: 250.0,
+            flexibleSpace: FlexibleSpaceBar(
+              background: AccountAppBap(),
             ),
-            SliverList(
-                delegate: SliverChildListDelegate(
-                  [
-                    Container(
-                      child: Row(
-                        children: [
-                          AccountHomeButton(
-                            title: 'Accounts',
-                            icon: Icons.account_balance_wallet,
-                            onTap: (){
-                              Navigator.of(context).push(
-                                MaterialPageRoute(builder: (childContext) {
-                                  return AccountsList();
-                                }),
-                              );
-                            },
-                          ),
-                          AccountHomeButton(
-                            title: 'New Record',
-                            icon: Icons.add,
-                            onTap: (){
-                              Navigator.of(context).push(
-                                MaterialPageRoute(builder: (childContext) {
-                                  return AddTransaction();
-                                }),
-                              );
-                            },
-                          ),
-                          AccountHomeButton(
-                            title: 'Import',
-                            icon: Icons.import_export,
-                            onTap: (){},
-                          )
-                        ],
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      ),
-                      padding: EdgeInsets.all(20),
-
-                    ),
-                    SectionContainer(
-                        child: BlocProvider(
-                          create: (context) => di<AnalyticsCubit<CategoryNodeModel>>()..fetch(),
-                          child: BlocBuilder<AnalyticsCubit<CategoryNodeModel>, AnalyticsState<CategoryNodeModel>>(
-                            builder: (context, state) {
-                              if (state.loading) {
-                                return LoadingSpinner();
-                              } else {
-                                return TransactionsByCategoryChart(state.models);
-                              }
-
-                            },
-                          ),
+          ),
+          SliverList(
+              delegate: SliverChildListDelegate(
+                [
+                  Container(
+                    child: Row(
+                      children: [
+                        AccountHomeButton(
+                          title: 'Accounts',
+                          icon: Icons.account_balance_wallet,
+                          onTap: (){
+                            Navigator.of(context).push(
+                              MaterialPageRoute(builder: (childContext) {
+                                return AccountsList();
+                              }),
+                            );
+                          },
                         ),
-                        title: "Spending this month"
-                    ),
-                    SectionContainer(
-                        child: TransactionsByRangeChart(),
-                        title: "Spending this month"),
+                        AccountHomeButton(
+                          title: 'New Record',
+                          icon: Icons.add,
+                          onTap: (){
+                            Navigator.of(context).push(
+                              MaterialPageRoute(builder: (childContext) {
+                                return AddTransaction();
+                              }),
 
-                    SectionContainer(
-                        child: TransactionsByRangeChart(),
-                        title: "Spending this month"),
-                  ]
-                )
-            )
-          ]
-        ),
+                            );
+                          },
+                        ),
+                        AccountHomeButton(
+                          title: 'Import',
+                          icon: Icons.import_export,
+                          onTap: (){
+
+                          },
+                        ),
+                        AccountHomeButton(
+                          title: 'Export',
+                          icon: Icons.picture_as_pdf,
+                          onTap: (){},
+                        )
+                      ],
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    ),
+                    padding: EdgeInsets.all(20),
+
+                  ),
+                  SectionContainer(
+                      child: BlocProvider(
+                        create: (context) => di<AnalyticsCubit<CategoryNodeModel>>()..fetch(),
+                        child: BlocBuilder<AnalyticsCubit<CategoryNodeModel>, AnalyticsState<CategoryNodeModel>>(
+                          builder: (context, state) {
+                            if (state.loading) {
+                              return LoadingSpinner();
+                            } else {
+                              return TransactionsByCategoryChart(state.models);
+                            }
+
+                          },
+                        ),
+                      ),
+                      title: "Spending this month"
+                  ),
+                  SectionContainer(
+                      child: TransactionsByRangeChart(),
+                      title: "Spending this month"),
+
+                  // SectionContainer(
+                  //     child: TransactionsByRangeChart(),
+                  //     title: "Spending this month"),
+                ]
+              )
+          )
+        ]
       ),
       // floatingActionButton: FloatingActionButton(
       //   onPressed: () {

@@ -105,7 +105,7 @@ class HttpClient {
     return new Uri(
       scheme: this.scheme,
       host: baseUrl,
-      port: kDebugMode ? 3000 : null,
+      port: kDebugMode ? 3000 : 3000,
       path: path,
       queryParameters: query,
     );

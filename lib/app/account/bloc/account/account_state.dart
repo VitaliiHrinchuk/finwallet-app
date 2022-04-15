@@ -7,6 +7,8 @@ class AccountInitial extends AccountState {}
 
 class AccountLoading extends AccountState {}
 
+class AccountRemoved extends AccountState {}
+
 class AccountLoaded extends AccountState {
   final AccountEntity account;
 

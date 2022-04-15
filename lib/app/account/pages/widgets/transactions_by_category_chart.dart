@@ -1,29 +1,53 @@
 import 'package:finwallet_app/app/account/domain/analytics_models/category_node_model.dart';
+import 'package:finwallet_app/app/category/utils/category_icon_settings.dart';
+import 'package:finwallet_app/app/category/utils/default_categories_list.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
 
-class TransactionsByCategoryChart extends StatelessWidget {
-  SelectionBehavior? selectionBehavior = SelectionBehavior(enable: true);
+class TransactionsByCategoryChart extends StatefulWidget {
   final List<CategoryNodeModel> nodes;
 
   TransactionsByCategoryChart(this.nodes);
 
   @override
+  State<TransactionsByCategoryChart> createState() => _TransactionsByCategoryChartState();
+}
+
+class _TransactionsByCategoryChartState extends State<TransactionsByCategoryChart> {
+  SelectionBehavior? selectionBehavior = SelectionBehavior(enable: true);
+  CategoryNodeModel? selected;
+
+  @override
   Widget build(BuildContext context) {
-    print(this.nodes);
+    print(this.widget.nodes);
+
+    double sum = _calculateTotal();
+
     return Container(
       child: SfCircularChart(
           onSelectionChanged: (SelectionArgs args) {
-            // print("dsadas");
-            // print(this.nodes[args.pointIndex].name);
+            print(args.pointIndex);
+            setState(() {
+              CategoryNodeModel newSelected = this.widget.nodes[args.pointIndex];
+              if (selected != null && selected?.name == newSelected.name) {
+                selected = null;
+              } else {
+                selected = this.widget.nodes[args.pointIndex];
+              }
 
+            });
           },
           annotations: <CircularChartAnnotation>[
 
             CircularChartAnnotation(
-                widget: const Text("22222 UAH")
+                widget: Text(
+                    sum.toStringAsFixed(2) + " USD",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold
+                    ),
+                )
             )
           ],
           // legend: Legend(
@@ -37,10 +61,18 @@ class TransactionsByCategoryChart extends StatelessWidget {
                 explode: true,
                 explodeOffset: '20%',
                 innerRadius: '60%',
-                dataSource: this.nodes,
+                dataSource: this.widget.nodes,
                 xValueMapper: (CategoryNodeModel data, _) => data.name,
                 yValueMapper: (CategoryNodeModel data, _) => double.parse(data.sum.toStringAsFixed(2)),
                 dataLabelMapper: (CategoryNodeModel data, _) => data.name,
+                pointColorMapper: (CategoryNodeModel data, _) {
+                  CategoryIconSettings settings =
+                    DEFAULT_CATEGORIES_ICONS.containsKey(data.slug)
+                        ? DEFAULT_CATEGORIES_ICONS[data.slug]!
+                        : DEFAULT_CATEGORIES_ICONS['other']!;
+
+                  return settings.color;
+                },
                 dataLabelSettings: const DataLabelSettings(
                     overflowMode: OverflowMode.hide,
                     isVisible: true,
@@ -50,5 +82,17 @@ class TransactionsByCategoryChart extends StatelessWidget {
             )
           ]),
     );
+  }
+
+  double _calculateTotal() {
+    double sum = 0;
+
+    if (this.selected != null) {
+      return this.selected!.sum;
+    }
+
+    this.widget.nodes.forEach((element) => sum += element.sum);
+
+    return sum;
   }
 }

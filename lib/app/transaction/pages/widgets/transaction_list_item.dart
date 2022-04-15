@@ -23,11 +23,11 @@ class TransactionListItem extends StatelessWidget {
       title: Row(
         children: [
           Text(entity.category.name),
-          SizedBox(width: 5,),
+          const SizedBox(width: 5,),
           Text(
             tags,
             overflow: TextOverflow.ellipsis,
-            style: TextStyle(
+            style: const TextStyle(
                 fontSize: 12,
                 color: Colors.grey
             ),

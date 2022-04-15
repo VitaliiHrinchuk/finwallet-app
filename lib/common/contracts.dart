@@ -67,8 +67,8 @@ abstract class AbstractHttpDataProvider<T> {
   }
 
   Future<T> update(String id, Map<String, dynamic> body) async {
-    Uri uri = this.generateUri(path: this.path + id);
-
+    Uri uri = this.generateUri(path: this.path + '/' + id);
+    print(uri);
     Map<String, dynamic> result = await this.client.patch(uri, body: body);
 
     return fromJSON(result);
@@ -76,14 +76,14 @@ abstract class AbstractHttpDataProvider<T> {
 
   Future<T> create(Map<String, dynamic> body) async {
     Uri uri = this.generateUri(path: this.path);
-    print(uri);
+
     Map<String, dynamic> result = await this.client.post(uri, body: body);
 
     return fromJSON(result);
   }
 
   Future<void> remove(String id) async {
-    Uri uri = this.generateUri(path: this.path + id);
+    Uri uri = this.generateUri(path: this.path + '/' + id);
 
     await this.client.delete(uri);
   }
