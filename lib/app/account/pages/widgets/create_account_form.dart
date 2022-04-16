@@ -45,7 +45,7 @@ class CreateAccountForm extends StatelessWidget {
               form.setName(this.name);
             }
             if (this.amount != null) {
-              print(this.amount);
+
               form.setAmount(this.amount);
             }
             if (this.currency != null) {

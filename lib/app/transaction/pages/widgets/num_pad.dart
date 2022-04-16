@@ -92,7 +92,7 @@ class NumButton extends StatelessWidget {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         // fontWeight: FontWeight.bold,
-                        fontSize: 25,
+                        fontSize: 23,
                             color: this.secondary ? secondaryColor : defaultColor
                     ),
             ),

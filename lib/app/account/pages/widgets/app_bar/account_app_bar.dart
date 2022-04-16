@@ -1,4 +1,5 @@
 import 'package:finwallet_app/app/account/cubit/list/accounts_list_cubit.dart';
+import 'package:finwallet_app/app/account/domain/account_entity.dart';
 import 'package:finwallet_app/app/account/pages/accounts_list.dart';
 import 'package:finwallet_app/app/account/pages/widgets/account_card.dart';
 import 'package:finwallet_app/app/account/pages/widgets/accounts_horizontal_list.dart';
@@ -6,10 +7,21 @@ import 'package:finwallet_app/common/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class AccountAppBap extends StatelessWidget {
+class AccountAppBap extends StatefulWidget {
+  final Function(AccountEntity? account) onAccountSelect;
 
+  AccountAppBap({
+    required this.onAccountSelect
+  });
+
+  @override
+  State<AccountAppBap> createState() => _AccountAppBapState();
+}
+
+class _AccountAppBapState extends State<AccountAppBap> {
   final double appBarHeight = 40.0;
   final Color textColor = Colors.black;
+  AccountEntity? selectedAccount;
 
   @override
   Widget build(BuildContext context) {
@@ -50,26 +62,6 @@ class AccountAppBap extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 80),
-                // BlocBuilder<AccountsListCubit, AccountsListState>(
-                //   builder: (context, state) {
-                //     return IconButton(
-                //       iconSize: 20,
-                //         onPressed: () {
-                //           Navigator.of(context).push(
-                //             MaterialPageRoute(builder: (childContext) {
-                //               return BlocProvider<AccountsListCubit>.value(
-                //                   value: BlocProvider.of<AccountsListCubit>(
-                //                       context),
-                //                   child: AccountsList());
-                //             }),
-                //           );
-                //         },
-                //         icon: Icon(
-                //           Icons.settings,
-                //           color: textColor,
-                //         ));
-                //   },
-                // ),
               ],
             ),
           ),
@@ -77,7 +69,15 @@ class AccountAppBap extends StatelessWidget {
           Container(
             height: 130,
             // margin: EdgeInsets.only(left: 10),
-            child: AccountsHorizontalList(),
+            child: AccountsHorizontalList(
+              onAccountSelect: (AccountEntity? entity) {
+                setState(() {
+                  selectedAccount = entity;
+                });
+                widget.onAccountSelect(entity);
+              },
+              selectedAccount: selectedAccount,
+            ),
           ),
 
         ],

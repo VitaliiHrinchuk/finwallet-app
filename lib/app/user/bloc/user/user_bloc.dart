@@ -27,8 +27,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
     try {
       UserEntity user = await this.fetchUser(EmptyParams());
-      print("fetch");
-      print(user.email);
+
       if (user.userConfigured) {
         emit(UserLoaded(user));
       } else {

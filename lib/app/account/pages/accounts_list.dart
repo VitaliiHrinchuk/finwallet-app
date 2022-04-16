@@ -26,7 +26,7 @@ class AccountsList extends StatelessWidget {
           ),
           child: BlocBuilder<AccountsListCubit, AccountsListState>(
             builder: (context, state) {
-              print(state);
+
               return ListView.builder(
                 itemCount: state.entities.length,
                 itemBuilder: (context, i) {

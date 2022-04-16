@@ -1,4 +1,5 @@
 
+import 'package:finwallet_app/common/constants/colors.dart';
 import 'package:finwallet_app/common/constants/currencies.dart';
 import 'package:finwallet_app/common/pages/currency_select.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,10 @@ class CurrencyButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 60,
+
+
       child: FittedBox(
+        clipBehavior: Clip.hardEdge,
         child: TextButton(
           onPressed: ()  {
             _navigateAndSelectCurrency(context);
@@ -25,18 +29,21 @@ class CurrencyButton extends StatelessWidget {
           style: TextButton.styleFrom(
             elevation: 0,
 
+            backgroundColor: SECONDARY_COLOR,
             shape: CircleBorder(
-              side: BorderSide(
-                color: Colors.black,
-                width: 2
-              )
+
+              // side: BorderSide(
+              //   color: Colors.black,
+              //   width: 2
+              // )
             ),
             padding: EdgeInsets.all(20),
           ),
           child: Text(
             this.value.code,
             style: TextStyle(
-              color: Colors.black
+              color: Colors.black,
+              fontWeight: FontWeight.bold
             ),
           ),
         ),

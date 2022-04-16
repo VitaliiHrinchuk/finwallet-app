@@ -18,8 +18,7 @@ class CreateTransaction extends Interactor<Future<TransactionEntity>, CreateTran
   Future<TransactionEntity> call(CreateTransactionParams params) {
     try {
       this.validate(params);
-      print("tags");
-      print(params.dto.tags.map((e) => e.slug).toList());
+
       return this.transactions.create({
         "categorySlug": params.dto.category.slug,
         "accountId": params.dto.account.id,

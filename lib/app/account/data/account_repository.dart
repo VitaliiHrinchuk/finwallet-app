@@ -32,7 +32,6 @@ class AccountRepository implements AccountRepositoryContract {
 
   @override
   Future<AccountEntity> update(UpdateAccountDto dto) {
-    print(dto.toJson());
     return this.dataProvider.update(dto.id, dto.toJson());
   }
 
@@ -48,7 +47,7 @@ class AccountRepository implements AccountRepositoryContract {
       'type': 'category'
     };
     Map<String, dynamic> result = await this.dataProvider.fetchAnalytics(params);
-    print(result);
+
     List<dynamic> data = result['data'];
     List<CategoryNodeModel> models = data.map((e) => CategoryNodeModel(
         name: e['name'],

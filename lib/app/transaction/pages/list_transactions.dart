@@ -53,7 +53,7 @@ class ListTransactions extends StatelessWidget {
             ];
           },
           body: BlocProvider<TransactionsListCubit>(
-            create: (context) => di<TransactionsListCubit>()..load(),
+            create: (context) => di<TransactionsListCubit>()..fetch(),
             child: SafeArea(
               child: TabBarView(
                 children: [

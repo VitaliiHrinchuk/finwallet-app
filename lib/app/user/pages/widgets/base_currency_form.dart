@@ -18,7 +18,7 @@ class BaseCurrencyForm extends StatelessWidget {
               children: <Widget>[
                 BlocBuilder<UserSetupFormCubit, UserSetupFormState>(
                     builder: (formContext, formState) {
-                      print("render ${formState.baseCurrency}");
+
                       return CurrencyPicker(
                           label: "Base Currency",
                           onSelect: (Currency? currency) =>

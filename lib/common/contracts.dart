@@ -94,3 +94,12 @@ abstract class AbstractHttpDataProvider<T> {
 
 
 }
+
+
+class Optional<T> {
+  final T? _value;
+
+  const Optional(this._value);
+
+  T? get value => _value;
+}

@@ -21,14 +21,14 @@ class _TransactionsByCategoryChartState extends State<TransactionsByCategoryChar
 
   @override
   Widget build(BuildContext context) {
-    print(this.widget.nodes);
+
 
     double sum = _calculateTotal();
 
     return Container(
       child: SfCircularChart(
           onSelectionChanged: (SelectionArgs args) {
-            print(args.pointIndex);
+
             setState(() {
               CategoryNodeModel newSelected = this.widget.nodes[args.pointIndex];
               if (selected != null && selected?.name == newSelected.name) {
@@ -45,7 +45,8 @@ class _TransactionsByCategoryChartState extends State<TransactionsByCategoryChar
                 widget: Text(
                     sum.toStringAsFixed(2) + " USD",
                     style: TextStyle(
-                      fontWeight: FontWeight.bold
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16
                     ),
                 )
             )
@@ -57,7 +58,7 @@ class _TransactionsByCategoryChartState extends State<TransactionsByCategoryChar
           // ),
           series: <DoughnutSeries<CategoryNodeModel, String>>[
             DoughnutSeries<CategoryNodeModel, String>(
-                radius: '70%',
+                radius: '90%',
                 explode: true,
                 explodeOffset: '20%',
                 innerRadius: '60%',

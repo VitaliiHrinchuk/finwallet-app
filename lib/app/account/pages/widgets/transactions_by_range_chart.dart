@@ -17,7 +17,6 @@ class TransactionsByRangeChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(this.nodes.first.date.toIso8601String());
     return Container(
       child: SfCartesianChart(
           plotAreaBorderWidth: 0,

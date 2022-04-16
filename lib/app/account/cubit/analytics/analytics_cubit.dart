@@ -1,9 +1,12 @@
 import 'package:bloc/bloc.dart';
+import 'package:finwallet_app/app/account/cubit/analytics/analytics_filters.dart';
+import 'package:finwallet_app/app/account/domain/account_entity.dart';
 import 'package:finwallet_app/app/account/domain/analytics_models/category_node_model.dart';
 import 'package:finwallet_app/app/account/domain/analytics_models/date_node_model.dart';
 import 'package:finwallet_app/app/account/domain/analytics_type.dart';
 import 'package:finwallet_app/app/account/usecases/fetch_summary_by_category.dart';
 import 'package:finwallet_app/app/account/usecases/fetch_summary_by_date.dart';
+import 'package:finwallet_app/common/contracts.dart';
 import 'package:finwallet_app/common/http_client/query_params.dart';
 import 'package:meta/meta.dart';
 
@@ -25,6 +28,15 @@ class AnalyticsCubit<T> extends Cubit<AnalyticsState<T>> {
   void fetch() async {
     try {
 
+      if (state.filters.startDate == null) {
+        DateTime startDate = this._getStartDateOfMonth(DateTime.now());
+        this.setFilterStartDate(startDate);
+      }
+
+      if (state.filters.endDate == null) {
+        DateTime endDate = this._getEndDateOfMonth(DateTime.now());
+        this.setFilterEndDate(endDate);
+      }
 
       if (this.type == AnalyticsType.category) {
         await this._fetchByCategory();
@@ -41,6 +53,30 @@ class AnalyticsCubit<T> extends Cubit<AnalyticsState<T>> {
     }
   }
 
+  void setFilterStartDate(DateTime startDate) {
+    emit(state.copyWith(
+        filters: state.filters.copyWith(
+            startDate: startDate
+        )
+    ));
+  }
+
+  void setFilterEndDate(DateTime endDate) {
+    emit(state.copyWith(
+        filters: state.filters.copyWith(
+            endDate: endDate
+        )
+    ));
+  }
+
+  void setAccount(AccountEntity? account) {
+    emit(state.copyWith(
+        filters: state.filters.copyWith(
+            account: Optional<AccountEntity>(account)
+        )
+    ));
+  }
+
 
   DateTime _getStartDateOfMonth(DateTime date) {
     return DateTime.utc(date.year, date.month, 1);
@@ -54,11 +90,7 @@ class AnalyticsCubit<T> extends Cubit<AnalyticsState<T>> {
     emit(state.copyWith(loading: true));
 
     List<CategoryNodeModel> models = await this._fetchSummaryByCategory(
-        QueryParams({
-          "startDate": _getStartDateOfMonth(DateTime.now()).toIso8601String(),
-          "endDate": _getEndDateOfMonth(DateTime.now()).toIso8601String(),
-          "transactionType": "CRE"
-        })
+        QueryParams(state.filters.toJson())
     );
 
     emit(state.copyWith(loading: false, models: models, loaded: true));
@@ -68,11 +100,7 @@ class AnalyticsCubit<T> extends Cubit<AnalyticsState<T>> {
     emit(state.copyWith(loading: true));
 
     List<DateNodeModel> models = await this._fetchSummaryByDate(
-        QueryParams({
-          "startDate": _getStartDateOfMonth(DateTime.now()).toIso8601String(),
-          "endDate": _getEndDateOfMonth(DateTime.now()).toIso8601String(),
-          "transactionType": "CRE"
-        })
+        QueryParams(state.filters.toJson())
     );
 
     emit(state.copyWith(loading: false, models: models, loaded: true));

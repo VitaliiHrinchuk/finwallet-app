@@ -34,7 +34,7 @@ class AuthDataProvider extends AbstractHttpDataProvider {
   Future<String> signInWithCredentials(Credentials credentials) async {
     Map<String, dynamic> body = {};
     Uri uri = this.generateUri(path: this.path + '/login');
-    print("uri ${uri}");
+
     body['email'] = credentials.email;
     body['password'] = credentials.password;
 

@@ -15,4 +15,5 @@ const List<Color> ACCOUNTS_COLORS = [
 ];
 
 const Color PRIMARY_COLOR = Color(0xFF0BA2D7);
-const Color SECONDARY_COLOR = Color(0xFFFED111);
+const Color SECONDARY_ACCENT_COLOR = Color(0xFFFED111);
+const Color SECONDARY_COLOR = Color(0xFFF6F6F6);

@@ -10,22 +10,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'account_card.dart';
 
 class AccountsHorizontalList extends StatelessWidget {
+
+  final AccountEntity? selectedAccount;
+  final Function(AccountEntity? entity) onAccountSelect;
+
+  AccountsHorizontalList({
+    required this.selectedAccount,
+    required this.onAccountSelect
+  });
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AccountsListCubit, AccountsListState>(builder: (context, state) {
-      // return Container(
-      //   height: 300,
-      //   child: Column(
-      //     children: [
-      //       Row(
-      //         children: [
-      //           Expanded(child: AccountCard()),
-      //           Expanded(child: AccountCard()),
-      //         ],
-      //       )
-      //     ],
-      //   ),
-      // );
 
       if (state.loading) {
         return LoadingSpinner();
@@ -44,7 +40,15 @@ class AccountsHorizontalList extends StatelessWidget {
           children: state.entities.map((e) => AccountCard(
             name: e.name,
             value: e.amount.toStringAsFixed(2) + " " + e.currency.code,
-            color: e.hexColor
+            color: e.hexColor,
+            inactive: selectedAccount != null && selectedAccount?.id != e.id,
+            onTap: () {
+              if (selectedAccount?.id == e.id) {
+                this.onAccountSelect(null);
+              } else {
+                this.onAccountSelect(e);
+              }
+            },
           )).toList()
       );
 
