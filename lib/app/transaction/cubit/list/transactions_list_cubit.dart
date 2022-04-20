@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:finwallet_app/app/account/domain/account_entity.dart';
+import 'package:finwallet_app/app/category/domain/category_entity.dart';
 import 'package:finwallet_app/app/transaction/domain/transaction_entity.dart';
 import 'package:finwallet_app/app/transaction/usecases/query_transactions.dart';
 import 'package:finwallet_app/common/contracts.dart';
@@ -74,11 +75,34 @@ class TransactionsListCubit extends Cubit<TransactionsListState> {
   void setAccount(AccountEntity? account) {
     emit(state.copyWith(
         filters: state.filters.copyWith(
-            account: Optional<AccountEntity>(account)
+            accounts: account != null ? Optional<List<AccountEntity>>([account]) : null
         )
     ));
   }
 
+  void setAccounts(List<AccountEntity>? accounts) {
+    emit(state.copyWith(
+        filters: state.filters.copyWith(
+            accounts: Optional<List<AccountEntity>>(accounts)
+        )
+    ));
+  }
+
+  void setCategories(List<CategoryEntity>? categories) {
+    emit(state.copyWith(
+        filters: state.filters.copyWith(
+            categories: Optional<List<CategoryEntity>>(categories)
+        )
+    ));
+  }
+
+  void setType(TransactionType? type) {
+    emit(state.copyWith(
+        filters: state.filters.copyWith(
+            type: Optional<TransactionType>(type)
+        )
+    ));
+  }
 
   DateTime _getStartDateOfMonth(DateTime date) {
     return DateTime.utc(date.year, date.month, 1);

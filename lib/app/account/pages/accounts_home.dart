@@ -11,8 +11,8 @@ import 'package:finwallet_app/app/account/pages/widgets/latest_transactions.dart
 import 'package:finwallet_app/app/account/pages/widgets/transactions_by_category_chart.dart';
 import 'package:finwallet_app/app/account/pages/widgets/transactions_by_range_chart.dart';
 import 'package:finwallet_app/app/transaction/cubit/list/transactions_list_cubit.dart';
-import 'package:finwallet_app/app/transaction/pages/add_transaction.dart';
-import 'package:finwallet_app/app/transaction/pages/list_transactions.dart';
+import 'package:finwallet_app/app/transaction/pages/transaction_add.dart';
+import 'package:finwallet_app/app/transaction/pages/transactions_list.dart';
 import 'package:finwallet_app/common/constants/colors.dart';
 import 'package:finwallet_app/common/constants/routes.dart';
 import 'package:finwallet_app/common/dependencies.dart';
@@ -26,12 +26,13 @@ import 'widgets/account_home_button.dart';
 import 'widgets/section_container.dart';
 
 class AccountsHome extends StatelessWidget {
-  final TransactionsListCubit _transactionsListCubit = di<TransactionsListCubit>();
-  final AnalyticsCubit<CategoryNodeModel> _categoryAnalyticsCubit = di<AnalyticsCubit<CategoryNodeModel>>();
-  final AnalyticsCubit<DateNodeModel> _dateAnalyticsCubit = di<AnalyticsCubit<DateNodeModel>>();
+
 
   @override
   Widget build(BuildContext context) {
+    final TransactionsListCubit _transactionsListCubit = di<TransactionsListCubit>();
+    final AnalyticsCubit<CategoryNodeModel> _categoryAnalyticsCubit = di<AnalyticsCubit<CategoryNodeModel>>();
+    final AnalyticsCubit<DateNodeModel> _dateAnalyticsCubit = di<AnalyticsCubit<DateNodeModel>>();
     return Scaffold(
       extendBodyBehindAppBar: true,
       // drawer: MainDrawer(),
