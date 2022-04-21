@@ -2,9 +2,11 @@ import 'package:bloc/bloc.dart';
 import 'package:finwallet_app/app/account/cubit/analytics/analytics_filters.dart';
 import 'package:finwallet_app/app/account/domain/account_entity.dart';
 import 'package:finwallet_app/app/account/domain/analytics_models/category_node_model.dart';
+import 'package:finwallet_app/app/account/domain/analytics_models/currency_node_model.dart';
 import 'package:finwallet_app/app/account/domain/analytics_models/date_node_model.dart';
 import 'package:finwallet_app/app/account/domain/analytics_type.dart';
 import 'package:finwallet_app/app/account/usecases/fetch_summary_by_category.dart';
+import 'package:finwallet_app/app/account/usecases/fetch_summary_by_currency.dart';
 import 'package:finwallet_app/app/account/usecases/fetch_summary_by_date.dart';
 import 'package:finwallet_app/common/contracts.dart';
 import 'package:finwallet_app/common/http_client/query_params.dart';
@@ -17,12 +19,14 @@ part 'analytics_state.dart';
 class AnalyticsCubit<T> extends Cubit<AnalyticsState<T>> {
   final FetchSummaryByCategory _fetchSummaryByCategory;
   final FetchSummaryByDate _fetchSummaryByDate;
+  final FetchSummaryByCurrency _fetchSummaryByCurrency;
   final AnalyticsType type;
 
   AnalyticsCubit(
       this.type,
       this._fetchSummaryByCategory,
-      this._fetchSummaryByDate
+      this._fetchSummaryByDate,
+      this._fetchSummaryByCurrency
       ) : super(AnalyticsInitial<T>());
 
   void fetch() async {
@@ -42,6 +46,8 @@ class AnalyticsCubit<T> extends Cubit<AnalyticsState<T>> {
         await this._fetchByCategory();
       } else if (this.type == AnalyticsType.date) {
         await this._fetchByDate();
+      } else if (this.type == AnalyticsType.currency) {
+        await this._fetchByCurrency();
       }
 
     } on HttpException catch (error) {
@@ -100,6 +106,16 @@ class AnalyticsCubit<T> extends Cubit<AnalyticsState<T>> {
     emit(state.copyWith(loading: true));
 
     List<DateNodeModel> models = await this._fetchSummaryByDate(
+        QueryParams(state.filters.toJson())
+    );
+
+    emit(state.copyWith(loading: false, models: models, loaded: true));
+  }
+
+  Future<void> _fetchByCurrency() async {
+    emit(state.copyWith(loading: true));
+
+    List<CurrencyNodeModel> models = await this._fetchSummaryByCurrency(
         QueryParams(state.filters.toJson())
     );
 

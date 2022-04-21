@@ -45,7 +45,7 @@ class SetupUserPage extends StatelessWidget {
                       child: BlocListener<UserBloc, UserState>(
                         listener: (context, state) {
                           if (state is UserIsSetup) {
-                            Navigator.pushNamed(context, CREATE_ACCOUNT_ROUTE);
+                            Navigator.pushReplacementNamed(context, CREATE_ACCOUNT_ROUTE);
                           }
                         },
                         child: BaseCurrencyForm(),

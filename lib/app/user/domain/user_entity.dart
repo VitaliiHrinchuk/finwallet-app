@@ -37,7 +37,7 @@ class UserEntity extends Equatable {
         id: json['id'],
         email: json['email'],
         name: json['name'],
-        baseCurrency: CURRENCIES.firstWhere((element) => element.code == json['baseCurrency']),
+        baseCurrency: json['baseCurrency'] != null ? CURRENCIES.firstWhere((element) => element.code == json['baseCurrency']) : null,
         userConfigured: json['userConfigured'],
         createdAt:  json['createdAt'] != null ? DateTime.parse(json['createdAt']) : null,
         updatedAt: json['updatedAt'] != null ? DateTime.parse(json['updatedAt']) : null,

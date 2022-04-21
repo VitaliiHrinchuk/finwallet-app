@@ -4,6 +4,7 @@ import 'package:finwallet_app/app/account/pages/accounts_list.dart';
 import 'package:finwallet_app/app/account/pages/widgets/account_card.dart';
 import 'package:finwallet_app/app/account/pages/widgets/accounts_horizontal_list.dart';
 import 'package:finwallet_app/common/constants/colors.dart';
+import 'package:finwallet_app/common/widgets/app_bar/gradient_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -31,20 +32,9 @@ class _AccountAppBapState extends State<AccountAppBap> {
         .padding
         .top;
 
-    return Container(
-      padding: new EdgeInsets.only(top: statusBarHeight, left: 15, right: 15),
-      // height: statusBarHeight + appBarHeight,
-      decoration: BoxDecoration(
-//        color: PRIMARY_COLOR,
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              Color(0xFF029FDF),
-              Color(0xFFFCEA11),
-            ],
-          )
-      ),
+    return GradientAppBar(
+      firstColor: Color(0xFF97ABFF),
+      secondColor: Color(0xFF123597),
       child: Column(
         children: [
           Container(
@@ -68,6 +58,7 @@ class _AccountAppBapState extends State<AccountAppBap> {
           // AccountsHorizontalList(),
           Container(
             height: 130,
+            width: double.infinity,
             // margin: EdgeInsets.only(left: 10),
             child: AccountsHorizontalList(
               onAccountSelect: (AccountEntity? entity) {

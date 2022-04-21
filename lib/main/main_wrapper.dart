@@ -1,10 +1,12 @@
 import 'package:finwallet_app/app/account/cubit/list/accounts_list_cubit.dart';
+import 'package:finwallet_app/app/account/pages/account_statistics.dart';
 import 'package:finwallet_app/app/account/pages/accounts_home.dart';
 import 'package:finwallet_app/app/account/pages/accounts_list.dart';
 import 'package:finwallet_app/app/category/cubit/list/category_list_cubit.dart';
 import 'package:finwallet_app/app/tag/cubit/list/tag_list_cubit.dart';
 import 'package:finwallet_app/app/transaction/pages/transaction_add.dart';
 import 'package:finwallet_app/app/transaction/pages/transactions_list.dart';
+import 'package:finwallet_app/app/user/pages/settings_page.dart';
 import 'package:finwallet_app/common/constants/colors.dart';
 import 'package:finwallet_app/common/dependencies.dart';
 import 'package:flutter/material.dart';
@@ -21,16 +23,10 @@ class _MainWrapperState extends State<MainWrapper> {
   TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   List<Widget> _widgetOptions = <Widget>[
     AccountsHome(),
-    Text(
-      'Statistics',
-      style: optionStyle,
-    ),
+    AccountStatistics(),
     // AddTransaction(),
     ListTransactions(),
-    Text(
-      'Settings',
-      style: optionStyle,
-    ),
+    SettingsPage(),
   ];
 
   void _onItemTapped(int index) {

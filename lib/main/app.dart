@@ -39,9 +39,9 @@ const Map<int, Color> color = {
 
 class App extends StatefulWidget {
   final String initialRoute;
-  final GlobalKey<NavigatorState> navigationKey;
+  // final GlobalKey<NavigatorState> navigationKey;
 
-  const App({required this.initialRoute, required this.navigationKey})
+  const App({required this.initialRoute})
       : super();
 
   @override
@@ -70,7 +70,7 @@ class _AppState extends State<App> {
       ],
       child: MaterialApp(
         title: 'FinWallet',
-        navigatorKey: widget.navigationKey,
+        // navigatorKey: widget.navigationKey,
         theme: theme.copyWith(
 
           // primarySwatch: MaterialColor(HEX_COLOR, color),
@@ -97,27 +97,13 @@ class _AppState extends State<App> {
               backgroundColor: Colors.white,
               foregroundColor: Colors.black,
             )),
-        // navigatorKey: Navigators.mainNav,
-        // onGenerateRoute: _router.onGenerateRoute,
+
         initialRoute: widget.initialRoute,
         routes: {
+          SETUP_USER_ROUTE: (context) => SetupUserPage(),
           HOME_ROUTE: (context) => MainWrapper(),
-          // LOGIN_ROUTE: (context) => Login(),
-          // SIGN_UP_ROUTE: (context) => Signup(),
-          // SETUP_USER_ROUTE: (context) => SetupUserPage(),
-          // CREATE_ACCOUNT_ROUTE: (context) => AccountFirst(),
-          // ACCOUNTS_LIST_ROUTE: (context) => AccountsList(),
-          // // ACCOUNTS_EDIT_ROUTE: (context) => AccountEdit(
-          // //   arguments: ModalRoute.of(context)?.settings.arguments as AccountEditScreenArguments,
-          // // ),
-          // // ACCOUNTS_CREATE_ROUTE: (context) => AccountEdit(),
-          // TRANSACTION_ADD_ROUTE: (context) => AddTransaction(),
-          // ACCOUNTS_SELECT_ROUTE: (context) => AccountSelect(),
-          // INCOMES_ROUTE: (context) => ListTransactions(isIncome: true),
-          // OUTCOMES_ROUTE: (context) => ListTransactions(isIncome: false),
+          CREATE_ACCOUNT_ROUTE: (context) => AccountFirst(),
         },
-
-        // navigatorObservers: [routeObserver],
       ),
     );
   }

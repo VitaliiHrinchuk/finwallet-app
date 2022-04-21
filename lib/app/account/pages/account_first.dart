@@ -48,7 +48,8 @@ class AccountFirst extends StatelessWidget {
                             if (state is AccountError) {
                               showFloatSnackBar(context, state.error ?? "Unknown error");
                             } else if (state is AccountLoaded) {
-                              Navigator.pushNamed(context, HOME_ROUTE);
+                              print("created");
+                              Navigator.pushReplacementNamed(context, HOME_ROUTE);
                             }
                           },
                           child: CreateAccountForm(

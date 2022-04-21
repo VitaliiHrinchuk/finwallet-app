@@ -6,6 +6,7 @@ import 'package:finwallet_app/app/account/domain/analytics_models/date_node_mode
 import 'package:finwallet_app/app/account/dto/create_account_dto.dart';
 import 'package:finwallet_app/app/account/dto/update_account_dto.dart';
 import 'package:finwallet_app/app/account/usecases/update_account.dart';
+import 'package:finwallet_app/common/constants/currencies.dart';
 import '../../../common/http_client/pagination.dart';
 
 import 'account_data_provider.dart';
@@ -59,9 +60,20 @@ class AccountRepository implements AccountRepositoryContract {
   }
 
   @override
-  Future<List<CurrencyNodeModel>> fetchSummaryByCurrency(Map<String, dynamic> query) {
-    // TODO: implement fetchSummaryByCurrency
-    throw UnimplementedError();
+  Future<List<CurrencyNodeModel>> fetchSummaryByCurrency(Map<String, dynamic> query) async {
+    Map<String, dynamic> params = {
+      ...query,
+      'type': 'currency'
+    };
+    Map<String, dynamic> result = await this.dataProvider.fetchAnalytics(params);
+
+    List<dynamic> data = result['data'];
+    List<CurrencyNodeModel> models = data.map((e) => CurrencyNodeModel(
+        currency: CURRENCIES.firstWhere((element) => element.code == e['currency']),
+        sum: double.parse(e['sum'].toString()))
+    ).toList();
+
+    return models;
   }
 
   @override

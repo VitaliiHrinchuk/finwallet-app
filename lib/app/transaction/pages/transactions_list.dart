@@ -19,6 +19,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
+import 'widgets/transactions_list_app_bar.dart';
+
 class ListTransactions extends StatelessWidget {
   ListTransactions();
 
@@ -40,8 +42,11 @@ class ListTransactions extends StatelessWidget {
                     centerTitle: true,
                     titleTextStyle: Theme.of(context).textTheme.titleMedium,
                     pinned: true,
-                    floating: true,
+                    // floating: true,
                     forceElevated: innerBoxIsScrolled,
+                    flexibleSpace: FlexibleSpaceBar(
+                      background: TransactionsListAppBar(),
+                    ),
                     actions: [
                       IconButton(
                           onPressed: () {
@@ -54,19 +59,30 @@ class ListTransactions extends StatelessWidget {
                               }),
                             );
                           },
-                          icon: Icon(Icons.filter_list_alt))
+                          icon: Icon(
+                              Icons.filter_list_alt,
+                              color: Colors.white,
+                          ))
                     ],
                     bottom: TabBar(
-                      labelColor: Theme.of(context).colorScheme.primary,
-                      indicatorColor: Theme.of(context).colorScheme.primary,
+                      // labelColor: Theme.of(context).colorScheme.primary,
+                      // indicatorColor: Theme.of(context).colorScheme.primary,
+                      labelColor: Colors.white,
+                      indicatorColor: Colors.white,
                       indicatorWeight: 3,
                       tabs: [
                         const Tab(text: 'By Date'),
                         const Tab(text: 'By Category'),
                       ],
                     ),
-                    title: const Text('Records'),
-                    backgroundColor: Colors.white,
+                    title: const Text(
+                        'Records',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20
+                        ),
+                    ),
+                    // backgroundColor: Colors.white,
                   ),
                 ];
               },

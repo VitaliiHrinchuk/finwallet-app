@@ -154,7 +154,6 @@ class AccountsHome extends StatelessWidget {
                               if (state.loading) {
                                 return LoadingSpinner();
                               } else {
-
                                 return TransactionsByRangeChart(state.models);
                               }
 
