@@ -14,9 +14,11 @@ class CategoryRepository implements CategoryRepositoryContract {
   CategoryRepository(this.dataProvider);
 
   @override
-  Future<CategoryEntity> create(CreateCategoryDto dto) {
-    throw UnimplementedError();
-    // return this.dataProvider.create(dto.toJson());
+  Future<CategoryEntity> create(String name, String type) {
+    return this.dataProvider.create({
+      "name": name,
+      "type": type
+    });
   }
 
   @override

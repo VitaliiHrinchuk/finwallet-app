@@ -1,4 +1,6 @@
 import 'package:finwallet_app/app/auth/bloc/auth/auth_bloc.dart';
+import 'package:finwallet_app/app/category/pages/category_list.dart';
+import 'package:finwallet_app/app/tag/pages/tag_list.dart';
 import 'package:finwallet_app/app/user/pages/widgets/setting_menu_item.dart';
 import 'package:finwallet_app/app/user/pages/widgets/settings_app_bar.dart';
 import 'package:flutter/material.dart';
@@ -18,13 +20,25 @@ class SettingsPage extends StatelessWidget {
               SettingMenuItem(
                   "Manage Categories",
                   icon: Icons.category,
-                  onTap: () {}
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(builder: (childContext) {
+                        return CategoryList();
+                      }),
+                    );
+                  }
               ),
               SizedBox(height: 15),
               SettingMenuItem(
                   "Manage Tags",
                   icon: Icons.label,
-                  onTap: () {}
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(builder: (childContext) {
+                        return TagList();
+                      }),
+                    );
+                  }
               ),
               // SizedBox(height: 15),
               // SettingMenuItem(

@@ -7,13 +7,15 @@ class TagEntity extends Equatable {
   final String slug;
   final DateTime? createdAt;
   final DateTime? updatedAt;
+  final String? createdBy;
 
   TagEntity({
     required this.id,
     required this.name,
     required this.slug,
     this.createdAt,
-    this.updatedAt
+    this.updatedAt,
+    this.createdBy
   });
 
   Map<String, dynamic> toJson() {
@@ -31,10 +33,18 @@ class TagEntity extends Equatable {
       id: json['id'],
       name: json['name'] ?? "",
       slug: json['slug'],
+      createdBy: json['createdBy'],
       createdAt:  json['createdAt'] != null ? DateTime.parse(json['createdAt']) : null,
       updatedAt: json['updatedAt'] != null ? DateTime.parse(json['updatedAt']) : null,
     );
   }
+
+  TagEntity copyWith({name, slug, type}) =>
+      TagEntity(
+        id: this.id,
+        name: name ?? this.name,
+        slug: slug ?? this.slug,
+      );
 
   @override
   List<Object?> get props => [

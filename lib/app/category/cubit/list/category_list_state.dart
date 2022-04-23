@@ -13,6 +13,9 @@ class CategoryListState {
   List<CategoryEntity> get debitEntities =>
       this.entities.where((element) => element.type == CategoryType.DEB).toList();
 
+  List<CategoryEntity> get customCategories =>
+      this.entities.where((element) => element.createdBy != null).toList();
+
   CategoryListState({
     required this.entities,
     required this.loading,

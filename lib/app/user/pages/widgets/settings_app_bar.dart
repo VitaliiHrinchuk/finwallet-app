@@ -1,11 +1,12 @@
+import 'package:finwallet_app/app/auth/bloc/auth/auth_bloc.dart';
 import 'package:finwallet_app/common/widgets/app_bar/gradient_app_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SettingsAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return GradientAppBar(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -19,12 +20,17 @@ class SettingsAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
             ),
             SizedBox(height: 10),
-            Text(
-              "some@mail.com",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 15,
-              ),
+            BlocBuilder<AuthBloc, AuthState>(
+              builder: (context, state) {
+                String email = state is AuthAuthenticated ? state.user.email : '';
+                return Text(
+                  email,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 15,
+                  ),
+                );
+              },
             )
           ],
         ),

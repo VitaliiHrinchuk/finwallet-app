@@ -11,8 +11,11 @@ class CategoryEntity extends Equatable {
   final String name;
   final String slug;
   final CategoryType type;
+  final String? createdBy;
   final DateTime? createdAt;
   final DateTime? updatedAt;
+
+  bool get custom => this.createdBy != null;
 
   CategoryEntity({
     required this.id,
@@ -20,6 +23,7 @@ class CategoryEntity extends Equatable {
     required this.slug,
     required this.type,
     this.createdAt,
+    this.createdBy,
     this.updatedAt
   });
 
@@ -40,10 +44,19 @@ class CategoryEntity extends Equatable {
       name: json['name'] ?? "",
       slug: json['slug'],
       type: CategoryType.values.byName(json['categoryType']),
+      createdBy: json['createdBy'],
       createdAt:  json['createdAt'] != null ? DateTime.parse(json['createdAt']) : null,
       updatedAt: json['updatedAt'] != null ? DateTime.parse(json['updatedAt']) : null,
     );
   }
+
+  CategoryEntity copyWith({name, slug, type}) =>
+    CategoryEntity(
+      id: this.id,
+      name: name ?? this.name,
+      slug: slug ?? this.slug,
+      type:  type ?? this.type,
+    );
 
   @override
   List<Object?> get props => [

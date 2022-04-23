@@ -25,16 +25,22 @@ import 'package:finwallet_app/app/auth/usecases/check_user.dart';
 import 'package:finwallet_app/app/auth/usecases/signin_user.dart';
 import 'package:finwallet_app/app/auth/usecases/signout_user.dart';
 import 'package:finwallet_app/app/auth/usecases/signup_user.dart';
+import 'package:finwallet_app/app/category/cubit/form/category_form_cubit.dart';
 import 'package:finwallet_app/app/category/cubit/list/category_list_cubit.dart';
 import 'package:finwallet_app/app/category/data/category_data_provider.dart';
 import 'package:finwallet_app/app/category/data/category_repository.dart';
 import 'package:finwallet_app/app/category/domain/category_repository_contract.dart';
+import 'package:finwallet_app/app/category/usecases/create_category.dart';
 import 'package:finwallet_app/app/category/usecases/list_category.dart';
+import 'package:finwallet_app/app/category/usecases/update_category.dart';
+import 'package:finwallet_app/app/tag/cubit/form/tag_form_cubit.dart';
 import 'package:finwallet_app/app/tag/cubit/list/tag_list_cubit.dart';
 import 'package:finwallet_app/app/tag/data/tag_data_provider.dart';
 import 'package:finwallet_app/app/tag/data/tag_repostitory.dart';
 import 'package:finwallet_app/app/tag/domain/tag_repository_contract.dart';
+import 'package:finwallet_app/app/tag/usecases/create_tag.dart';
 import 'package:finwallet_app/app/tag/usecases/query_tags.dart';
+import 'package:finwallet_app/app/tag/usecases/update_tag.dart';
 import 'package:finwallet_app/app/transaction/cubit/form/transaction_form_cubit.dart';
 import 'package:finwallet_app/app/transaction/cubit/list/transactions_list_cubit.dart';
 import 'package:finwallet_app/app/transaction/cubit/math_pad/math_pad_cubit.dart';
@@ -119,14 +125,21 @@ void setupLocator() {
   di.registerLazySingleton<CategoryRepositoryContract>(() => CategoryRepository(di()));
 
   di.registerLazySingleton<ListCategory>(() => ListCategory(di()));
+  di.registerLazySingleton<CreateCategory>(() => CreateCategory(di()));
+  di.registerLazySingleton<UpdateCategory>(() => UpdateCategory(di()));
 
   di.registerFactory<CategoryListCubit>(() => CategoryListCubit(di()));
+  di.registerFactory<CategoryFormCubit>(() => CategoryFormCubit(di(), di()));
 
   // Tag --------------------------
   di.registerLazySingleton<TagDataProvider>(() => TagDataProvider(di()));
   di.registerLazySingleton<TagRepositoryContract>(() => TagRepository(di()));
 
   di.registerLazySingleton<QueryTags>(() => QueryTags(di()));
+  di.registerLazySingleton<CreateTag>(() => CreateTag(di()));
+  di.registerLazySingleton<UpdateTag>(() => UpdateTag(di()));
+
+  di.registerFactory<TagFormCubit>(() => TagFormCubit(di(), di()));
 
   di.registerFactory<TagListCubit>(() => TagListCubit(di()));
 

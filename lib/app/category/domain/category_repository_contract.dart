@@ -7,6 +7,6 @@ import '../dto/create_category_dto.dart';
 abstract class CategoryRepositoryContract {
   Future<CategoryEntity> find(String id);
   Future<CategoryEntity> update(CategoryEntity entity);
-  Future<CategoryEntity> create(CreateCategoryDto dto);
+  Future<CategoryEntity> create(String name, String type);
   Future<Pagination<CategoryEntity>> browse(Map<String, dynamic> query);
 }

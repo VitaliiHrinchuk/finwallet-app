@@ -6,6 +6,9 @@ class TagListState {
   final String? error;
   final bool loaded;
 
+  List<TagEntity> get customTags =>
+      this.entities.where((element) => element.createdBy != null).toList();
+
 
   TagListState({
     required this.entities,
