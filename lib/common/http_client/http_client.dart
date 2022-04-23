@@ -68,6 +68,32 @@ class HttpClient {
     }
   }
 
+  Future<Map<String, dynamic>> postMultipartFormFile(Uri uri, {
+    required File file,
+    required Map<String, String> params,
+    String name = 'file'
+  }) async {
+    try {
+      MultipartRequest request = http.MultipartRequest('POST', uri);
+      request.headers["Authorization"] = this.getHeader("Authorization") ?? "";
+      request.files.add(
+          await http.MultipartFile.fromPath(
+              name,
+              file.path
+          )
+      );
+      request.fields.addAll(params);
+      print(request);
+      print(request.files[0].filename);
+      http.StreamedResponse responseStream = await request.send();
+      Response response = await http.Response.fromStream(responseStream);
+
+      return _processResponse(response);
+    } on SocketException {
+      throw NetworkException();
+    }
+  }
+
   Map<String, dynamic> _processResponse(http.Response response) {
     Map<String, dynamic> responseJson = response.body.length > 0 ? json.decode(response.body.toString()) : {};
     switch (response.statusCode) {

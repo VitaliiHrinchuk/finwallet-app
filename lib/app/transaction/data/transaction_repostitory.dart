@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:finwallet_app/app/account/domain/account_entity.dart';
 import 'package:finwallet_app/app/account/domain/account_repository_contract.dart';
 import 'package:finwallet_app/app/account/dto/create_account_dto.dart';
@@ -40,4 +42,14 @@ class TransactionRepository implements TransactionRepositoryContract {
   Future<void> remove(TransactionEntity entity) {
     return this.dataProvider.remove(entity.id);
   }
+
+  @override
+  Future<void> import(String accountId, String type, File file) {
+    Map<String, String> params = {
+      "accountId": accountId,
+      "type": type
+    };
+    return this.dataProvider.import(params, file);
+  }
+
 }

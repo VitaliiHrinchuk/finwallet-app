@@ -49,6 +49,7 @@ import 'package:finwallet_app/app/transaction/data/transaction_data_provider.dar
 import 'package:finwallet_app/app/transaction/data/transaction_repostitory.dart';
 import 'package:finwallet_app/app/transaction/domain/transaction_repository_contract.dart';
 import 'package:finwallet_app/app/transaction/usecases/create_transaction.dart';
+import 'package:finwallet_app/app/transaction/usecases/import_transactions.dart';
 import 'package:finwallet_app/app/transaction/usecases/query_transactions.dart';
 import 'package:finwallet_app/app/user/bloc/user/user_bloc.dart';
 import 'package:finwallet_app/app/user/cubit/user_setup_form_cubit.dart';
@@ -112,11 +113,12 @@ void setupLocator() {
   di.registerLazySingleton<TransactionRepositoryContract>(() => TransactionRepository(di()));
   di.registerLazySingleton<QueryTransactions>(() => QueryTransactions(di()));
   di.registerLazySingleton<CreateTransaction>(() => CreateTransaction(di()));
+  di.registerLazySingleton<ImportTransactions>(() => ImportTransactions(di()));
 
   di.registerFactory<TransactionsListCubit>(() => TransactionsListCubit(di()));
   di.registerFactory<MathPadCubit>(() => MathPadCubit());
   di.registerFactory<TransactionFormCubit>(() => TransactionFormCubit());
-  di.registerFactory<TransactionCubit>(() => TransactionCubit(di()));
+  di.registerFactory<TransactionCubit>(() => TransactionCubit(di(), di()));
 
   di.registerLazySingleton<ValidatorContract>(() => RuleValidator());
 
