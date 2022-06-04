@@ -27,6 +27,7 @@ import '../../../common/widgets/app_bar/main_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../common/widgets/placeholder.dart';
 import 'widgets/account_home_button.dart';
 import 'widgets/section_container.dart';
 
@@ -128,6 +129,8 @@ class AccountsHome extends StatelessWidget {
                       builder: (context, state) {
                         if (state.loading) {
                           return LoadingSpinner();
+                        } else if (state.entities.length == 0) {
+                          return ContentPlaceholder(title: 'Looks like you don`t have any transaction this month yet');
                         } else {
                           return LatestTransactions(state.entities);
                         }
@@ -142,7 +145,7 @@ class AccountsHome extends StatelessWidget {
                           return LoadingSpinner();
                         } else {
                           if (state.models.length == 0) {
-                            return LoadingSpinner();
+                            return ContentPlaceholder(title: 'Looks like you don`t have any transaction this month yet');
                           }
                           return TransactionsByCategoryChart(state.models);
                         }
@@ -156,6 +159,9 @@ class AccountsHome extends StatelessWidget {
                         if (state.loading) {
                           return LoadingSpinner();
                         } else {
+                          if (state.models.length == 0) {
+                            return ContentPlaceholder(title: 'Looks like you don`t have any transaction this month yet');
+                          }
                           return TransactionsByRangeChart(state.models);
                         }
                       },
